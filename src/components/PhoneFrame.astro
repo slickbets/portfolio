@@ -10,20 +10,22 @@ interface Props {
   position?: string;
   /** How wide the phone shows on desktop, in CSS pixels. Used to pick image sizes. */
   width?: number;
+  /** Show the whole screenshot at its own shape. Use for real phone screenshots. */
+  whole?: boolean;
   priority?: boolean;
   class?: string;
 }
 
-const { src, alt, position = 'center top', width = 240, priority = false, class: className } = Astro.props;
+const { src, alt, position = 'center top', width = 240, whole = false, priority = false, class: className } = Astro.props;
 
 // The crop fills a 9:17 screen, so a wide screenshot is drawn much wider than the phone itself.
-const cover = Math.max(1, (17 / 9) * (src.width / src.height));
+const cover = whole ? 1 : Math.max(1, (17 / 9) * (src.width / src.height));
 const shown = Math.round(width * cover);
 const sizes = `(max-width: 767px) ${Math.round(60 * cover)}vw, ${shown}px`;
 const widths = [...new Set([shown, shown * 2].map((w) => Math.min(w, src.width)))];
 ---
 
-<div class:list={['phone', className]}>
+<div class:list={['phone', { whole }, className]}>
   <Image
     src={src}
     alt={alt}
@@ -43,4 +45,5 @@ const widths = [...new Set([shown, shown * 2].map((w) => Math.min(w, src.width))
     box-shadow: 0 30px 60px -28px rgb(var(--shadow) / .5);
   }
   img { display: block; width: 100%; height: auto; border-radius: 27px; aspect-ratio: 9 / 17; object-fit: cover; }
+  .whole img { aspect-ratio: auto; }
 </style>

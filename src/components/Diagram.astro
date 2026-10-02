@@ -1,0 +1,65 @@
+---
+// The support-content migration, drawn as a diagram because the work was confidential.
+// The wide layout matches docs/reference/workbench.html. When the diagram itself is narrow
+// (phones, Work page cards), it switches to a stacked layout so the labels stay readable.
+const label =
+  'How the migration worked: content in the old help desk went through tools Spencer built, then into the new platforms and an agent knowledge base used by about 1,000 agents.';
+---
+
+<figure class="diagram">
+  <svg class="wide" viewBox="0 0 760 210" role="img" aria-label={label}>
+    <rect x="4" y="70" width="170" height="72" rx="14" fill="var(--bg)" stroke="var(--rule)" />
+    <text x="89" y="101" text-anchor="middle" fill="var(--fg)">Old help desk</text>
+    <text x="89" y="123" text-anchor="middle" class="sub" fill="var(--muted)">1,000+ articles, 2,000+ macros</text>
+    <rect x="262" y="70" width="200" height="72" rx="14" fill="var(--accent)" />
+    <text x="362" y="101" text-anchor="middle" fill="var(--accent-ink)">Tools I built</text>
+    <text x="362" y="123" text-anchor="middle" class="sub" fill="var(--accent-ink)">Matching and usage analysis</text>
+    <rect x="550" y="8" width="206" height="72" rx="14" fill="var(--bg)" stroke="var(--rule)" />
+    <text x="653" y="49" text-anchor="middle" fill="var(--fg)">New content platforms</text>
+    <rect x="550" y="132" width="206" height="72" rx="14" fill="var(--bg)" stroke="var(--accent)" stroke-width="2" />
+    <text x="653" y="163" text-anchor="middle" fill="var(--fg)">Agent knowledge base</text>
+    <text x="653" y="185" text-anchor="middle" class="sub" fill="var(--muted)">About 1,000 agents</text>
+    <path d="M174 106H262M462 96L550 52M462 116L550 160" stroke="var(--muted)" stroke-width="1.5" fill="none" />
+  </svg>
+
+  <svg class="tall" viewBox="0 0 320 326" role="img" aria-label={label}>
+    <rect x="4" y="4" width="312" height="68" rx="14" fill="var(--bg)" stroke="var(--rule)" />
+    <text x="160" y="33" text-anchor="middle" fill="var(--fg)">Old help desk</text>
+    <text x="160" y="55" text-anchor="middle" class="sub" fill="var(--muted)">1,000+ articles, 2,000+ macros</text>
+    <rect x="4" y="112" width="312" height="68" rx="14" fill="var(--accent)" />
+    <text x="160" y="141" text-anchor="middle" fill="var(--accent-ink)">Tools I built</text>
+    <text x="160" y="163" text-anchor="middle" class="sub" fill="var(--accent-ink)">Matching and usage analysis</text>
+    <rect x="4" y="226" width="150" height="96" rx="14" fill="var(--bg)" stroke="var(--rule)" />
+    <text x="79" y="268" text-anchor="middle" fill="var(--fg)">New content</text>
+    <text x="79" y="288" text-anchor="middle" fill="var(--fg)">platforms</text>
+    <rect x="166" y="226" width="150" height="96" rx="14" fill="var(--bg)" stroke="var(--accent)" stroke-width="2" />
+    <text x="241" y="257" text-anchor="middle" fill="var(--fg)">Agent</text>
+    <text x="241" y="277" text-anchor="middle" fill="var(--fg)">knowledge base</text>
+    <text x="241" y="302" text-anchor="middle" class="sub" fill="var(--muted)">About 1,000 agents</text>
+    <path d="M160 72V112M120 180L79 226M200 180L241 226" stroke="var(--muted)" stroke-width="1.5" fill="none" />
+  </svg>
+
+  <figcaption>This was confidential internal work, so it's shown as a diagram instead of screenshots.</figcaption>
+</figure>
+
+<style>
+  .diagram {
+    container-type: inline-size;
+    margin: 0;
+    border-radius: 14px;
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    padding: clamp(18px, 4vw, 44px);
+  }
+  svg { display: block; width: 100%; height: auto; }
+  .wide { max-height: 260px; }
+  .tall { display: none; max-width: 380px; margin-inline: auto; }
+  text { font-family: var(--sans); font-size: 15px; }
+  text.sub { font-size: 13px; }
+  figcaption { font: 400 14px/1.4 var(--mono); color: var(--muted); margin-top: 14px; }
+
+  @container (max-width: 560px) {
+    .wide { display: none; }
+    .tall { display: block; }
+  }
+</style>

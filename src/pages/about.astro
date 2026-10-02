@@ -1,0 +1,108 @@
+---
+// Words from docs/core-copy.md (approved 2026-10-02). Date ranges use "to" per the copy rules.
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="About | Spencer Solomon"
+  description="Spencer Solomon's background, web résumé and contact details."
+>
+  <div class="wrap">
+  <div class="page">
+    <section class="bio">
+      <h1>About</h1>
+      <p>I'm a Staff Technical Project Manager at SentinelOne, based in Springfield, Missouri. Before that I spent nine years at Block, Jack Henry and Pondurance. My job has always been getting complicated technical work across the finish line: migrations, rollouts and projects that touch a dozen teams.</p>
+      <p>In early 2026 that changed. With AI coding tools, mainly Claude Code, I started building the tools myself instead of only coordinating the people who build them. I'm not a traditional software engineer, and I don't pretend to be. What I'm good at is knowing what to build, directing the AI to build it, checking the work, and deciding when it's done or when to walk away.</p>
+      <p>That shows up in the work here:</p>
+      <ul>
+        <li>At Block I built a knowledge base for support agents that went to production, plus the tools that kept a large content migration on track.</li>
+        <li>On my own time I built an NBA prediction model that ran live for a season, and a real-time auction draft room for my fantasy football league.</li>
+      </ul>
+      <p>I'm looking for product, technical program or builder roles where I can do both: figure out the right thing to build, and build it. I'm especially interested in internal tools, customer-facing products, sports tech and weather.</p>
+      <p>Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and take care of our two dogs, Zoey and Traeger.</p>
+    </section>
+
+    <section id="resume" class="resume">
+      <h2>Résumé</h2>
+      <p class="lead"><strong>Spencer Solomon</strong>: Technical Program Manager, internal tools and building with Claude. Springfield, MO. PMP.</p>
+
+      <div class="job">
+        <h3>SentinelOne</h3>
+        <p class="role">Staff Technical Project Manager, Professional Services</p>
+        <p class="dates">May 2026 to present</p>
+        <ul>
+          <li>I lead enterprise deployments of SentinelOne's AI-powered SIEM platform for large customers and reseller partners, running four implementations at once from kickoff to go-live.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <h3>Block (Square, Cash App, Afterpay)</h3>
+        <p class="role">Senior Technical Project Manager, Customer Operations Technology Enablement</p>
+        <p class="dates">Jul 2024 to May 2026</p>
+        <ul>
+          <li>Built an agent knowledge base with Claude Code, from side prototype to production approval. I wrote the web front end and the API-based migration of support articles from Zendesk into Contentful, and designed its role-based access. It launched to Afterpay's ~1,000 support agents. (<a href="/work/support-content-hub">Case study</a>)</li>
+          <li>Led an AI enablement program for Customer Operations leads. It included AI tool training and a weekly leadership briefing, built with a Knowledge Management colleague: about 100 leads submit updates, and a scheduled Claude task compiles them into a summary for senior leadership.</li>
+          <li>Led the migration of Afterpay's full support-content library (1,000+ articles, ~2,200 macros, 5 regions) off Zendesk ahead of a hard contract deadline. I kept 20+ stakeholders aligned through a mid-program reorg and wrote the requirements and the launch plan.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <h3>Jack Henry &amp; Associates</h3>
+        <p class="role">Advisory Technical Project Manager (promoted from Senior, 2022)</p>
+        <p class="dates">Oct 2021 to Jul 2024</p>
+        <ul>
+          <li>Led 15+ data center migrations, moving bank and credit union infrastructure into Jack Henry's private cloud.</li>
+          <li>Delivered network and security implementations for financial institution clients.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <h3>Pondurance</h3>
+        <p class="role">Lead Project Manager, Implementations</p>
+        <p class="dates">Jan 2020 to Oct 2021</p>
+        <ul>
+          <li>Built the implementation PMO for the managed services division from the ground up, and ran 20+ concurrent customer deployments.</li>
+          <li>As PM for the software engineering team, worked with Product on backlog priorities and ran customer testing of new features.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <h3>Jack Henry &amp; Associates</h3>
+        <p class="role">Technical Project Manager; earlier Technical Pre-Sales</p>
+        <p class="dates">Jan 2017 to Jan 2020</p>
+      </div>
+
+      <p><strong>Certifications and education:</strong> PMP (2023). Associate of Arts, Ozarks Technical Community College.</p>
+      <a class="more" href="/resume.pdf">Download the full résumé (PDF)</a>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <p>The best way to reach me is email: <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>. I'm also on <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a> and <a href="https://github.com/slickbets">GitHub</a>.</p>
+      <a class="more" href="/resume.pdf">Download my résumé (PDF)</a>
+    </section>
+  </div>
+  </div>
+</Base>
+
+<style>
+  .page { max-width: 680px; padding-block: clamp(36px, 6vw, 72px) clamp(56px, 8vw, 104px); display: grid; gap: clamp(48px, 7vw, 80px); }
+
+  section { display: grid; gap: 18px; }
+  .resume, .contact { border-top: 1px solid var(--rule); padding-top: clamp(28px, 4vw, 40px); }
+  h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
+  h2 { font-size: clamp(26px, 3vw, 36px); line-height: 1.1; }
+  h3 { font-size: 19px; letter-spacing: -.01em; }
+  ul { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
+  li::marker { color: var(--accent); }
+  section a:not(.more) { color: var(--accent); }
+  strong { font-weight: 600; }
+
+  .lead { font-size: clamp(18px, 1.8vw, 21px); color: var(--muted); }
+  .lead strong { color: var(--fg); }
+  .job { display: grid; gap: 4px; padding-top: 8px; }
+  .role { font-weight: 500; }
+  .dates { font: 500 14px/1.5 var(--sans); color: var(--muted); margin-bottom: 6px; }
+  .job ul { margin-top: 4px; }
+  .mono { font-size: .94em; }
+</style>

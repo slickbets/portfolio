@@ -1,0 +1,30 @@
+---
+// A project's picture: its cover in a browser frame, or its diagram if the work was confidential.
+// Used by the homepage rows, the Work list and project pages so they always agree.
+import type { CollectionEntry } from 'astro:content';
+import BrowserFrame from './BrowserFrame.astro';
+import Diagram from './Diagram.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  /** How wide the frame shows on desktop, in CSS pixels. */
+  width?: number;
+  /** Show the whole screenshot instead of the 16:10 crop. */
+  whole?: boolean;
+  priority?: boolean;
+}
+
+const { project, width, whole = false, priority = false } = Astro.props;
+const { cover, coverAlt, title } = project.data;
+
+const diagrams = new Set(['support-content-hub']);
+if (!cover && !diagrams.has(project.id)) {
+  throw new Error(`Project "${project.id}" needs a cover image or a diagram in ProjectVisual.astro.`);
+}
+---
+
+{cover ? (
+  <BrowserFrame src={cover} alt={coverAlt ?? title} width={width} whole={whole} priority={priority} />
+) : (
+  <Diagram />
+)}

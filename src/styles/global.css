@@ -57,6 +57,12 @@ img { max-width: 100%; height: auto; }
 
 .mono { font-family: var(--mono); }
 
+/* Status pill plus "Work, 2026" above a project title. */
+.meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font: 500 14px/1 var(--sans); color: var(--muted); }
+
+/* "Read the case study" style link. The arrow slide on hover comes in the motion step. */
+.more { font: 500 15px/1 var(--sans); color: var(--accent); text-decoration: none; display: inline-flex; gap: 6px; align-items: center; justify-self: start; }
+
 .skip {
   position: absolute;
   left: 16px;

@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import StatusPill from '../../components/StatusPill.astro';
+
+// Newest first. Projects from the same year keep their homepage order, then go alphabetically.
+const projects = (await getCollection('projects')).sort(
+  (a, b) =>
+    b.data.year - a.data.year ||
+    (a.data.featured ?? Infinity) - (b.data.featured ?? Infinity) ||
+    a.data.title.localeCompare(b.data.title),
+);
+---
+
+<Base title="Work | Spencer Solomon" description="Every project Spencer Solomon has built, newest first.">
+  <div class="wrap page">
+    <h1>Work</h1>
+    <ul class="list">
+      {projects.map((project) => (
+        <li class="card">
+          <div class="visual"><ProjectVisual project={project} width={520} /></div>
+          <div class="txt">
+            <div class="meta"><StatusPill status={project.data.status} /></div>
+            <h2><a href={`/work/${project.id}`}>{project.data.title}</a></h2>
+            <p>{project.data.summary}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .page { padding-block: clamp(36px, 6vw, 72px) clamp(56px, 8vw, 104px); display: grid; gap: clamp(28px, 4vw, 44px); }
+  h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
+
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(20px, 3vw, 32px); }
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(20px, 4vw, 48px);
+    align-items: center;
+    padding: clamp(16px, 3vw, 28px);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    background: var(--bg);
+  }
+  .card:hover { border-color: var(--muted); }
+  .visual { min-width: 0; }
+  .txt { display: grid; gap: 14px; min-width: 0; }
+  h2 { font-size: clamp(24px, 2.6vw, 32px); line-height: 1.12; }
+  h2 a { text-decoration: none; }
+  /* The whole card is clickable through the title link. */
+  h2 a::after { content: ''; position: absolute; inset: 0; border-radius: 14px; }
+  .txt p { color: var(--muted); max-width: 56ch; }
+
+  @media (max-width: 767px) {
+    .card { grid-template-columns: 1fr; }
+  }
+</style>

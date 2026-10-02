@@ -1,17 +1,85 @@
 ---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import BrowserFrame from '../components/BrowserFrame.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
+import ProjectRow from '../components/ProjectRow.astro';
+import tvBoard from '../content/projects/auction-draft/tv-board.png';
+import managerPhone from '../content/projects/auction-draft/manager-phone.png';
 
+const featured = (await getCollection('projects', ({ data }) => data.featured !== undefined)).sort(
+  (a, b) => a.data.featured! - b.data.featured!,
+);
+const layouts = ['stacked', 'tint', 'flip'] as const;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  title="Spencer Solomon"
+  description="A technical program manager who builds working software with Claude Code and makes the product calls along the way."
+>
+  <div class="wrap">
+    <section class="hero">
+      <div class="txt">
+        <h1>I'm Spencer. I build software by directing AI, <em>and I ship it.</em></h1>
+        <p>A technical program manager who builds working software with Claude Code and makes the product calls along the way.</p>
+        <div class="btns">
+          <a class="btn primary" href="/work">See my work</a>
+          <a class="btn" href="/about#resume">Résumé</a>
+        </div>
+      </div>
+      <div class="collage" aria-hidden="true">
+        <BrowserFrame src={tvBoard} alt="" width={560} priority />
+        <PhoneFrame src={managerPhone} alt="" whole width={170} priority />
+      </div>
+    </section>
+  </div>
+
+  {featured.map((project, i) => <ProjectRow project={project} layout={layouts[i % layouts.length]} />)}
+
+  <section class="contact">
+    <div class="wrap">
+      <h2>Hiring for a product, program or builder role?</h2>
+      <p>I'm looking for work where I can figure out the right thing to build and then build it, especially in internal tools, customer-facing products, sports tech and weather. Email is the best way to reach me.</p>
+      <a class="email" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+      <div class="btns">
+        <a class="btn" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+        <a class="btn" href="https://github.com/slickbets">GitHub</a>
+        <a class="btn" href="/about#resume">Résumé</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+    padding-block: clamp(32px, 6vw, 80px) clamp(48px, 7vw, 96px);
+  }
+  .txt { display: grid; gap: 22px; }
+  h1 { font-size: clamp(36px, 4.6vw, 58px); line-height: 1.04; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .txt p { color: var(--muted); font-size: clamp(18px, 1.6vw, 20px); max-width: 40ch; }
+
+  /* The phone overlaps the bottom right corner of the browser frame. */
+  .collage { position: relative; padding-bottom: 14%; padding-right: 10%; }
+  .collage :global(.phone) { position: absolute; right: 0; bottom: 0; width: 30%; }
+
+  .contact { border-top: 1px solid var(--rule); }
+  .contact .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap: 18px; justify-items: start; }
+  .contact h2 { font-size: clamp(30px, 3.8vw, 46px); line-height: 1.08; max-width: 18ch; }
+  .contact p { color: var(--muted); max-width: 56ch; }
+  .email {
+    font: 500 clamp(20px, 2.4vw, 26px)/1.2 var(--mono);
+    color: var(--fg);
+    text-decoration: none;
+    word-break: break-word;
+    padding-block: 4px;
+  }
+
+  @media (max-width: 767px) {
+    .hero { grid-template-columns: 1fr; padding-top: 24px; }
+  }
+</style>

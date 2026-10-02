@@ -1,0 +1,79 @@
+---
+// One featured project on the homepage. The layout comes from its position so the rows never
+// repeat the same pattern: full width and stacked, then a tinted split, then a split with the image first.
+import type { CollectionEntry } from 'astro:content';
+import ProjectVisual from './ProjectVisual.astro';
+import StatusPill from './StatusPill.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  layout: 'stacked' | 'tint' | 'flip';
+}
+
+const { project, layout } = Astro.props;
+const { title, summary, status, type, year, proof, proofNote } = project.data;
+const href = `/work/${project.id}`;
+---
+
+{layout === 'stacked' ? (
+  <section class="project-row stacked">
+    <div class="wrap">
+      <div class="top">
+        <div class="left">
+          <div class="meta"><StatusPill status={status} /><span>{type}, {year}</span></div>
+          <h2>{title}</h2>
+        </div>
+        <div class="right">
+          <p class="body">{summary}</p>
+          <p class="proof">{proof}<small>{proofNote}</small></p>
+          <a class="more" href={href}>Read the case study <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <ProjectVisual project={project} width={1100} />
+    </div>
+  </section>
+) : (
+  <section class:list={['project-row', 'split', layout]}>
+    <div class="wrap">
+      <div class="txt">
+        <div class="meta"><StatusPill status={status} /><span>{type}, {year}</span></div>
+        <h2>{title}</h2>
+        <p class="body">{summary}</p>
+        <p class="proof">{proof}<small>{proofNote}</small></p>
+        <a class="more" href={href}>Read the case study <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="visual">
+        <ProjectVisual project={project} width={600} />
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .project-row { border-top: 1px solid var(--rule); }
+  h2 { font-size: clamp(26px, 3vw, 36px); line-height: 1.1; }
+  .body { color: var(--muted); max-width: 56ch; }
+  .proof { font: 600 clamp(20px, 2vw, 24px)/1.3 var(--sans); letter-spacing: -.01em; }
+  .proof small { display: block; font: 400 15px/1.4 var(--sans); color: var(--muted); letter-spacing: 0; margin-top: 2px; }
+
+  .stacked .wrap { padding-block: clamp(48px, 7vw, 96px); display: grid; gap: clamp(24px, 4vw, 40px); }
+  .stacked .top { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); align-items: end; }
+  .left, .right { display: grid; gap: 14px; }
+
+  .split .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(24px, 5vw, 72px);
+    align-items: center;
+    padding-block: clamp(48px, 7vw, 96px);
+  }
+  .split .txt { display: grid; gap: 14px; min-width: 0; }
+  .visual { min-width: 0; }
+  .tint { background: var(--tint); }
+  .flip .txt { order: 2; }
+
+  @media (max-width: 767px) {
+    .stacked .top, .split .wrap { grid-template-columns: 1fr; }
+    .flip .txt { order: 0; }
+  }
+</style>
