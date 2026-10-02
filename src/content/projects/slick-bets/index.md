@@ -7,9 +7,12 @@ year: 2026
 stack: [Python, Streamlit, SQLite, Fly.io, GitHub Actions, Claude Code]
 featured: 2
 repo: https://github.com/slickbets/nba-betting-value
+tags: [sports, data, ai-building]
+proof: "71.5% of winners picked correctly"
+proofNote: "648 games, each prediction locked in before tip-off"
+cover: ./home-picks.png
+coverAlt: "Slick Bets daily picks table with matchups, picks, win probability and predicted spreads"
 ---
-
-<!-- FINAL v1 (approved by Spencer 2026-10-02). -->
 
 **Retired.** It ran live through the 2025-26 NBA season, and it's dormant now.
 
@@ -71,8 +74,3 @@ Shipping is its own skill. The model was the fun part. Hosting, scheduling, data
 Cutting scope was the right call. A focused predictor that worked beat a betting tool that didn't.
 
 If I picked it back up, I'd fix the interface first. It shows a lot of numbers but doesn't tell you what to do with them.
-
-## Links
-
-- [Code on GitHub](https://github.com/slickbets/nba-betting-value)
-- Screenshots: daily picks, game details, model accuracy, team ratings (in inventory/assets/slick-bets)

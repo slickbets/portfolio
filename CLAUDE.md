@@ -55,6 +55,7 @@ stack: [Python, Streamlit]
 tags: [sports, data]           # only: ai-building, internal-tools, sports, data, product
 featured: 2                    # homepage order; omit to show only on /work
 cover: ./cover.png             # optional; Work projects may use a diagram component instead
+coverAlt: "What the screenshot shows"   # required whenever cover is set
 proof: "71.5% of winners picked correctly"   # the one proof line on the homepage row
 proofNote: "648 games, each prediction locked in before tip-off"
 repo: https://...              # optional
@@ -62,6 +63,10 @@ demo: https://...              # optional
 ```
 
 Every project page body uses these sections in this order: The problem, What I built, How I built it, Outcome, What I learned.
+
+A project that was stopped may call its Outcome section "Why I stopped".
+
+Repo and demo links live in the facts row at the top of the page, so the body never ends with a separate Links section.
 
 Writing (`src/content/writing/<slug>.md`): `title`, `date`, `summary`, `tags`, and an optional `project` slug that links back to a project.
 

@@ -6,9 +6,10 @@ type: Work
 year: 2026
 stack: [React, Vite, Contentful, Salesforce Knowledge, Zendesk API, Claude Code]
 featured: 1
+tags: [internal-tools, ai-building, product]
+proof: "Launched to about 1,000 support agents"
+proofNote: "An agent knowledge base that went from my side prototype to production"
 ---
-
-<!-- FINAL v2 (approved by Spencer 2026-10-02). Employer, brands, people, ticket IDs, internal URLs and dollar figures are intentionally left out. Spencer should brush up on the matching engine and usage analysis before interviews. -->
 
 **Shipped.** I led the support-content migration during a leading fintech company's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.
 
@@ -50,7 +51,3 @@ The knowledge base went through engineering review before production. Engineers 
 Running a program and building for it aren't separate jobs. Each time the standard tools stopped answering the question, building the answer myself with Claude Code was faster than waiting or working around the gap. It also gave the decisions much better data.
 
 A working prototype also moves people faster than a proposal. Leadership approved the knowledge base after seeing it work.
-
-## Links
-
-No links or screenshots. This was internal work, and I keep it confidential.

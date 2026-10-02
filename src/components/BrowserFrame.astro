@@ -8,21 +8,23 @@ interface Props {
   alt: string;
   /** How wide the frame shows on desktop, in CSS pixels. Used to pick image sizes. */
   width?: number;
+  /** Show the whole screenshot at its own shape instead of cropping it to 16:10. */
+  whole?: boolean;
   /** Load right away instead of lazily. Use for the frame in the first screen of a page. */
   priority?: boolean;
   class?: string;
 }
 
-const { src, alt, width = 640, priority = false, class: className } = Astro.props;
+const { src, alt, width = 640, whole = false, priority = false, class: className } = Astro.props;
 
 // The crop fills a 16:10 window, so a wider screenshot is drawn wider than the frame.
-const cover = Math.max(1, src.width / src.height / (16 / 10));
+const cover = whole ? 1 : Math.max(1, src.width / src.height / (16 / 10));
 const shown = Math.round(width * cover);
 const sizes = `(max-width: 767px) ${Math.round(100 * cover)}vw, ${shown}px`;
 const widths = [...new Set([Math.round(shown / 2), shown, shown * 2].map((w) => Math.min(w, src.width)))];
 ---
 
-<div class:list={['browser', className]}>
+<div class:list={['browser', { whole }, className]}>
   <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
   <Image
     src={src}
@@ -45,4 +47,5 @@ const widths = [...new Set([Math.round(shown / 2), shown, shown * 2].map((w) => 
   .bar { height: 28px; background: var(--chrome); display: flex; gap: 6px; align-items: center; padding-inline: 12px; }
   .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); display: block; }
   img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
+  .whole img { aspect-ratio: auto; }
 </style>

@@ -7,9 +7,12 @@ year: 2026
 stack: [TypeScript, React, Node.js, Socket.IO, Postgres, Claude Code]
 featured: 3
 repo: https://github.com/slickbets/auction-draft
+tags: [sports, product, ai-building]
+proof: "Picks up where it left off after a crash"
+proofNote: "Every bid is logged, so a server restart loses nothing"
+cover: ./tv-board.png
+coverAlt: "Draft room TV board showing every team's budget, the nomination clock and recent sales"
 ---
-
-<!-- FINAL v1 (approved by Spencer 2026-10-02). Repo made public 2026-10-02. -->
 
 **Prototype.** The draft engine works end to end in testing. It was never used in a real draft.
 
@@ -56,8 +59,3 @@ I've played fantasy football for more than a decade, so I know how people draft.
 Planning first with Claude Code worked. A written spec and plans, plus tests that try to break things, produced much more solid software than my first project.
 
 Knowing when to stop is part of the job. Shelving it before draft night was the right call.
-
-## Links
-
-- [Code on GitHub](https://github.com/slickbets/auction-draft)
-- Screenshots: manager phone view, TV board, commissioner view (in inventory/assets/auction-draft)

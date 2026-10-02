@@ -1,0 +1,90 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import BrowserFrame from '../../components/BrowserFrame.astro';
+import StatusPill from '../../components/StatusPill.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { title, summary, status, type, year, stack, cover, coverAlt, repo, demo } = project.data;
+const { Content } = await render(project);
+---
+
+<Base title={`${title} | Spencer Solomon`} description={summary}>
+  <div class="wrap case">
+    <header class="head">
+      <a class="back" href="/work">← All work</a>
+      <h1>{title}</h1>
+      <p class="sum">{summary}</p>
+      <dl class="facts">
+        <div><dt>Status</dt><dd><StatusPill status={status} /></dd></div>
+        <div><dt>Type</dt><dd>{type}, {year}</dd></div>
+        <div>
+          <dt>Built with</dt>
+          <dd><ul class="chips">{stack.map((item) => <li>{item}</li>)}</ul></dd>
+        </div>
+        {repo && <div><dt>Code</dt><dd><a href={repo}>GitHub repository</a></dd></div>}
+        {demo && <div><dt>Demo</dt><dd><a href={demo}>Live site</a></dd></div>}
+      </dl>
+    </header>
+
+    {cover ? (
+      <BrowserFrame src={cover} width={1100} whole priority alt={coverAlt ?? `Screenshot of ${title}`} />
+    ) : (
+      <div class="placeholder">
+        <p>The diagram for this project goes here.</p>
+      </div>
+    )}
+
+    <article class="article">
+      <Content />
+    </article>
+  </div>
+</Base>
+
+<style>
+  .head { padding-block: clamp(36px, 6vw, 72px) 28px; display: grid; gap: 18px; max-width: 880px; }
+  .back { font: 500 15px/1 var(--sans); color: var(--muted); text-decoration: none; justify-self: start; }
+  .back:hover { color: var(--fg); }
+  h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
+  .sum { font-size: clamp(18px, 1.8vw, 21px); color: var(--muted); max-width: 60ch; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px 32px;
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+    margin: 6px 0 0;
+  }
+  .facts div { display: grid; gap: 6px; align-content: start; min-width: 0; }
+  .facts dt { font: 500 13px/1 var(--sans); color: var(--muted); }
+  .facts dd { margin: 0; font: 500 15px/1.45 var(--sans); }
+  .facts a { color: var(--accent); }
+
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips li { font: 400 12.5px/1 var(--mono); padding: 6px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); }
+
+  .placeholder {
+    border-radius: 14px;
+    background: var(--tint);
+    border: 1px dashed var(--rule);
+    min-height: 260px;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+  .placeholder p { font: 400 14px/1.4 var(--mono); color: var(--muted); text-align: center; }
+
+  .article { max-width: 680px; padding-block: 36px 88px; display: grid; gap: 18px; }
+  .article :global(h2) { font-size: 26px; line-height: 1.2; margin-top: 22px; }
+  .article :global(p), .article :global(ul) { margin: 0; }
+  .article :global(ul) { padding-left: 22px; display: grid; gap: 10px; }
+  .article :global(li::marker) { color: var(--accent); }
+  .article :global(strong) { font-weight: 600; }
+  .article :global(a) { color: var(--accent); }
+</style>
