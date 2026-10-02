@@ -1,0 +1,274 @@
+<title>Portfolio Workbench Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Design read: personal portfolio for recruiters and hiring managers, clean product-studio language, native CSS, restrained motion.
+   Dials: DESIGN_VARIANCE 6, MOTION_INTENSITY 5, VISUAL_DENSITY 3. Light-only by Spencer's instruction.
+   Shape rule: buttons and pills are full-pill, frames are 14px, the phone frame is 34px. One accent per page (switchable for review only). */
+:root{
+  --bg:#fafaf9; --tint:#f2f3f1; --fg:#18191b; --muted:#5b5f66; --rule:#e4e5e2; --frame:#1d1f22; --chrome:#ececea; --dot:#cfd0cc;
+  --accent:#2148b8; --accent-ink:#fafaf9; --shadow:24 40 80;
+  --sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:light;
+}
+body[data-accent="green"]{--accent:#2e6a41;--shadow:30 60 40}
+body[data-accent="red"]{--accent:#a52a21;--shadow:70 30 25}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:17px/1.6 var(--sans);margin:0;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2{font-weight:600;letter-spacing:-.025em;text-wrap:balance;margin:0}
+p{margin:0}
+
+/* review bar (not part of the site) */
+.review{background:var(--tint);border-bottom:1px solid var(--rule);font:500 13px/1.4 var(--mono);color:var(--muted);padding-block:10px}
+.review .wrap{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pick button{font:500 13px/1 var(--mono);color:var(--fg);background:var(--bg);border:1px solid var(--rule);border-radius:999px;padding:8px 12px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.pick button span{width:12px;height:12px;border-radius:50%;display:block}
+.pick button[aria-pressed="true"]{border-color:var(--fg)}
+
+/* nav */
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;height:68px;font:500 15px/1 var(--sans)}
+.nav .name{font-weight:600;text-decoration:none}
+.nav nav{display:flex;gap:28px}
+.nav nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+.nav nav a:hover{color:var(--fg)}
+
+/* hero: split, text left, real screenshots right */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,5vw,72px);align-items:center;padding-block:clamp(32px,6vw,80px) clamp(48px,7vw,96px)}
+.hero .txt{display:grid;gap:22px}
+.hero h1{font-size:clamp(36px,4.6vw,58px);line-height:1.04}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--muted);font-size:clamp(18px,1.6vw,20px);max-width:40ch}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{font:500 15px/1 var(--sans);padding:14px 20px;border-radius:999px;text-decoration:none;border:1px solid var(--rule);background:var(--bg);white-space:nowrap;transition:transform .3s var(--ease),border-color .2s}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:hover{border-color:var(--fg);transform:translateY(-1px)}
+.btn.primary:hover{border-color:var(--accent)}
+.btn:active{transform:scale(.98)}
+.collage{position:relative;padding-bottom:14%;padding-right:10%}
+.collage .browser{width:100%}
+.collage .phone{position:absolute;right:0;bottom:0;width:30%}
+
+/* frames */
+.browser{border-radius:14px;overflow:hidden;border:1px solid var(--rule);background:var(--bg);box-shadow:0 30px 60px -32px rgb(var(--shadow) / .35)}
+.browser .bar{height:28px;background:var(--chrome);display:flex;gap:6px;align-items:center;padding-inline:12px}
+.browser .bar i{width:9px;height:9px;border-radius:50%;background:var(--dot);display:block}
+.browser img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left}
+.phone{border-radius:34px;background:var(--frame);padding:8px;box-shadow:0 30px 60px -28px rgb(var(--shadow) / .5)}
+.phone img{display:block;width:100%;border-radius:27px;aspect-ratio:9/17;object-fit:cover;object-position:6% top}
+
+/* projects */
+.project-row{border-top:1px solid var(--rule)}
+.meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font:500 14px/1 var(--sans);color:var(--muted)}
+.pill{padding:6px 11px;border-radius:999px;border:1px solid var(--rule);color:var(--fg);background:var(--bg);font:500 13px/1 var(--mono)}
+.project-row h2{font-size:clamp(26px,3vw,36px);line-height:1.1}
+.project-row .body{color:var(--muted);max-width:56ch}
+.proof{font:600 clamp(20px,2vw,24px)/1.3 var(--sans);letter-spacing:-.01em}
+.proof small{display:block;font:400 15px/1.4 var(--sans);color:var(--muted);letter-spacing:0;margin-top:2px}
+.more{font:500 15px/1 var(--sans);color:var(--accent);text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.more span{transition:transform .3s var(--ease)}
+.more:hover span{transform:translateX(4px)}
+
+/* row 1: full-width stacked (breaks the zigzag) */
+.stacked .wrap{padding-block:clamp(48px,7vw,96px);display:grid;gap:clamp(24px,4vw,40px)}
+.stacked .top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:end}
+.stacked .top .left{display:grid;gap:14px}
+.stacked .top .right{display:grid;gap:14px}
+.diagram{border-radius:14px;background:var(--tint);border:1px solid var(--rule);padding:clamp(18px,4vw,44px)}
+.diagram svg{display:block;width:100%;height:auto;max-height:260px}
+.diagram p{font:400 14px/1.4 var(--mono);color:var(--muted);margin-top:14px}
+
+/* rows 2 and 3: split */
+.split .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(24px,5vw,72px);align-items:center;padding-block:clamp(48px,7vw,96px)}
+.split.flip .txt{order:2}
+.split .txt{display:grid;gap:14px;min-width:0}
+.split.tint{background:var(--tint)}
+
+/* contact */
+.contact{border-top:1px solid var(--rule)}
+.contact .wrap{padding-block:clamp(56px,8vw,104px);display:grid;gap:18px;justify-items:start}
+.contact h2{font-size:clamp(30px,3.8vw,46px);line-height:1.08;max-width:18ch}
+.contact p{color:var(--muted);max-width:56ch}
+.email{font:500 clamp(20px,2.4vw,26px)/1.2 var(--mono);color:var(--fg);word-break:break-word;user-select:all;padding-block:4px}
+footer{border-top:1px solid var(--rule);font:400 14px/1.5 var(--sans);color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-block:24px}
+footer nav{display:flex;gap:18px}
+footer a{text-decoration:none}
+
+/* project page sample */
+.divider{background:var(--tint);border-block:1px solid var(--rule);font:500 13px/1.5 var(--mono);color:var(--muted);padding-block:14px;text-align:center}
+.case .head{padding-block:clamp(36px,6vw,72px) 28px;display:grid;gap:18px;max-width:880px}
+.back{font:500 15px/1 var(--sans);color:var(--muted);text-decoration:none}
+.case h1{font-size:clamp(32px,4.4vw,52px);line-height:1.06}
+.case .sum{font-size:clamp(18px,1.8vw,21px);color:var(--muted);max-width:60ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px 32px;border-top:1px solid var(--rule);padding-top:20px;margin:6px 0 0}
+.facts div{display:grid;gap:6px;min-width:0}
+.facts dt{font:500 13px/1 var(--sans);color:var(--muted)}
+.facts dd{margin:0;font:500 15px/1.45 var(--sans)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font:400 12.5px/1 var(--mono);padding:6px 9px;border-radius:999px;background:var(--tint);border:1px solid var(--rule)}
+.article{max-width:680px;padding-block:36px 88px;display:grid;gap:18px}
+.article h2{font-size:26px;margin-top:22px}
+.article ul{margin:0;padding-left:22px;display:grid;gap:10px}
+.article li::marker{color:var(--accent)}
+
+@media (max-width:767px){
+  .hero,.split .wrap,.stacked .top{grid-template-columns:1fr}
+  .split.flip .txt{order:0}
+  .hero{padding-top:24px}
+  .nav nav{gap:20px}
+}
+
+/* motion: load-in cascade on the hero, gentle rise on frames as they scroll in, hover feedback. All off for reduced motion. */
+@media (prefers-reduced-motion:no-preference){
+  .hero .txt > *{animation:rise .8s var(--ease) both;animation-delay:calc(var(--i,0) * 90ms)}
+  .collage .browser{animation:rise 1s var(--ease) .15s both}
+  .collage .phone{animation:float-in 1.1s var(--ease) .35s both}
+  .reveal{transition:transform .9s var(--ease)}
+  .reveal.below{transform:translateY(28px)}
+  .browser,.phone,.diagram{transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+  .split:hover .browser,.split:hover .phone{transform:translateY(-4px)}
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes float-in{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+</style>
+
+<div class="review"><div class="wrap"><span>Design review only. Try an accent:</span><div class="pick" role="group" aria-label="Accent color"><button type="button" id="a-navy" data-a="navy" aria-pressed="true"><span style="background:#2148b8"></span>Navy (my pick)</button><button type="button" id="a-green" data-a="green" aria-pressed="false"><span style="background:#2e6a41"></span>Field green</button><button type="button" id="a-red" data-a="red" aria-pressed="false"><span style="background:#a52a21"></span>Arrowhead red</button></div></div></div>
+
+<div class="wrap">
+  <header class="nav"><a class="name" href="#top">Spencer Solomon</a><nav aria-label="Main"><a href="#work">Work</a><a href="#about">About</a></nav></header>
+  <section class="hero" id="top">
+    <div class="txt">
+      <h1 style="--i:0">I'm Spencer. I build software by directing AI, <em>and I ship it.</em></h1>
+      <p style="--i:1">A technical program manager who builds working software with Claude Code and makes the product calls along the way.</p>
+      <div class="btns" style="--i:2"><a class="btn primary" href="#work">See my work</a><a class="btn" href="#about">Résumé</a></div>
+    </div>
+    <div class="collage" aria-hidden="true">
+      <div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="img/draft-tv.png" alt=""></div>
+      <div class="phone"><img src="img/draft-phone.png" alt=""></div>
+    </div>
+  </section>
+</div>
+
+<section class="project-row stacked" id="work">
+  <div class="wrap">
+    <div class="top">
+      <div class="left">
+        <div class="meta"><span class="pill">Shipped</span><span>Work, 2026</span></div>
+        <h2>Moving a fintech's support content off Zendesk</h2>
+      </div>
+      <div class="right">
+        <p class="body">I led the content side of the migration and built the tools it needed, including an agent knowledge base that went from my side prototype to production.</p>
+        <a class="more" href="#case">Read the case study <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 210" role="img" aria-label="How the migration worked: content in the old help desk went through tools Spencer built, then into the new platforms and an agent knowledge base used by about 1,000 agents.">
+        <g font-family="Geist, system-ui, sans-serif" font-size="15">
+          <rect x="4" y="70" width="170" height="72" rx="14" fill="var(--bg)" stroke="var(--rule)"/>
+          <text x="89" y="101" text-anchor="middle" fill="var(--fg)">Old help desk</text>
+          <text x="89" y="123" text-anchor="middle" font-size="13" fill="var(--muted)">1,000+ articles, 2,000+ macros</text>
+          <rect x="262" y="70" width="200" height="72" rx="14" fill="var(--accent)"/>
+          <text x="362" y="101" text-anchor="middle" fill="var(--accent-ink)">Tools I built</text>
+          <text x="362" y="123" text-anchor="middle" font-size="13" fill="var(--accent-ink)">Matching and usage analysis</text>
+          <rect x="550" y="8" width="206" height="72" rx="14" fill="var(--bg)" stroke="var(--rule)"/>
+          <text x="653" y="49" text-anchor="middle" fill="var(--fg)">New content platforms</text>
+          <rect x="550" y="132" width="206" height="72" rx="14" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="653" y="163" text-anchor="middle" fill="var(--fg)">Agent knowledge base</text>
+          <text x="653" y="185" text-anchor="middle" font-size="13" fill="var(--muted)">About 1,000 agents</text>
+          <path d="M174 106H262M462 96L550 52M462 116L550 160" stroke="var(--muted)" stroke-width="1.5" fill="none"/>
+        </g>
+      </svg>
+      <p>This was confidential internal work, so it's shown as a diagram instead of screenshots.</p>
+    </div>
+  </div>
+</section>
+
+<section class="project-row split tint">
+  <div class="wrap">
+    <div class="txt">
+      <div class="meta"><span class="pill">Retired</span><span>Personal, 2026</span></div>
+      <h2>Slick Bets, an NBA prediction model</h2>
+      <p class="body">My first Claude Code project predicted every NBA game each day, adjusting for injuries, rest and home court, and it ran on its own for a full season.</p>
+      <p class="proof">71.5% of winners picked correctly<small>648 games, each prediction locked in before tip-off</small></p>
+      <a class="more" href="#case">Read the case study <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="browser reveal"><div class="bar"><i></i><i></i><i></i></div><img src="img/slick-picks.png" alt="Slick Bets daily picks table with matchups, picks, win probability and predicted spreads"></div>
+  </div>
+</section>
+
+<section class="project-row split flip">
+  <div class="wrap">
+    <div class="txt">
+      <div class="meta"><span class="pill">Prototype</span><span>Personal, 2026</span></div>
+      <h2>A live auction draft room for my fantasy league</h2>
+      <p class="body">I built a real-time draft room in six days with a written spec and heavy testing, then shelved it when I saw that drafters needed player news and depth charts more than a new auction.</p>
+      <p class="proof">Picks up where it left off after a crash<small>Every bid is logged, so a server restart loses nothing</small></p>
+      <a class="more" href="#case">Read the case study <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="browser reveal"><div class="bar"><i></i><i></i><i></i></div><img src="img/draft-tv.png" alt="Draft room TV board showing every team's budget, the nomination clock and recent sales"></div>
+  </div>
+</section>
+
+<section class="contact" id="about">
+  <div class="wrap">
+    <h2>Hiring for a product, program or builder role?</h2>
+    <p>I'm looking for work where I can figure out the right thing to build and then build it, especially in internal tools, customer-facing products, sports tech and weather. Email is the best way to reach me.</p>
+    <span class="email">spencerwsolomon@gmail.com</span>
+    <div class="btns"><a class="btn" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a><a class="btn" href="https://github.com/slickbets">GitHub</a><a class="btn" href="#about">Résumé</a></div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>Spencer Solomon, Springfield, MO</span><nav aria-label="Footer"><a href="#work">Work</a><a href="#about">About</a></nav></div></footer>
+
+<div class="divider" id="case">Below is how a project page looks in this design.</div>
+
+<div class="wrap case">
+  <div class="head">
+    <a class="back" href="#work">← All work</a>
+    <h1>Slick Bets, an NBA prediction model</h1>
+    <p class="sum">My first Claude Code project: an NBA prediction app that picked 71.5% of game winners over 648 games, tracked live.</p>
+    <dl class="facts">
+      <div><dt>Status</dt><dd><span class="pill">Retired</span></dd></div>
+      <div><dt>Type</dt><dd>Personal, 2026</dd></div>
+      <div><dt>Built with</dt><dd><span class="chips"><span>Python</span><span>Streamlit</span><span>SQLite</span><span>Fly.io</span><span>Claude Code</span></span></dd></div>
+      <div><dt>Code</dt><dd><a href="https://github.com/slickbets/nba-betting-value">GitHub repository</a></dd></div>
+    </dl>
+  </div>
+  <div class="browser reveal"><div class="bar"><i></i><i></i><i></i></div><img src="img/slick-details.png" alt="Slick Bets game details with rest adjustments and every prediction for the day"></div>
+  <article class="article">
+    <h2>The problem</h2>
+    <p>I wanted to know if I could build a model that predicts NBA games well enough to trust, and whether it could find bets where the sportsbooks' odds were off. I also wanted to learn how to build software with Claude Code. This was my first real project with it.</p>
+    <h2>How I built it</h2>
+    <p>I directed Claude Code through every part of it over about ten weeks. I set the goals, made the calls on the model and the product, and reviewed everything before it shipped. Three decisions shaped it:</p>
+    <ul>
+      <li>I cut the betting features when the value picks weren't right, and narrowed the app to the one thing the model could do well, which was picking winners.</li>
+      <li>I tuned the model with a backtest that replayed the season across 840 combinations of settings.</li>
+      <li>I learned to run software in production by running into its problems, and turned each fix into a written rule so Claude wouldn't repeat the mistake.</li>
+    </ul>
+  </article>
+</div>
+
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.pick button'));
+  function set(a){document.body.setAttribute('data-accent',a);btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.a===a));});try{localStorage.setItem('accent',a);}catch(e){}}
+  btns.forEach(function(b){b.addEventListener('click',function(){set(b.dataset.a);});});
+  var saved='navy';try{saved=localStorage.getItem('accent')||'navy';}catch(e){}
+  set(saved);
+
+  // Scroll reveal: only elements below the first screen get offset, and only while the observer is running.
+  if(!('IntersectionObserver' in window)) return;
+  var els=[].slice.call(document.querySelectorAll('.reveal'));
+  var vh=window.innerHeight;
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('below');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px'});
+  els.forEach(function(el){if(el.getBoundingClientRect().top>vh){el.classList.add('below');io.observe(el);}});
+})();
+</script>
