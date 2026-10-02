@@ -14,7 +14,7 @@ const { title, summary, status, type, year, stack, repo, demo } = project.data;
 const { Content } = await render(project);
 ---
 
-<Base title={`${title} | Spencer Solomon`} description={summary}>
+<Base title={`${title} | Spencer Solomon`} description={summary} image={`/og/${project.id}.png`} type="article">
   <div class="wrap case">
     <header class="head">
       <a class="back" href="/work">← All work</a>

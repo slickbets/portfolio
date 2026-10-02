@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found | Spencer Solomon" description="This page doesn't exist on spencerwsolomon.com." noindex>
+  <div class="wrap">
+    <section class="notfound">
+      <h1>That page doesn't exist.</h1>
+      <p>The link may be old, or the address may have a typo. You can head back home or look through my work instead.</p>
+      <div class="btns">
+        <a class="btn primary" href="/">Go to the homepage</a>
+        <a class="btn" href="/work">See my work</a>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .notfound { padding-block: clamp(56px, 10vw, 128px); display: grid; gap: 22px; justify-items: start; }
+  h1 { font-size: clamp(36px, 4.6vw, 58px); line-height: 1.04; }
+  p { color: var(--muted); font-size: clamp(18px, 1.6vw, 20px); max-width: 44ch; }
+</style>

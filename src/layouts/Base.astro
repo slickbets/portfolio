@@ -4,16 +4,23 @@ import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
 
 interface Props {
+  /** The browser tab and share title. */
   title: string;
-  description?: string;
+  /** One sentence for search results and link previews. */
+  description: string;
+  /** Share image path from /og, e.g. "/og/slick-bets.png". Defaults to the homepage image. */
+  image?: string;
+  /** "article" for project pages, "website" for everything else. */
+  type?: 'website' | 'article';
+  /** Keep the page out of search results (the styleguide and the 404 page). */
+  noindex?: boolean;
 }
 
-const {
-  title,
-  description = 'Spencer Solomon builds software by directing AI, and ships it.',
-} = Astro.props;
+const { title, description, image = '/og/home.png', type = 'website', noindex = false } = Astro.props;
 
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/';
+const canonical = new URL(path, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
 const links = [
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
@@ -28,6 +35,21 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Spencer Solomon" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <meta name="theme-color" content="#fafaf9" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />

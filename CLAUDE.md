@@ -34,10 +34,12 @@ src/
     work/[slug].astro            Project page
     about.astro                  Bio, web résumé, contact
     writing/index.astro, writing/[slug].astro, rss.xml.js, 404.astro
+    og/[slug].png.ts             share images (1200x630), drawn at build time for home and each project
   styles/global.css              design tokens and base styles
 public/
   resume.pdf                     résumé with no phone number
-  og/                            share images
+  robots.txt                     points to the sitemap
+scripts/check-copy.mjs           the copy check behind npm run lint:copy
 .claude/skills/design-taste-frontend/SKILL.md   the reviewed taste-skill, copied in by hand
 ```
 
