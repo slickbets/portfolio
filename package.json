@@ -29,6 +29,7 @@
     "esbuild": true
   },
   "devDependencies": {
-    "pdfjs-dist": "^6.3.289"
+    "pdfjs-dist": "^6.3.289",
+    "wrangler": "^4.147.0"
   }
 }

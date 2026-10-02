@@ -8,7 +8,7 @@ This repo is Spencer Solomon's portfolio site. It supports his search for produc
 - Content is Markdown or MDX in Astro content collections.
 - Plain CSS with custom properties in `src/styles/global.css`. No Tailwind and no UI kit.
 - Fonts are self-hosted with `@fontsource-variable/geist` and `@fontsource-variable/geist-mono`.
-- Hosting is Cloudflare Pages, deployed from the `main` branch on GitHub. Analytics is Cloudflare Web Analytics, which sets no cookies.
+- Hosting is Cloudflare Workers with static assets (Cloudflare's current recommendation for static Astro sites), built by Workers Builds from the `main` branch on GitHub. Settings are in `wrangler.jsonc`, and the Node version is in `.node-version`. Analytics is Cloudflare Web Analytics, which sets no cookies.
 - Images go through `astro:assets` (`<Image />`) so they are resized and served as WebP.
 
 ## Commands
@@ -134,7 +134,7 @@ These apply to every word on the site, including alt text and share text.
 
 ## Deploys
 
-Pushing to `main` deploys to production through Cloudflare Pages, and every other branch gets a preview link. Spencer reviews a preview before anything merges to `main`. Never push straight to `main` unless Spencer asks you to.
+Pushing to `main` deploys to production through Cloudflare Workers Builds, and every other branch gets a preview link. Spencer reviews a preview before anything merges to `main`. Never push straight to `main` unless Spencer asks you to.
 
 ## Don't
 

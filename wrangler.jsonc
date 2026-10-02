@@ -1,0 +1,16 @@
+// Cloudflare Workers settings. The site is fully static: Cloudflare runs `npm run build`
+// and serves the dist/ folder. No server code runs.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "portfolio",
+  "compatibility_date": "2026-10-02",
+  "assets": {
+    "directory": "./dist",
+    // Missing pages get dist/404.html with a real 404 status.
+    "not_found_handling": "404-page",
+    // Pages are built as about.html, served at /about. /about/ and /about.html redirect to /about.
+    "html_handling": "drop-trailing-slash"
+  },
+  // Branches other than main get their own preview link.
+  "preview_urls": true
+}
