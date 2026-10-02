@@ -7,12 +7,8 @@ export default defineConfig({
   site: 'https://spencerwsolomon.com',
   // Pages are built as /about.html rather than /about/index.html, so every URL is written without a
   // trailing slash (/about, /work/slick-bets). That matches the site's links and canonical URLs, and
-  // Cloudflare Pages serves them without a redirect.
+  // Cloudflare serves them without a redirect.
   trailingSlash: 'never',
   build: { format: 'file' },
-  integrations: [
-    sitemap({
-      filter: (page) => !page.includes('/styleguide'),
-    }),
-  ],
+  integrations: [sitemap()],
 });
