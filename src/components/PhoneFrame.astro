@@ -33,7 +33,7 @@ const widths = [...new Set([shown, shown * 2].map((w) => Math.min(w, src.width))
     sizes={sizes}
     loading={priority ? 'eager' : 'lazy'}
     fetchpriority={priority ? 'high' : 'auto'}
-    style={`object-position: ${position}`}
+    style={`object-position: ${position}` + (whole ? `; aspect-ratio: ${src.width} / ${src.height}` : '')}
   />
 </div>
 
@@ -45,5 +45,4 @@ const widths = [...new Set([shown, shown * 2].map((w) => Math.min(w, src.width))
     box-shadow: 0 30px 60px -28px rgb(var(--shadow) / .5);
   }
   img { display: block; width: 100%; height: auto; border-radius: 27px; aspect-ratio: 9 / 17; object-fit: cover; }
-  .whole img { aspect-ratio: auto; }
 </style>

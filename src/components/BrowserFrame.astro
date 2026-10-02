@@ -33,6 +33,7 @@ const widths = [...new Set([Math.round(shown / 2), shown, shown * 2].map((w) => 
     sizes={sizes}
     loading={priority ? 'eager' : 'lazy'}
     fetchpriority={priority ? 'high' : 'auto'}
+    style={whole ? `aspect-ratio: ${src.width} / ${src.height}` : undefined}
   />
 </div>
 
@@ -47,5 +48,4 @@ const widths = [...new Set([Math.round(shown / 2), shown, shown * 2].map((w) => 
   .bar { height: 28px; background: var(--chrome); display: flex; gap: 6px; align-items: center; padding-inline: 12px; }
   .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); display: block; }
   img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
-  .whole img { aspect-ratio: auto; }
 </style>
