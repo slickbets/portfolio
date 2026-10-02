@@ -11,6 +11,8 @@
     // Pages are built as about.html, served at /about. /about/ and /about.html redirect to /about.
     "html_handling": "drop-trailing-slash"
   },
-  // Branches other than main get their own preview link.
-  "preview_urls": true
+  // Branches other than main get their own preview link. Workers Builds runs `wrangler preview`
+  // for those branches, which needs a previews block even when it's empty.
+  "preview_urls": true,
+  "previews": {}
 }
