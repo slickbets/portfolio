@@ -122,10 +122,12 @@ These apply to every word on the site, including alt text and share text.
 
 1. `npm run build` passes.
 2. `npm run check` passes.
-3. `npm run lint:copy` passes. It scans `src/` and the text of `public/resume.pdf` for:
+3. `npm run lint:copy` passes. It scans `src/` for:
    - em-dashes and en-dashes
    - anything that looks like a phone number
    - "Block", "Square", "Cash App" or "Afterpay" inside `src/content/projects/support-content-hub/`
+
+   It scans the text of `public/resume.pdf` for phone numbers only. Dashes are allowed in the PDF.
 4. Look at the changed pages at phone width (375px) and desktop width. There should be no sideways scrolling.
 
 ## Deploys

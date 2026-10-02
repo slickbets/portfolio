@@ -59,6 +59,32 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
         </nav>
       </div>
     </footer>
+
+    <script>
+      // Scroll reveal. Only frames that start below the first screen are offset, and only once
+      // this script is running, so nothing is hidden or moved if JavaScript fails.
+      if ('IntersectionObserver' in window && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+        const frames = document.querySelectorAll('main .browser, main .phone, main .diagram');
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.remove('below');
+              entry.target.addEventListener('transitionend', () => entry.target.classList.remove('reveal'), { once: true });
+              io.unobserve(entry.target);
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px' },
+        );
+        for (const el of frames) {
+          if (el.closest('.collage')) continue;
+          if (el.getBoundingClientRect().top > window.innerHeight) {
+            el.classList.add('reveal', 'below');
+            io.observe(el);
+          }
+        }
+      }
+    </script>
   </body>
 </html>
 
