@@ -1,0 +1,89 @@
+---
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Spencer Solomon builds software by directing AI, and ships it.',
+} = Astro.props;
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/work', label: 'Work' },
+  { href: '/about', label: 'About' },
+];
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fafaf9" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="wrap">
+      <header class="nav">
+        <a class="name" href="/">Spencer Solomon</a>
+        <nav aria-label="Main">
+          {links.map(({ href, label }) => (
+            <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
+          ))}
+        </nav>
+      </header>
+    </div>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>Spencer Solomon, Springfield, MO</span>
+        <nav aria-label="Contact">
+          <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+          <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+          <a href="https://github.com/slickbets">GitHub</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    height: 68px;
+    font: 500 15px/1 var(--sans);
+  }
+  .name { font-weight: 600; text-decoration: none; }
+  .nav nav { display: flex; gap: 28px; }
+  .nav nav a { text-decoration: none; color: var(--muted); }
+  .nav nav a:hover, .nav nav a[aria-current='page'] { color: var(--fg); }
+
+  footer { border-top: 1px solid var(--rule); font: 400 14px/1.5 var(--sans); color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 18px; padding-block: 24px; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+  footer .mono { font-size: 13.5px; }
+
+  @media (max-width: 767px) {
+    .nav nav { gap: 20px; }
+  }
+</style>
