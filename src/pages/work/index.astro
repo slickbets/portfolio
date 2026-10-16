@@ -19,7 +19,7 @@ const projects = (await getCollection('projects')).sort(
     <ul class="list">
       {projects.map((project) => (
         <li class="card">
-          <div class="visual"><ProjectVisual project={project} width={520} /></div>
+          <div class="visual"><ProjectVisual project={project} width={520} whole /></div>
           <div class="txt">
             <div class="meta"><StatusPill status={project.data.status} /></div>
             <h2><a href={`/work/${project.id}`}>{project.data.title}</a></h2>

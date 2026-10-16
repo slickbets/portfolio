@@ -5,6 +5,7 @@
   --tint: #f2f3f1;
   --fg: #18191b;
   --muted: #5b5f66;
+  --muted-strong: #44474d; /* small grey text, darker for contrast */
   --rule: #e4e5e2;
   --frame: #1d1f22;
   --chrome: #ececea;
