@@ -14,7 +14,7 @@ stats:
   - { value: "~1,000", label: "support agents using the knowledge base" }
   - { value: "~1,800", label: "missed article links found" }
   - { value: "10,000+", label: "support tickets analyzed" }
-  - { value: "1,000+ / 2,000+", label: "articles and macros migrated" }
+  - { value: "1,000+", label: "support articles migrated" }
 ---
 
 **Shipped.** I led the support-content migration during a leading fintech company's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.

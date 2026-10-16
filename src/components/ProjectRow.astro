@@ -4,7 +4,6 @@
 import type { CollectionEntry } from 'astro:content';
 import ProjectVisual from './ProjectVisual.astro';
 import StatusPill from './StatusPill.astro';
-import Stats from './Stats.astro';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -12,7 +11,7 @@ interface Props {
 }
 
 const { project, layout } = Astro.props;
-const { title, summary, cardSummary, status, type, year, proof, proofNote, stats } = project.data;
+const { title, summary, cardSummary, status, type, year, proof, proofNote } = project.data;
 // The card uses a shorter summary when one is set, so it doesn't repeat the proof line.
 const blurb = cardSummary ?? summary;
 const href = `/work/${project.id}`;
@@ -32,8 +31,7 @@ const href = `/work/${project.id}`;
           <a class="more" href={href}>Read the case study <span aria-hidden="true">→</span></a>
         </div>
       </div>
-      {stats && <Stats stats={stats} />}
-      <ProjectVisual project={project} width={1100} />
+      <ProjectVisual project={project} width={1100} showStats />
     </div>
   </section>
 ) : (
