@@ -38,7 +38,7 @@ const { Content } = await render(project);
       </dl>
     </header>
 
-    <ProjectVisual project={project} width={1100} whole priority />
+    <ProjectVisual project={project} width={1100} whole priority showStats />
 
     <article class="article">
       <Content />
@@ -96,6 +96,13 @@ const { Content } = await render(project);
   .cta h2 { font-size: clamp(26px, 3vw, 36px); line-height: 1.1; }
   .cta p { color: var(--muted); max-width: 52ch; }
   @media (max-width: 767px) { .end { grid-template-columns: 1fr; } }
+
+  .article :global(.callout) { margin: 14px 0; padding: clamp(18px, 3vw, 28px); border-radius: 14px; background: var(--tint); border: 1px solid var(--rule); border-left: 3px solid var(--accent); display: grid; gap: 14px; }
+  .article :global(.callout-label) { font: 500 13px/1 var(--mono); color: var(--muted-strong); }
+  .article :global(.callout-stats) { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+  .article :global(.callout-stats div) { display: grid; gap: 4px; }
+  .article :global(.callout-stats strong) { font: 600 30px/1.1 var(--sans); color: var(--accent); letter-spacing: -.02em; }
+  .article :global(.callout-stats span) { font-size: 15px; line-height: 1.45; color: var(--muted-strong); }
 
   .article { max-width: 680px; padding-block: 36px 56px; display: grid; gap: 18px; }
   .article :global(h2) { font-size: 26px; line-height: 1.2; margin-top: 22px; }

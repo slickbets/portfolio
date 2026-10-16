@@ -10,6 +10,7 @@ repo: https://github.com/slickbets/nba-betting-value
 tags: [sports, data, ai-building]
 proof: "71.5% of winners picked correctly"
 proofNote: "648 games, each prediction locked in before tip-off"
+cardSummary: "My first Claude Code project: an NBA prediction app that ran live through the 2025-26 season."
 cover: ./home-picks.png
 coverAlt: "Slick Bets daily picks table with matchups, picks, win probability and predicted spreads"
 ---
