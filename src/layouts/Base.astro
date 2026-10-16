@@ -77,9 +77,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       <div class="wrap">
         <span>Spencer Solomon, Springfield, MO</span>
         <nav aria-label="Contact">
-          <a href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+          <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
           <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
-          <a href="https://github.com/slickbets">GitHub (Slick Bets)</a>
+          <a href="https://github.com/slickbets">GitHub</a>
         </nav>
       </div>
     </footer>
@@ -132,6 +132,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   footer nav { display: flex; flex-wrap: wrap; gap: 10px 18px; }
   footer a { text-decoration: none; display: inline-block; padding-block: 4px; }
   footer a:hover { color: var(--fg); }
+  footer .mono { font-size: 13.5px; }
 
   @media (max-width: 767px) {
     .nav nav { gap: 20px; }

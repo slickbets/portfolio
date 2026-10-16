@@ -106,8 +106,7 @@ img { max-width: 100%; height: auto; }
 /* Contact email: a visible link in the main font, with a copy button beside it. */
 .email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .email {
-  font: 500 clamp(20px, 2.4vw, 26px)/1.2 var(--sans);
-  letter-spacing: -.01em;
+  font: 500 clamp(20px, 2.4vw, 26px)/1.2 var(--mono);
   color: var(--accent);
   text-decoration: underline;
   text-decoration-thickness: 2px;
