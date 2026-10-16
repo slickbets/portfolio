@@ -11,12 +11,25 @@ const featured = (await getCollection('projects', ({ data }) => data.featured !=
   (a, b) => a.data.featured! - b.data.featured!,
 );
 const layouts = ['stacked', 'tint', 'flip'] as const;
+
+// Tells search engines who this site is about, so a search for the name can show a profile.
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Spencer Solomon',
+  url: 'https://spencerwsolomon.com/',
+  jobTitle: 'Technical Program Manager',
+  email: 'mailto:spencerwsolomon@gmail.com',
+  address: { '@type': 'PostalAddress', addressLocality: 'Springfield', addressRegion: 'MO', addressCountry: 'US' },
+  sameAs: ['https://www.linkedin.com/in/spencerwsolomon/', 'https://github.com/slickbets'],
+};
 ---
 
 <Base
-  title="Spencer Solomon"
+  title="Spencer Solomon | building w/ AI tools"
   description="A technical program manager who builds working software with Claude Code and makes the product calls along the way."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
   <div class="wrap">
     <section class="hero">
       <div class="txt">
