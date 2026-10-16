@@ -13,11 +13,11 @@ const projects = (await getCollection('projects')).sort(
 );
 ---
 
-<Base title="Work | Spencer Solomon" description="Every project Spencer Solomon has built, newest first.">
+<Base title="Work | Spencer Solomon" description="Projects Spencer Solomon has built, from shipped work to personal experiments.">
   <div class="wrap page">
     <div class="intro">
       <h1>Work</h1>
-      <p>Every project I've built, newest first, from shipped work tools to personal experiments.</p>
+      <p>These are the projects I've built, from a shipped tool at work to personal experiments.</p>
     </div>
     <ul class="list">
       {projects.map((project) => (
