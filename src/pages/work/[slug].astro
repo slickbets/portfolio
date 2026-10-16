@@ -3,13 +3,19 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ProjectVisual from '../../components/ProjectVisual.astro';
 import StatusPill from '../../components/StatusPill.astro';
+import EmailCopy from '../../components/EmailCopy.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
-  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+  // Same order as the homepage, so "Next project" walks through the work and loops back.
+  const ordered = projects.sort((a, b) => (a.data.featured ?? Infinity) - (b.data.featured ?? Infinity) || a.data.title.localeCompare(b.data.title));
+  return ordered.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, next: ordered[(i + 1) % ordered.length] },
+  }));
 }
 
-const { project } = Astro.props;
+const { project, next } = Astro.props;
 const { title, summary, status, type, year, stack, repo, demo } = project.data;
 const { Content } = await render(project);
 ---
@@ -37,6 +43,24 @@ const { Content } = await render(project);
     <article class="article">
       <Content />
     </article>
+
+    <section class="end">
+      {next.id !== project.id && (
+        <a class="next" href={`/work/${next.id}`}>
+          <span class="next-label">Next project →</span>
+          <span class="next-title">{next.data.title}</span>
+        </a>
+      )}
+      <div class="cta">
+        <h2>Get in touch</h2>
+        <p>If you're hiring for a product, program or builder role, email is the best way to reach me.</p>
+        <EmailCopy />
+        <div class="btns">
+          <a class="btn primary" href="/resume.pdf">Résumé (PDF)</a>
+          <a class="btn" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+        </div>
+      </div>
+    </section>
   </div>
 </Base>
 
@@ -63,6 +87,16 @@ const { Content } = await render(project);
   .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
   .chips li { font: 400 12.5px/1 var(--mono); padding: 6px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); }
 
+  .end { border-top: 1px solid var(--rule); padding-block: clamp(36px, 6vw, 64px) clamp(56px, 8vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
+  .next { display: grid; gap: 10px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 14px; text-decoration: none; background: var(--tint); }
+  .next:hover { border-color: var(--accent); }
+  .next-label { font: 500 15px/1 var(--sans); color: var(--accent); }
+  .next-title { font: 600 clamp(20px, 2.2vw, 26px)/1.2 var(--sans); letter-spacing: -.02em; }
+  .cta { display: grid; gap: 16px; justify-items: start; }
+  .cta h2 { font-size: clamp(26px, 3vw, 36px); line-height: 1.1; }
+  .cta p { color: var(--muted); max-width: 52ch; }
+  @media (max-width: 767px) { .end { grid-template-columns: 1fr; } }
+
   .article :global(.callout) { margin: 14px 0; padding: clamp(18px, 3vw, 28px); border-radius: 14px; background: var(--tint); border: 1px solid var(--rule); border-left: 3px solid var(--accent); display: grid; gap: 14px; }
   .article :global(.callout-label) { font: 500 13px/1 var(--mono); color: var(--muted-strong); }
   .article :global(.callout-stats) { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
@@ -70,7 +104,7 @@ const { Content } = await render(project);
   .article :global(.callout-stats strong) { font: 600 30px/1.1 var(--sans); color: var(--accent); letter-spacing: -.02em; }
   .article :global(.callout-stats span) { font-size: 15px; line-height: 1.45; color: var(--muted-strong); }
 
-  .article { max-width: 680px; padding-block: 36px 88px; display: grid; gap: 18px; }
+  .article { max-width: 680px; padding-block: 36px 56px; display: grid; gap: 18px; }
   .article :global(h2) { font-size: 26px; line-height: 1.2; margin-top: 22px; }
   .article :global(p), .article :global(ul) { margin: 0; }
   .article :global(ul) { padding-left: 22px; display: grid; gap: 10px; }

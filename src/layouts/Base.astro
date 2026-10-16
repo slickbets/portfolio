@@ -24,6 +24,7 @@ const imageUrl = new URL(image, Astro.site).href;
 const links = [
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
+  { href: '/#contact', label: 'Contact' },
 ];
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
 ---

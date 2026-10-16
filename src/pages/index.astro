@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import BrowserFrame from '../components/BrowserFrame.astro';
 import PhoneFrame from '../components/PhoneFrame.astro';
+import EmailCopy from '../components/EmailCopy.astro';
 import ProjectRow from '../components/ProjectRow.astro';
 import tvBoard from '../content/projects/auction-draft/tv-board.png';
 import managerPhone from '../content/projects/auction-draft/manager-phone.png';
@@ -37,7 +38,7 @@ const person = {
         <p style="--i: 1">A technical program manager who builds working software with Claude Code and makes the product calls along the way.</p>
         <div class="btns" style="--i: 2">
           <a class="btn primary" href="/work">See my work</a>
-          <a class="btn" href="/about#resume">Résumé</a>
+          <a class="btn" href="/resume.pdf">Résumé</a>
         </div>
       </div>
       <div class="collage" aria-hidden="true">
@@ -49,15 +50,15 @@ const person = {
 
   {featured.map((project, i) => <ProjectRow project={project} layout={layouts[i % layouts.length]} />)}
 
-  <section class="contact">
+  <section class="contact" id="contact">
     <div class="wrap">
       <h2>Hiring for a product, program or builder role?</h2>
       <p>I'm looking for work where I can figure out the right thing to build and then build it, especially in internal tools, customer-facing products, sports tech and weather. Email is the best way to reach me.</p>
-      <a class="email" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+      <EmailCopy />
       <div class="btns">
+        <a class="btn primary" href="/resume.pdf">Résumé (PDF)</a>
         <a class="btn" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
         <a class="btn" href="https://github.com/slickbets">GitHub</a>
-        <a class="btn" href="/about#resume">Résumé</a>
       </div>
     </div>
   </section>
@@ -84,13 +85,6 @@ const person = {
   .contact .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap: 18px; justify-items: start; }
   .contact h2 { font-size: clamp(30px, 3.8vw, 46px); line-height: 1.08; max-width: 18ch; }
   .contact p { color: var(--muted); max-width: 56ch; }
-  .email {
-    font: 500 clamp(20px, 2.4vw, 26px)/1.2 var(--mono);
-    color: var(--fg);
-    text-decoration: none;
-    word-break: break-word;
-    padding-block: 4px;
-  }
 
   @media (max-width: 767px) {
     .hero { grid-template-columns: 1fr; padding-top: 24px; }
