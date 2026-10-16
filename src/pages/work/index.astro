@@ -13,9 +13,12 @@ const projects = (await getCollection('projects')).sort(
 );
 ---
 
-<Base title="Work | Spencer Solomon" description="Every project Spencer Solomon has built, newest first.">
+<Base title="Work | Spencer Solomon" description="Projects Spencer Solomon has built, from shipped work to personal experiments.">
   <div class="wrap page">
-    <h1>Work</h1>
+    <div class="intro">
+      <h1>Work</h1>
+      <p>These are the projects I've built, from a shipped tool at work to personal experiments.</p>
+    </div>
     <ul class="list">
       {projects.map((project) => (
         <li class="card">
@@ -33,6 +36,8 @@ const projects = (await getCollection('projects')).sort(
 
 <style>
   .page { padding-block: clamp(36px, 6vw, 72px) clamp(56px, 8vw, 104px); display: grid; gap: clamp(28px, 4vw, 44px); }
+  .intro { display: grid; gap: 12px; }
+  .intro p { color: var(--muted); font-size: clamp(17px, 1.6vw, 19px); max-width: 60ch; }
   h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
 
   .list { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(20px, 3vw, 32px); }
