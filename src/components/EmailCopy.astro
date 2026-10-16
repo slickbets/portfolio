@@ -1,0 +1,23 @@
+---
+// The contact email as a visible link, with a button that copies it.
+const email = 'spencerwsolomon@gmail.com';
+---
+
+<div class="email-row">
+  <a class="email" href={`mailto:${email}`}>{email}</a>
+  <button class="copy" type="button" data-copy={email}>Copy email</button>
+</div>
+
+<script>
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('button[data-copy]')) {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+        btn.textContent = 'Copied';
+      } catch {
+        btn.textContent = 'Press Ctrl+C to copy';
+      }
+      setTimeout(() => (btn.textContent = 'Copy email'), 2000);
+    });
+  }
+</script>
