@@ -9,6 +9,12 @@ featured: 1
 tags: [internal-tools, ai-building, product]
 proof: "Launched to about 1,000 support agents"
 proofNote: "An agent knowledge base that went from my side prototype to production"
+cardSummary: "I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and the agent knowledge base."
+stats:
+  - { value: "~1,000", label: "support agents using the knowledge base" }
+  - { value: "~1,800", label: "missed article links found" }
+  - { value: "10,000+", label: "support tickets analyzed" }
+  - { value: "1,000+ / 2,000+", label: "articles and macros migrated" }
 ---
 
 **Shipped.** I led the support-content migration during a leading fintech company's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.
@@ -28,6 +34,14 @@ The usual tools ran out quickly, so I built what was missing.
 - **An agent knowledge base.** Agents needed somewhere to find articles after the move. I built a prototype on Contentful, a content platform. Product leadership approved it, and it went into the production app with versions for two brands. It launched to about 1,000 support agents at one brand. The second brand's version was built and planned to go live, but hadn't launched yet.
 - **A matching engine for articles and macros.** To migrate safely, we had to know which macros pointed to which support articles. The existing mapping looked complete, but it wasn't. I built a matcher that compared every article with every macro in several passes, from exact title matches to fuzzy ones. It found about 1,800 links the original mapping had missed, which was over 40% of the total. That changed which macros we treated as documented, and it changed the migration scope.
 - **A usage analysis for macros.** The help desk's built-in reports couldn't tell us which macros agents actually used. So I sampled more than 10,000 support tickets and pulled every macro use out of them. That showed which macros to migrate, which to rewrite, and which to retire. It also settled a debate about how far back we needed to look before archiving one.
+
+<aside class="callout">
+  <p class="callout-label">What the tools found</p>
+  <div class="callout-stats">
+    <div><strong>~1,800</strong><span>article-to-macro links the original mapping had missed, over 40% of the total</span></div>
+    <div><strong>10,000+</strong><span>support tickets sampled to see which macros agents actually used</span></div>
+  </div>
+</aside>
 
 ## How I built it
 

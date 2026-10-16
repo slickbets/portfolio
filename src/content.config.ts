@@ -21,6 +21,8 @@ const projects = defineCollection({
       coverAlt: z.string().optional(),
       proof: z.string(),
       proofNote: z.string(),
+      cardSummary: z.string().optional(),
+      stats: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
       repo: z.url().optional(),
       demo: z.url().optional(),
     })

@@ -2,6 +2,15 @@
 // The support-content migration, drawn as a diagram because the work was confidential.
 // The wide layout matches docs/reference/workbench.html. When the diagram itself is narrow
 // (phones, Work page cards), it switches to a stacked layout so the labels stay readable.
+import Stats from './Stats.astro';
+
+interface Props {
+  /** Show the stat row under the diagram. */
+  stats?: { value: string; label: string }[];
+  /** Replace or hide the "confidential" caption (the homepage hero uses its own). */
+  caption?: string | false;
+}
+const { stats, caption = "This was confidential internal work, so it's shown as a diagram instead of screenshots." } = Astro.props;
 const label =
   'How the migration worked: content in the old help desk went through tools Spencer built, then into the new platforms and an agent knowledge base used by about 1,000 agents.';
 ---
@@ -39,7 +48,8 @@ const label =
     <path d="M160 72V112M120 180L79 226M200 180L241 226" stroke="var(--muted)" stroke-width="1.5" fill="none" />
   </svg>
 
-  <figcaption>This was confidential internal work, so it's shown as a diagram instead of screenshots.</figcaption>
+  {stats && <div class="stat-row"><Stats stats={stats} compact /></div>}
+  {caption && <figcaption>{caption}</figcaption>}
 </figure>
 
 <style>
@@ -56,6 +66,7 @@ const label =
   .tall { display: none; max-width: 380px; margin-inline: auto; }
   text { font-family: var(--sans); font-size: 15px; }
   text.sub { font-size: 13px; }
+  .stat-row { margin-top: clamp(16px, 3vw, 28px); }
   figcaption { font: 400 14px/1.4 var(--mono); color: var(--muted); margin-top: 14px; }
 
   @container (max-width: 560px) {

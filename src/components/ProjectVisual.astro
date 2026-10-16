@@ -12,9 +12,11 @@ interface Props {
   /** Show the whole screenshot instead of the 16:10 crop. */
   whole?: boolean;
   priority?: boolean;
+  /** Show the project's stat row inside its diagram. */
+  showStats?: boolean;
 }
 
-const { project, width, whole = false, priority = false } = Astro.props;
+const { project, width, whole = false, priority = false, showStats = false } = Astro.props;
 const { cover, coverAlt, title } = project.data;
 
 const diagrams = new Set(['support-content-hub']);
@@ -26,5 +28,5 @@ if (!cover && !diagrams.has(project.id)) {
 {cover ? (
   <BrowserFrame src={cover} alt={coverAlt ?? title} width={width} whole={whole} priority={priority} />
 ) : (
-  <Diagram />
+  <Diagram stats={showStats ? project.data.stats : undefined} />
 )}

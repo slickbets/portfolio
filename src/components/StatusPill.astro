@@ -5,9 +5,17 @@ interface Props {
 }
 
 const { status } = Astro.props;
+// Display labels only. The content field keeps the plain status value.
+const labels: Record<Props['status'], string> = {
+  Live: 'Live',
+  Shipped: 'Shipped',
+  Prototype: 'Working prototype',
+  Concept: 'Concept',
+  Retired: 'Ran live for a season',
+};
 ---
 
-<span class="pill">{status}</span>
+<span class="pill">{labels[status]}</span>
 
 <style>
   .pill {

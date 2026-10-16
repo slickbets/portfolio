@@ -1,15 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import BrowserFrame from '../components/BrowserFrame.astro';
-import PhoneFrame from '../components/PhoneFrame.astro';
+import Diagram from '../components/Diagram.astro';
 import ProjectRow from '../components/ProjectRow.astro';
-import tvBoard from '../content/projects/auction-draft/tv-board.png';
-import managerPhone from '../content/projects/auction-draft/manager-phone.png';
 
 const featured = (await getCollection('projects', ({ data }) => data.featured !== undefined)).sort(
   (a, b) => a.data.featured! - b.data.featured!,
 );
+const hub = featured.find((p) => p.id === 'support-content-hub');
 const layouts = ['stacked', 'tint', 'flip'] as const;
 
 // Tells search engines who this site is about, so a search for the name can show a profile.
@@ -40,10 +38,10 @@ const person = {
           <a class="btn" href="/about#resume">Résumé</a>
         </div>
       </div>
-      <div class="collage" aria-hidden="true">
-        <BrowserFrame src={tvBoard} alt="" width={560} priority />
-        <PhoneFrame src={managerPhone} alt="" whole width={170} priority />
-      </div>
+      <a class="hero-visual" href="/work/support-content-hub" aria-label="Read the case study: moving a fintech's support content off Zendesk">
+        <span class="hero-tag"><span class="dot" aria-hidden="true"></span>Shipped: an agent knowledge base in production</span>
+        <Diagram stats={hub?.data.stats} caption="Confidential work for a leading fintech, shown as a diagram." />
+      </a>
     </section>
   </div>
 
@@ -76,9 +74,15 @@ const person = {
   h1 em { font-style: normal; color: var(--accent); }
   .txt p { color: var(--muted); font-size: clamp(18px, 1.6vw, 20px); max-width: 40ch; }
 
-  /* The phone overlaps the bottom right corner of the browser frame. */
-  .collage { position: relative; padding-bottom: 14%; padding-right: 10%; }
-  .collage :global(.phone) { position: absolute; right: 0; bottom: 0; width: 30%; }
+  /* Hero visual: the shipped Zendesk work, with its stat row. */
+  .hero-visual { display: grid; gap: 12px; text-decoration: none; color: inherit; min-width: 0; }
+  .hero-visual :global(.diagram) { box-shadow: 0 30px 60px -32px rgb(var(--shadow) / .35); background: var(--bg); }
+  .hero-visual:hover :global(.diagram) { border-color: var(--accent); }
+  .hero-tag { justify-self: start; display: inline-flex; gap: 8px; align-items: center; font: 500 13px/1 var(--mono); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--rule); background: var(--bg); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-visual { animation: rise 1s var(--ease) .15s both; }
+  }
 
   .contact { border-top: 1px solid var(--rule); }
   .contact .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap: 18px; justify-items: start; }
