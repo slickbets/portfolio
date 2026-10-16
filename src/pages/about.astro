@@ -1,12 +1,97 @@
 ---
 // Words from docs/core-copy.md (approved 2026-10-02). Date ranges use "to" per the copy rules.
 import Base from '../layouts/Base.astro';
+
+// Tells search engines who this page is about. Facts only from this site.
+const profile = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "https://spencerwsolomon.com/about",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Spencer Solomon",
+    "url": "https://spencerwsolomon.com/",
+    "jobTitle": "Staff Technical Project Manager",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "SentinelOne"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Springfield",
+      "addressRegion": "MO",
+      "addressCountry": "US"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/spencerwsolomon/",
+      "https://github.com/slickbets"
+    ],
+    "hasCredential": {
+      "@type": "EducationalOccupationalCredential",
+      "name": "Project Management Professional (PMP)",
+      "credentialCategory": "certification",
+      "dateCreated": "2023"
+    },
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "Ozarks Technical Community College"
+      },
+      {
+        "@type": "OrganizationRole",
+        "alumniOf": {
+          "@type": "Organization",
+          "name": "Block"
+        },
+        "roleName": "Senior Technical Project Manager",
+        "startDate": "2024",
+        "endDate": "2026"
+      },
+      {
+        "@type": "OrganizationRole",
+        "alumniOf": {
+          "@type": "Organization",
+          "name": "Jack Henry & Associates"
+        },
+        "roleName": "Advisory Technical Project Manager",
+        "startDate": "2021",
+        "endDate": "2024"
+      },
+      {
+        "@type": "OrganizationRole",
+        "alumniOf": {
+          "@type": "Organization",
+          "name": "Pondurance"
+        },
+        "roleName": "Lead Project Manager, Implementations",
+        "startDate": "2020",
+        "endDate": "2021"
+      },
+      {
+        "@type": "OrganizationRole",
+        "alumniOf": {
+          "@type": "Organization",
+          "name": "Jack Henry & Associates"
+        },
+        "roleName": "Technical Project Manager",
+        "startDate": "2017",
+        "endDate": "2020"
+      }
+    ],
+    "knowsAbout": [
+      "Claude Code",
+      "Technical program management",
+      "AI-assisted product building"
+    ]
+  }
+};
 ---
 
 <Base
   title="About | Spencer Solomon"
   description="Spencer Solomon's background, web résumé and contact details."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(profile)} />
   <div class="wrap">
   <div class="page">
     <section class="bio">
@@ -23,57 +108,16 @@ import Base from '../layouts/Base.astro';
     </section>
 
     <section id="resume" class="resume">
-      <h2>Résumé</h2>
-      <p class="lead"><strong>Spencer Solomon</strong>: Technical Program Manager, internal tools and building with Claude. Springfield, MO. PMP.</p>
-
-      <div class="job">
-        <h3>SentinelOne</h3>
-        <p class="role">Staff Technical Project Manager, Professional Services</p>
-        <p class="dates">May 2026 to present</p>
-        <ul>
-          <li>I lead enterprise deployments of SentinelOne's AI-powered SIEM platform for large customers and reseller partners, running four implementations at once from kickoff to go-live.</li>
-        </ul>
-      </div>
-
-      <div class="job">
-        <h3>Block (Square, Cash App, Afterpay)</h3>
-        <p class="role">Senior Technical Project Manager, Customer Operations Technology Enablement</p>
-        <p class="dates">Jul 2024 to May 2026</p>
-        <ul>
-          <li>Built an agent knowledge base with Claude Code, from side prototype to production approval. I wrote the web front end and the API-based migration of support articles from Zendesk into Contentful, and designed its role-based access. It launched to a leading fintech's ~1,000 support agents. (<a href="/work/support-content-hub">Case study</a>)</li>
-          <li>Led an AI enablement program for Customer Operations leads. It included AI tool training and a weekly leadership briefing, built with a Knowledge Management colleague: about 100 leads submit updates, and a scheduled Claude task compiles them into a summary for senior leadership.</li>
-          <li>Led the migration of a leading fintech's full support-content library (1,000+ articles, 2,000+ macros, 5 regions) off Zendesk ahead of a hard contract deadline. I kept 20+ stakeholders aligned through a mid-program reorg and wrote the requirements and the launch plan.</li>
-        </ul>
-      </div>
-
-      <div class="job">
-        <h3>Jack Henry &amp; Associates</h3>
-        <p class="role">Advisory Technical Project Manager (promoted from Senior, 2022)</p>
-        <p class="dates">Oct 2021 to Jul 2024</p>
-        <ul>
-          <li>Led 15+ data center migrations, moving bank and credit union infrastructure into Jack Henry's private cloud.</li>
-          <li>Delivered network and security implementations for financial institution clients.</li>
-        </ul>
-      </div>
-
-      <div class="job">
-        <h3>Pondurance</h3>
-        <p class="role">Lead Project Manager, Implementations</p>
-        <p class="dates">Jan 2020 to Oct 2021</p>
-        <ul>
-          <li>Built the implementation PMO for the managed services division from the ground up, and ran 20+ concurrent customer deployments.</li>
-          <li>As PM for the software engineering team, worked with Product on backlog priorities and ran customer testing of new features.</li>
-        </ul>
-      </div>
-
-      <div class="job">
-        <h3>Jack Henry &amp; Associates</h3>
-        <p class="role">Technical Project Manager; earlier Technical Pre-Sales</p>
-        <p class="dates">Jan 2017 to Jan 2020</p>
-      </div>
-
-      <p><strong>Certifications and education:</strong> PMP (2023). Associate of Arts, Ozarks Technical Community College.</p>
-      <a class="more" href="/resume.pdf">Download the full résumé (PDF)</a>
+      <h2>Experience</h2>
+      <ul class="roles">
+        <li><strong>SentinelOne:</strong> Staff Technical Project Manager, 2026 to now</li>
+        <li><strong>Block (Square, Cash App, Afterpay):</strong> Senior Technical Project Manager, 2024 to 2026</li>
+        <li><strong>Jack Henry &amp; Associates:</strong> Advisory Technical Project Manager, 2021 to 2024</li>
+        <li><strong>Pondurance:</strong> Lead Project Manager, Implementations, 2020 to 2021</li>
+        <li><strong>Jack Henry &amp; Associates:</strong> Technical Project Manager, 2017 to 2020</li>
+      </ul>
+      <p>PMP certified (2023).</p>
+      <a class="btn primary" href="/resume.pdf">Download my full résumé (PDF)</a>
     </section>
 
     <section id="contact" class="contact">
@@ -92,18 +136,12 @@ import Base from '../layouts/Base.astro';
   .resume, .contact { border-top: 1px solid var(--rule); padding-top: clamp(28px, 4vw, 40px); }
   h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
   h2 { font-size: clamp(26px, 3vw, 36px); line-height: 1.1; }
-  h3 { font-size: 19px; letter-spacing: -.01em; }
   ul { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
   li::marker { color: var(--accent); }
-  section a:not(.more) { color: var(--accent); }
+  section a:not(.more):not(.btn) { color: var(--accent); }
   strong { font-weight: 600; }
 
-  .lead { font-size: clamp(18px, 1.8vw, 21px); color: var(--muted); }
-  .lead strong { color: var(--fg); }
-  .job { display: grid; gap: 4px; padding-top: 8px; }
-  .role { font-weight: 500; }
-  .dates { font: 500 14px/1.5 var(--sans); color: var(--muted); margin-bottom: 6px; }
-  .job ul { margin-top: 4px; }
+  .resume .btn { justify-self: start; }
   .mono { font-size: .94em; }
   .email-link { text-decoration: underline; text-underline-offset: 3px; }
 </style>
