@@ -47,7 +47,7 @@ const href = `/work/${project.id}`;
         <a class="more" href={href}>Read the case study <span aria-hidden="true">→</span></a>
       </div>
       <div class="visual">
-        <ProjectVisual project={project} width={600} />
+        <ProjectVisual project={project} width={600} whole />
       </div>
     </div>
   </section>
@@ -59,10 +59,10 @@ const href = `/work/${project.id}`;
   .body { color: var(--muted); max-width: 56ch; }
   /* Lighter than the title: medium weight, smaller, with a navy rule so it reads as evidence. */
   .proof { font: 500 18px/1.35 var(--sans); padding-left: 14px; border-left: 2px solid var(--accent); }
-  .proof small { display: block; font: 400 15px/1.4 var(--sans); color: var(--muted); letter-spacing: 0; margin-top: 2px; }
+  .proof small { display: block; font: 400 14px/1.45 var(--sans); color: var(--muted-strong); letter-spacing: 0; margin-top: 2px; }
 
   .stacked .wrap { padding-block: clamp(48px, 7vw, 96px); display: grid; gap: clamp(24px, 4vw, 40px); }
-  .stacked .top { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); align-items: end; }
+  .stacked .top { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); align-items: start; }
   .left, .right { display: grid; gap: 14px; }
 
   .split .wrap {
