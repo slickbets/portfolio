@@ -17,9 +17,12 @@ const layouts = ['stacked', 'tint', 'flip'] as const;
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  // Same @id as the Person on /about, so search engines treat both blocks as one person.
+  '@id': 'https://spencerwsolomon.com/#person',
   name: 'Spencer Solomon',
   url: 'https://spencerwsolomon.com/',
-  jobTitle: 'Technical Program Manager',
+  jobTitle: 'Staff Technical Project Manager',
+  worksFor: { '@type': 'Organization', name: 'SentinelOne' },
   email: 'mailto:spencerwsolomon@gmail.com',
   address: { '@type': 'PostalAddress', addressLocality: 'Springfield', addressRegion: 'MO', addressCountry: 'US' },
   sameAs: ['https://www.linkedin.com/in/spencerwsolomon/', 'https://github.com/slickbets'],
