@@ -1,7 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Spencer Solomon">
   <rect width="32" height="32" fill="#fafaf9"/>
-  <path fill="none" stroke="#2148b8" stroke-width="6.8" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4"
-    d="M 24.6 6.1 H 12.4 A 4.9 4.9 0 0 0 12.4 15.9 L 16.0 18.3"/>
-  <path fill="none" stroke="#2148b8" stroke-width="6.8" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4"
-    d="M 16.0 13.7 L 19.6 16.1 A 4.9 4.9 0 0 1 19.6 25.9 H 7.4"/>
+  <path fill="none" stroke="#2148b8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
+    d="M 24.5 5.5
+       H 10.5
+       A 4.5 4.5 0 0 0 10.5 14.5
+       L 21.5 19.5
+       A 4.5 4.5 0 0 1 21.5 28.5
+       H 7.5"/>
 </svg>
