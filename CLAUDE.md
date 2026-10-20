@@ -25,7 +25,7 @@ src/
     projects/<slug>/index.md     one case study per folder, with its images beside it
     writing/<slug>.md            posts (the Writing menu link appears only once one exists)
   content.config.ts              schemas for both collections
-  components/                    Nav, Footer, ProjectRow, BrowserFrame, PhoneFrame, StatusPill, Diagram
+  components/                    ProjectWheel, BrowserFrame, PhoneFrame, StatusPill, Diagram, Stats, EmailCopy
   layouts/Base.astro             head tags, fonts, nav, footer
   pages/
     index.astro                  Home
@@ -34,7 +34,10 @@ src/
     about.astro                  Bio, web résumé, contact
     writing/index.astro, writing/[slug].astro, rss.xml.js, 404.astro
     og/[slug].png.ts             share images (1200x630), drawn at build time for home and each project
-  styles/global.css              design tokens and base styles
+  styles/global.css              design tokens and base styles (Midnight Garden)
+  styles/home.css                homepage hero, stack strip, project wheel, contact card
+  lib/themes.ts                  per-project color presets
+  scripts/wheel.js               headline load-in, wheel and page color blending
 public/
   resume.pdf                     résumé with no phone number
   robots.txt                     points to the sitemap
@@ -58,6 +61,7 @@ cover: ./cover.png             # optional; Work projects may use a diagram compo
 coverAlt: "What the screenshot shows"   # required whenever cover is set
 proof: "71.5% of winners picked correctly"   # the one proof line on the homepage row
 proofNote: "648 games, each prediction locked in before tip-off"
+theme: { accent: "#8CC5A8", bg: "#0F2A2B", bg2: "#173B3A", glow: "#1E7A6E" }   # optional; colors for the card and page, otherwise a preset from src/lib/themes.ts
 repo: https://...              # optional
 demo: https://...              # optional
 ```
@@ -80,7 +84,7 @@ Nothing else should need to change. If adding a project requires editing a page 
 
 ## Design direction
 
-The visual design is an open experiment, and Spencer has removed the earlier design restrictions (the "Workbench" spec, light-only, the navy accent, Geist-only type, pill and frame shapes, and the restrained-motion rule). Treat `docs/design-spec.md` and `docs/reference/workbench.html` as history, not rules.
+The live design is "Midnight Garden" (deep green and navy, warm paper text, one soft accent per project, Big Shoulders Display, Instrument Serif and Sans, Geist Mono), planned in `docs/garden-redesign-plan.md`. It came out of an open experiment, and Spencer has removed the earlier design restrictions (the "Workbench" spec, light-only, the navy accent, Geist-only type, pill and frame shapes, and the restrained-motion rule). Treat `docs/design-spec.md` and `docs/reference/workbench.html` as history, not rules.
 
 - Spencer's own reactions are the bar. He will say what he likes and what he hates, and that overrides any default taste.
 - Colors, type, layout, motion, dark or light, and styling tools are all open. Add fonts or packages when the design needs them.

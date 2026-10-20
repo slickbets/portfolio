@@ -1,7 +1,10 @@
 ---
-import '@fontsource-variable/geist';
+import '@fontsource-variable/big-shoulders-display';
+import '@fontsource-variable/instrument-sans';
+import '@fontsource/instrument-serif/latin-400-italic.css';
 import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
+import { baseTheme, themeStyle, type Theme } from '../lib/themes';
 
 interface Props {
   /** The browser tab and share title. */
@@ -14,9 +17,11 @@ interface Props {
   type?: 'website' | 'article';
   /** Keep the page out of search results (the 404 page). */
   noindex?: boolean;
+  /** Colors for this page. Project pages pass their project's theme; everything else uses the first preset. */
+  theme?: Theme;
 }
 
-const { title, description, image = '/og/home.png', type = 'website', noindex = false } = Astro.props;
+const { title, description, image = '/og/home.png', type = 'website', noindex = false, theme = baseTheme } = Astro.props;
 
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/';
 const canonical = new URL(path, Astro.site).href;
@@ -24,13 +29,13 @@ const imageUrl = new URL(image, Astro.site).href;
 const links = [
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/#contact', label: 'Contact', hideOnPhone: true },
 ];
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style={themeStyle(theme)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -51,90 +56,114 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <meta name="theme-color" content="#fafaf9" />
+    <meta name="theme-color" content={theme.bg} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="icon" href="/favicon.ico" />
     <slot name="head" />
   </head>
   <body>
+    <div class="aura" aria-hidden="true"></div>
     <a class="skip" href="#main">Skip to content</a>
-    <div class="wrap">
-      <header class="nav">
-        <a class="name" href="/">Spencer Solomon</a>
-        <nav aria-label="Main">
-          {links.map(({ href, label }) => (
-            <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
-          ))}
-        </nav>
-      </header>
-    </div>
+    <header class="wrap top">
+      <a class="mark" href="/" aria-label="Spencer Solomon, home">
+        <span class="mark-badge" aria-hidden="true">S</span>
+        <span class="mark-name">Spencer Solomon</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        {links.map(({ href, label, hideOnPhone }) => (
+          <a href={href} class={hideOnPhone ? 'hide-sm' : undefined} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
+        ))}
+        <a class="cv" href="/resume.pdf">Résumé</a>
+      </nav>
+    </header>
 
     <main id="main">
       <slot />
     </main>
 
-    <footer>
-      <div class="wrap">
-        <span>Spencer Solomon, Springfield, MO</span>
-        <nav aria-label="Contact">
-          <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
-          <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
-          <a href="https://github.com/slickbets">GitHub</a>
-        </nav>
-      </div>
+    <footer class="wrap foot">
+      <span>Spencer Solomon, Springfield, MO</span>
+      <nav aria-label="Contact">
+        <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+        <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+        <a href="https://github.com/slickbets">GitHub</a>
+      </nav>
     </footer>
 
     <script>
-      // Scroll reveal. Only frames that start below the first screen are offset, and only once
-      // this script is running, so nothing is hidden or moved if JavaScript fails.
+      // Scroll reveal. Elements marked .rv fade up when they reach the viewport. The .js class is
+      // set in the head, so nothing is hidden if scripts fail, and motion is skipped on request.
+      const items = document.querySelectorAll('.rv');
       if ('IntersectionObserver' in window && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-        const frames = document.querySelectorAll('main .browser, main .phone, main .diagram');
+        const groups = new Map<Element, number>();
         const io = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
               if (!entry.isIntersecting) continue;
-              entry.target.classList.remove('below');
-              entry.target.addEventListener('transitionend', () => entry.target.classList.remove('reveal'), { once: true });
+              entry.target.classList.add('in');
               io.unobserve(entry.target);
             }
           },
-          { rootMargin: '0px 0px -10% 0px' },
+          { rootMargin: '0px 0px -12% 0px' },
         );
-        for (const el of frames) {
-          if (el.closest('.collage')) continue;
-          if (el.getBoundingClientRect().top > window.innerHeight) {
-            el.classList.add('reveal', 'below');
-            io.observe(el);
-          }
+        for (const el of items) {
+          // Siblings that reveal together get a small stagger.
+          const parent = el.parentElement!;
+          const k = groups.get(parent) ?? 0;
+          groups.set(parent, k + 1);
+          (el as HTMLElement).style.setProperty('--d', `${Math.min(k, 6) * 70}ms`);
+          io.observe(el);
         }
+      } else {
+        for (const el of items) el.classList.add('in');
       }
     </script>
   </body>
 </html>
 
 <style>
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    height: 68px;
-    font: 500 15px/1 var(--sans);
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
+  .mark { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font: 800 21px/1 var(--disp); text-transform: uppercase; letter-spacing: .03em; padding-block: 4px; }
+  .mark-badge {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    background: var(--accent);
+    color: var(--ink);
+    font: 900 23px/1 var(--disp);
+    transform: rotate(-8deg);
+    transition: transform .5s var(--ease);
   }
-  .name { font-weight: 600; text-decoration: none; padding-block: 12px; }
-  .nav nav { display: flex; gap: 28px; }
-  /* Padding makes each link at least 24px tall to tap (WCAG 2.5.8) without moving the text. */
-  .nav nav a { text-decoration: none; color: var(--muted); padding-block: 12px; }
-  .nav nav a:hover, .nav nav a[aria-current='page'] { color: var(--fg); }
+  .mark:hover .mark-badge { transform: rotate(8deg) scale(1.06); }
 
-  footer { border-top: 1px solid var(--rule); font: 400 14px/1.5 var(--sans); color: var(--muted-strong); }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding-block: 20px; }
-  footer nav { display: flex; flex-wrap: wrap; gap: 10px 18px; }
-  footer a { text-decoration: none; display: inline-block; padding-block: 4px; }
-  footer a:hover { color: var(--fg); }
-  footer .mono { font-size: 13.5px; }
+  .nav { display: flex; gap: 6px; }
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    font: 500 13.5px/1 var(--mono);
+    transition: border-color .25s, color .25s, background-color .25s;
+  }
+  .nav a:hover, .nav a[aria-current='page'] { border-color: var(--accent); color: var(--accent); }
+  .nav a.cv { background: var(--fg); color: var(--ink); border-color: var(--fg); }
+  .nav a.cv:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); }
 
-  @media (max-width: 767px) {
-    .nav nav { gap: 20px; }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; padding-block: 28px 36px; font: 500 13px/1.4 var(--mono); color: var(--faint); }
+  .foot nav { display: flex; flex-wrap: wrap; gap: 4px 22px; }
+  .foot a { display: inline-block; text-decoration: none; color: var(--muted); padding-block: 12px; }
+  .foot a:hover { color: var(--accent); }
+  .foot span { padding-block: 12px; }
+
+  @media (max-width: 520px) {
+    .nav a.hide-sm { display: none; }
+    .mark-name { display: none; }
+    .nav a { padding: 0 14px; }
   }
 </style>

@@ -38,7 +38,7 @@ const projects = (await getCollection('projects')).sort(
   .page { padding-block: clamp(36px, 6vw, 72px) clamp(56px, 8vw, 104px); display: grid; gap: clamp(28px, 4vw, 44px); }
   .intro { display: grid; gap: 12px; }
   .intro p { color: var(--muted); font-size: clamp(17px, 1.6vw, 19px); max-width: 60ch; }
-  h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
+  h1 { font: 900 clamp(64px, 9vw, 140px)/.82 var(--disp); text-transform: uppercase; letter-spacing: -.005em; }
 
   .list { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(20px, 3vw, 32px); }
   .card {
@@ -49,16 +49,17 @@ const projects = (await getCollection('projects')).sort(
     align-items: center;
     padding: clamp(16px, 3vw, 28px);
     border: 1px solid var(--rule);
-    border-radius: 14px;
-    background: var(--bg);
+    border-radius: 22px;
+    background: color-mix(in oklab, var(--bg-2) 55%, transparent);
+    transition: border-color .3s, transform .5s var(--ease);
   }
-  .card:hover { border-color: var(--muted); }
+  .card:hover { border-color: var(--accent); transform: translateY(-4px); }
   .visual { min-width: 0; }
   .txt { display: grid; gap: 14px; min-width: 0; }
-  h2 { font-size: clamp(24px, 2.6vw, 32px); line-height: 1.12; }
+  h2 { font: 800 clamp(28px, 3vw, 42px)/.98 var(--disp); text-transform: uppercase; letter-spacing: .005em; }
   h2 a { text-decoration: none; }
   /* The whole card is clickable through the title link. */
-  h2 a::after { content: ''; position: absolute; inset: 0; border-radius: 14px; }
+  h2 a::after { content: ''; position: absolute; inset: 0; border-radius: 22px; }
   .txt p { color: var(--muted); max-width: 56ch; }
 
   @media (max-width: 767px) {

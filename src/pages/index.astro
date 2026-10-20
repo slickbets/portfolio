@@ -1,17 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import BrowserFrame from '../components/BrowserFrame.astro';
-import PhoneFrame from '../components/PhoneFrame.astro';
+import ProjectWheel from '../components/ProjectWheel.astro';
 import EmailCopy from '../components/EmailCopy.astro';
-import ProjectRow from '../components/ProjectRow.astro';
-import tvBoard from '../content/projects/auction-draft/tv-board.png';
-import managerPhone from '../content/projects/auction-draft/manager-phone.png';
+import '../styles/home.css';
 
-const featured = (await getCollection('projects', ({ data }) => data.featured !== undefined)).sort(
-  (a, b) => a.data.featured! - b.data.featured!,
-);
-const layouts = ['stacked', 'tint', 'flip'] as const;
+const projects = await getCollection('projects');
+const featured = projects.filter(({ data }) => data.featured !== undefined).sort((a, b) => a.data.featured! - b.data.featured!);
+
+// The strip under the headline lists every tool in a project's stack, most-used first.
+const counts = new Map<string, number>();
+for (const { data } of projects) for (const item of data.stack) counts.set(item, (counts.get(item) ?? 0) + 1);
+const stack = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([name]) => name);
 
 // Tells search engines who this site is about, so a search for the name can show a profile.
 const person = {
@@ -34,62 +34,53 @@ const person = {
   description="Work tools and personal products I built with AI and put in front of real users."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
-  <div class="wrap">
-    <section class="hero">
-      <div class="txt">
-        <h1 style="--i: 0">Built with AI. <em>Shipped to real users.</em></h1>
-        <p style="--i: 1">Work tools and personal products I built with AI and put in front of real users.</p>
-        <div class="btns" style="--i: 2">
-          <a class="btn primary" href="/work">See my work</a>
+
+  <!-- Hero: the headline rises in letter by letter once the fonts are ready (see src/scripts/wheel.js). -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-type">
+      <h1 class="headline" id="hero-title">
+        <span class="sr-only">Built with AI. Shipped to real users.</span>
+        <span class="line l1" aria-hidden="true" data-split>Built with AI.</span>
+        <span class="line l2" aria-hidden="true" data-split>Shipped to</span>
+        <span class="line l3" aria-hidden="true"><em>real users.</em><svg class="swoosh" viewBox="0 0 400 30"><path d="M6 21 C 110 8, 250 4, 394 15" pathLength="1"></path></svg></span>
+      </h1>
+      <div class="hero-foot">
+        <p>Work tools and personal products I built with AI and put in front of real users.</p>
+        <div class="btns">
+          <a class="btn primary" href="#work">See my work <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"></path></svg></a>
           <a class="btn" href="/resume.pdf">Résumé</a>
         </div>
       </div>
-      <div class="collage" aria-hidden="true">
-        <BrowserFrame src={tvBoard} alt="" width={560} priority />
-        <PhoneFrame src={managerPhone} alt="" whole width={170} priority />
-      </div>
-    </section>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      {[0, 1].map(() => stack.map((name) => <><span>{name}</span><i></i></>))}
+    </div>
   </div>
 
-  {featured.map((project, i) => <ProjectRow project={project} layout={layouts[i % layouts.length]} />)}
+  <ProjectWheel projects={featured} />
 
-  <section class="contact" id="contact">
-    <div class="wrap">
-      <h2>Hiring for a product, program or builder role?</h2>
-      <p>I'm looking for work where I can figure out the right thing to build and then build it, especially in internal tools, customer-facing products, sports tech and weather. Email is the best way to reach me.</p>
-      <EmailCopy />
-      <div class="btns">
-        <a class="btn primary" href="/resume.pdf">Résumé (PDF)</a>
-        <a class="btn" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
-        <a class="btn" href="https://github.com/slickbets">GitHub</a>
+  <section class="contact wrap" id="contact">
+    <div class="contact-card rv">
+      <div>
+        <p class="kicker kicker-ink"><span class="kicker-dot" aria-hidden="true"></span>Contact</p>
+        <h2>Hiring for a product, program or builder role?</h2>
+        <p>I'm looking for work where I can figure out the right thing to build and then build it, especially in internal tools, customer-facing products, sports tech and weather. Email is the best way to reach me.</p>
+      </div>
+      <div class="contact-r">
+        <EmailCopy />
+        <div class="btns">
+          <a class="btn btn-ink" href="/resume.pdf">Résumé (PDF)</a>
+          <a class="btn btn-line" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+          <a class="btn btn-line" href="https://github.com/slickbets">GitHub</a>
+        </div>
       </div>
     </div>
   </section>
 </Base>
 
-<style>
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    gap: clamp(28px, 5vw, 72px);
-    align-items: center;
-    padding-block: clamp(32px, 6vw, 80px) clamp(48px, 7vw, 96px);
-  }
-  .txt { display: grid; gap: 22px; }
-  h1 { font-size: clamp(36px, 4.6vw, 58px); line-height: 1.04; }
-  h1 em { font-style: normal; color: var(--accent); }
-  .txt p { color: var(--muted); font-size: clamp(18px, 1.6vw, 20px); max-width: 40ch; }
-
-  /* The phone overlaps the bottom right corner of the browser frame. */
-  .collage { position: relative; padding-bottom: 14%; padding-right: 10%; }
-  .collage :global(.phone) { position: absolute; right: 0; bottom: 0; width: 30%; }
-
-  .contact { border-top: 1px solid var(--rule); }
-  .contact .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap: 18px; justify-items: start; }
-  .contact h2 { font-size: clamp(30px, 3.8vw, 46px); line-height: 1.08; max-width: 18ch; }
-  .contact p { color: var(--muted); max-width: 56ch; }
-
-  @media (max-width: 767px) {
-    .hero { grid-template-columns: 1fr; padding-top: 24px; }
-  }
-</style>
+<script>
+  import '../scripts/wheel.js';
+</script>

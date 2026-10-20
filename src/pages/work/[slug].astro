@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import ProjectVisual from '../../components/ProjectVisual.astro';
 import StatusPill from '../../components/StatusPill.astro';
 import EmailCopy from '../../components/EmailCopy.astro';
+import { themeAt } from '../../lib/themes';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -11,16 +12,17 @@ export async function getStaticPaths() {
   const ordered = projects.sort((a, b) => (a.data.featured ?? Infinity) - (b.data.featured ?? Infinity) || a.data.title.localeCompare(b.data.title));
   return ordered.map((project, i) => ({
     params: { slug: project.id },
-    props: { project, next: ordered[(i + 1) % ordered.length] },
+    // Each project page wears its project's colors, the same ones as its card on the homepage wheel.
+    props: { project, next: ordered[(i + 1) % ordered.length], theme: themeAt(i, project.data.theme) },
   }));
 }
 
-const { project, next } = Astro.props;
+const { project, next, theme } = Astro.props;
 const { title, summary, status, type, year, stack, repo, demo } = project.data;
 const { Content } = await render(project);
 ---
 
-<Base title={`${title} | Spencer Solomon`} description={summary} image={`/og/${project.id}.png`} type="article">
+<Base title={`${title} | Spencer Solomon`} description={summary} image={`/og/${project.id}.png`} type="article" theme={theme}>
   <div class="wrap case">
     <header class="head">
       <a class="back" href="/work">← All work</a>
@@ -66,9 +68,9 @@ const { Content } = await render(project);
 
 <style>
   .head { padding-block: clamp(36px, 6vw, 72px) 28px; display: grid; gap: 18px; max-width: 880px; }
-  .back { font: 500 15px/1 var(--sans); color: var(--muted); text-decoration: none; justify-self: start; }
-  .back:hover { color: var(--fg); }
-  h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; }
+  .back { font: 500 14px/1 var(--mono); color: var(--muted); text-decoration: none; justify-self: start; padding-block: 10px; }
+  .back:hover { color: var(--accent); }
+  h1 { font: 900 clamp(48px, 7vw, 104px)/.88 var(--disp); text-transform: uppercase; letter-spacing: -.005em; max-width: 18ch; }
   .sum { font-size: clamp(18px, 1.8vw, 21px); color: var(--muted); max-width: 60ch; }
 
   .facts {
@@ -80,7 +82,7 @@ const { Content } = await render(project);
     margin: 6px 0 0;
   }
   .facts div { display: grid; gap: 6px; align-content: start; min-width: 0; }
-  .facts dt { font: 500 13px/1 var(--sans); color: var(--muted); }
+  .facts dt { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
   .facts dd { margin: 0; font: 500 15px/1.45 var(--sans); }
   .facts a { color: var(--accent); }
 
@@ -88,12 +90,12 @@ const { Content } = await render(project);
   .chips li { font: 400 12.5px/1 var(--mono); padding: 6px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); }
 
   .end { border-top: 1px solid var(--rule); padding-block: clamp(36px, 6vw, 64px) clamp(56px, 8vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
-  .next { display: grid; gap: 10px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 14px; text-decoration: none; background: var(--tint); }
-  .next:hover { border-color: var(--accent); }
-  .next-label { font: 500 15px/1 var(--sans); color: var(--accent); }
-  .next-title { font: 600 clamp(20px, 2.2vw, 26px)/1.2 var(--sans); letter-spacing: -.02em; }
+  .next { display: grid; gap: 10px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 22px; text-decoration: none; background: var(--tint); transition: border-color .3s, transform .5s var(--ease); }
+  .next:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .next-label { font: 600 14px/1 var(--mono); color: var(--accent); }
+  .next-title { font: 800 clamp(24px, 2.6vw, 34px)/.98 var(--disp); text-transform: uppercase; }
   .cta { display: grid; gap: 16px; justify-items: start; }
-  .cta h2 { font-size: clamp(26px, 3vw, 36px); line-height: 1.1; }
+  .cta h2 { font: 800 clamp(30px, 3.4vw, 46px)/.95 var(--disp); text-transform: uppercase; }
   .cta p { color: var(--muted); max-width: 52ch; }
   @media (max-width: 767px) { .end { grid-template-columns: 1fr; } }
 
@@ -105,7 +107,7 @@ const { Content } = await render(project);
   .article :global(.callout-stats span) { font-size: 15px; line-height: 1.45; color: var(--muted-strong); }
 
   .article { max-width: 680px; padding-block: 36px 56px; display: grid; gap: 18px; }
-  .article :global(h2) { font-size: 26px; line-height: 1.2; margin-top: 22px; }
+  .article :global(h2) { font: 800 clamp(30px, 3vw, 40px)/.98 var(--disp); text-transform: uppercase; letter-spacing: .005em; margin-top: 26px; }
   .article :global(p), .article :global(ul) { margin: 0; }
   .article :global(ul) { padding-left: 22px; display: grid; gap: 10px; }
   .article :global(li::marker) { color: var(--accent); }
