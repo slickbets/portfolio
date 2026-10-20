@@ -253,3 +253,43 @@ html:not(.js) .wcard { position: relative; flex: none; width: var(--cw); height:
 
 .contact-card .btn { color: var(--ink); }
 .contact-card .btn-ink { color: var(--accent); }
+
+/* About teaser: tilted photo frames beside short chapters from the About page. */
+.about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px clamp(40px, 6vw, 110px); align-items: start; padding-top: clamp(96px, 14vh, 170px); padding-bottom: clamp(40px, 7vh, 80px); scroll-margin-top: 24px; }
+.about-l { position: sticky; top: 48px; }
+.about-title { margin-top: 20px; font: 500 clamp(36px, 4.3vw, 66px)/1.02 var(--sans); letter-spacing: -.05em; max-width: 14ch; text-wrap: balance; }
+.about-title em { font: italic 400 1.08em/1 var(--serif); letter-spacing: -.03em; color: var(--accent); }
+.about .more { margin-top: clamp(24px, 3vw, 36px); }
+.about .more svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .4s var(--ease); }
+.about .more:hover svg { transform: translateX(5px); }
+.chapters { display: grid; gap: clamp(40px, 5vw, 64px); }
+.chapter { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 3vw, 44px); align-items: center; }
+.chapter:nth-child(2) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.chapter:nth-child(2) .photo { order: 2; }
+.photo { position: relative; aspect-ratio: 4 / 5; border-radius: 20px; overflow: hidden; transform: rotate(var(--rot, 0deg)); transition: transform .7s var(--ease); box-shadow: 0 50px 90px -40px rgb(var(--shadow) / .85), inset 0 0 0 1px rgb(255 255 255 / .07); background: var(--tint); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.chapter:nth-child(1) .photo img { object-position: 52% 30%; }
+.chapter:hover .photo { transform: rotate(0deg) translateY(-6px); }
+.ch-label { display: flex; align-items: baseline; gap: 12px; font: 500 12.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+.ch-label b { font: 900 34px/.8 var(--disp); letter-spacing: 0; color: var(--accent); }
+.chapter p { margin-top: 14px; color: var(--muted); max-width: 38ch; }
+.js .chapter.rv { transform: translateY(56px); }
+.js .chapter.rv.in { transform: none; }
+@media (max-width: 999px) {
+  .about { grid-template-columns: 1fr; gap: 0; }
+  .about-l { display: contents; }
+  .about .chapters { order: 2; margin-top: 44px; }
+  .about .more { order: 3; justify-self: start; }
+}
+@media (max-width: 760px) {
+  .chapters { gap: 44px; }
+  .chapter, .chapter:nth-child(2) { grid-template-columns: 1fr; gap: 20px; }
+  .chapter .photo { width: 62%; }
+  .chapter:nth-child(2) .photo { order: 0; justify-self: end; }
+  .chapter p { margin-top: 10px; }
+  .ch-label b { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .chapter.rv { transform: none; }
+  .photo { transition: none; }
+}

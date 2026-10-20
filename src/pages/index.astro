@@ -1,8 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProjectWheel from '../components/ProjectWheel.astro';
 import EmailCopy from '../components/EmailCopy.astro';
+import me from '../assets/about/me.jpg';
+import bridge from '../assets/about/golden-gate.jpg';
+import columns from '../assets/about/athens.jpg';
 import '../styles/home.css';
 
 const projects = await getCollection('projects');
@@ -14,6 +18,13 @@ for (const { data } of projects) for (const item of data.stack) counts.set(item,
 const stack = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([name]) => name);
 
 // Tells search engines who this site is about, so a search for the name can show a profile.
+// Short chapters from the About page, each beside one of Spencer's own photos.
+const chapters = [
+  { n: '01', label: 'The day job', rot: '-2.5deg', photo: me, alt: 'Spencer Solomon in a navy cap, glasses and a red plaid jacket, standing in front of a large orange maple tree in autumn.', text: "I'm a Staff Technical Project Manager at SentinelOne, based in Springfield, Missouri. My job has always been getting complicated technical work across the finish line: migrations, rollouts and projects that touch a dozen teams." },
+  { n: '02', label: 'Early 2026', rot: '2deg', photo: bridge, alt: 'The Golden Gate Bridge seen across the water from a hillside path, under a clear blue sky.', text: 'In early 2026 that changed. With AI coding tools, mainly Claude Code, I started building the tools myself instead of only coordinating the people who build them.' },
+  { n: '03', label: 'Off the clock', rot: '-1.5deg', photo: columns, alt: 'A long row of white marble columns beside a stone walkway, under a blue sky with streaky clouds.', text: "Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and take care of our two dogs, Zoey and Traeger." },
+];
+
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -61,6 +72,25 @@ const person = {
   </div>
 
   <ProjectWheel projects={featured} />
+
+  <section class="about wrap" id="about" aria-labelledby="about-title">
+    <div class="about-l">
+      <p class="kicker rv"><span class="kicker-dot" aria-hidden="true"></span>About</p>
+      <h2 class="about-title rv" id="about-title">I'm Spencer. I&nbsp;build software by directing AI, and&nbsp;I <em>ship&nbsp;it.</em></h2>
+      <a class="more rv" href="/about">More about me <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 4l6 6-6 6"></path></svg></a>
+    </div>
+    <div class="chapters">
+      {chapters.map(({ n, label, rot, photo, alt, text }) => (
+        <figure class="chapter rv" style={`--rot:${rot}`}>
+          <div class="photo"><Image src={photo} alt={alt} widths={[360, 640]} sizes="(min-width: 1000px) 420px, 62vw" /></div>
+          <figcaption>
+            <span class="ch-label"><b>{n}</b>{label}</span>
+            <p>{text}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
 
   <section class="contact wrap" id="contact">
     <div class="contact-card rv">
