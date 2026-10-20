@@ -1,0 +1,108 @@
+---
+// The homepage project wheel: a fanned row of cards that turns when dragged, swiped or stepped with
+// the arrow keys. The script in src/scripts/wheel.js builds the 3D layout, adds a twin of each card
+// so the wheel can wrap, and blends the page colors toward the project in the middle.
+// Each card shows the project's own cover screenshot (or its diagram) on its accent color.
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import { themeAt } from '../lib/themes';
+
+interface Props {
+  /** Featured projects in homepage order. */
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+const total = projects.length;
+
+const cards = projects.map((project, i) => {
+  const { cover, coverAlt, title, summary, cardSummary, status, type, year, stack, proof, proofNote } = project.data;
+  if (!cover && project.id !== 'support-content-hub') {
+    throw new Error(`Project "${project.id}" needs a cover image to appear on the homepage wheel.`);
+  }
+  const theme = themeAt(i, project.data.theme);
+  return {
+    project, cover, coverAlt: coverAlt ?? title, title, status, type, year, proof, proofNote, theme,
+    blurb: cardSummary ?? summary,
+    tags: stack.filter((item) => item !== 'Claude Code').slice(0, 3),
+    href: `/work/${project.id}`,
+    label: `${i + 1} of ${total}`,
+  };
+});
+const first = cards[0];
+---
+
+<div class="cursor" aria-hidden="true"><span class="cursor-dot"><span class="cursor-label">Drag</span></span></div>
+
+<section class="work" id="work" aria-labelledby="work-title">
+  <div class="wrap work-head">
+    <div>
+      <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Featured work</p>
+      <h2 class="work-title" id="work-title">These are the projects I've built, from a shipped tool at work to personal experiments.</h2>
+    </div>
+    <div class="work-side">
+      <p class="score" aria-hidden="true"><span class="score-now"><span id="score-now">01</span></span><span class="score-of">/{String(total).padStart(2, '0')}</span></p>
+      <div class="ctrls">
+        <button class="arrow" type="button" data-step="-1" aria-label="Previous project"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H4M9 4l-6 6 6 6"></path></svg></button>
+        <button class="arrow" type="button" data-step="1" aria-label="Next project"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 4l6 6-6 6"></path></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Featured projects. Use the left and right arrow keys to turn the wheel.">
+    <div class="ring">
+      {cards.map((c) => (
+        <article
+          class="wcard"
+          style={`--c:${c.theme.accent}; --sheet:${c.theme.bg}; --deep:color-mix(in srgb, ${c.theme.accent} 45%, ${c.theme.bg})`}
+          data-status={c.status}
+          data-title={c.title}
+          data-href={c.href}
+          data-accent={c.theme.accent}
+          data-bg={c.theme.bg}
+          data-bg2={c.theme.bg2}
+          data-glow={c.theme.glow}
+          aria-roledescription="slide"
+          aria-label={`${c.label}: ${c.title}`}
+        >
+          <div class="cover" aria-hidden="true">
+            {c.cover ? (
+              <div class="cover-shot">
+                <Image src={c.cover} alt="" widths={[412, 824]} sizes="(max-width: 760px) 340px, 412px" loading="lazy" />
+              </div>
+            ) : (
+              <div class="cover-flow">
+                <div class="node"><b>Old help desk</b><small>1,000+ articles, 2,000+ macros</small></div>
+                <div class="node hot"><b>Tools I built</b><small>Matching and usage analysis</small></div>
+                <div class="pair">
+                  <div class="node"><b>New content platforms</b></div>
+                  <div class="node"><b>Agent knowledge base</b><small>About 1,000 agents</small></div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div class="wcard-top"><span class="wstatus"><i></i>{c.status}</span><span class="wcard-meta">{c.type}, {c.year}</span></div>
+          <div class="wcard-body">
+            <h3>{c.title}</h3>
+            <p class="sum">{c.blurb}</p>
+            <ul class="tags" aria-label="Built with">{c.tags.map((tag) => <li>{tag}</li>)}</ul>
+            <div class="wproof">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg>
+              <p><strong>{c.proof}</strong><span>{c.proofNote}</span></p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="caption">
+    <a class="pill" id="pill" href={first.href}>
+      <span class="pill-status" id="pill-status">{first.status}</span>
+      <span class="pill-title" id="pill-title">{first.title}</span>
+      <span class="pill-go" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M5 15L15 5M7 5h8v8"></path></svg></span>
+    </a>
+  </div>
+  <p class="hint" aria-hidden="true">Drag, swipe or use the arrow keys to turn the wheel.</p>
+  <p class="sr-only" aria-live="polite" id="live"></p>
+</section>

@@ -6,8 +6,7 @@ This repo is Spencer Solomon's portfolio site. It supports his search for produc
 
 - Astro, fully static output. No server code, database, login or CMS.
 - Content is Markdown or MDX in Astro content collections.
-- Plain CSS with custom properties in `src/styles/global.css`. No Tailwind and no UI kit.
-- Fonts are self-hosted with `@fontsource-variable/geist` and `@fontsource-variable/geist-mono`.
+- Styling and fonts are open (see Design direction). Use whatever serves the design.
 - Hosting is Cloudflare Workers with static assets (Cloudflare's current recommendation for static Astro sites), built by Workers Builds from the `main` branch on GitHub. Settings are in `wrangler.jsonc`, and the Node version is in `.node-version`. Analytics is Cloudflare Web Analytics, which sets no cookies.
 - Images go through `astro:assets` (`<Image />`) so they are resized and served as WebP.
 
@@ -26,7 +25,7 @@ src/
     projects/<slug>/index.md     one case study per folder, with its images beside it
     writing/<slug>.md            posts (the Writing menu link appears only once one exists)
   content.config.ts              schemas for both collections
-  components/                    Nav, Footer, ProjectRow, BrowserFrame, PhoneFrame, StatusPill, Diagram
+  components/                    ProjectWheel, BrowserFrame, PhoneFrame, StatusPill, Diagram, Stats, EmailCopy
   layouts/Base.astro             head tags, fonts, nav, footer
   pages/
     index.astro                  Home
@@ -35,12 +34,14 @@ src/
     about.astro                  Bio, web résumé, contact
     writing/index.astro, writing/[slug].astro, rss.xml.js, 404.astro
     og/[slug].png.ts             share images (1200x630), drawn at build time for home and each project
-  styles/global.css              design tokens and base styles
+  styles/global.css              design tokens and base styles (Midnight Garden)
+  styles/home.css                homepage hero, stack strip, project wheel, contact card
+  lib/themes.ts                  per-project color presets
+  scripts/wheel.js               headline load-in, wheel and page color blending
 public/
   resume.pdf                     résumé with no phone number
   robots.txt                     points to the sitemap
 scripts/check-copy.mjs           the copy check behind npm run lint:copy
-.claude/skills/design-taste-frontend/SKILL.md   the reviewed taste-skill, copied in by hand
 ```
 
 ## Content model
@@ -60,6 +61,7 @@ cover: ./cover.png             # optional; Work projects may use a diagram compo
 coverAlt: "What the screenshot shows"   # required whenever cover is set
 proof: "71.5% of winners picked correctly"   # the one proof line on the homepage row
 proofNote: "648 games, each prediction locked in before tip-off"
+theme: { accent: "#8CC5A8", bg: "#0F2A2B", bg2: "#173B3A", glow: "#1E7A6E" }   # optional; colors for the card and page, otherwise a preset from src/lib/themes.ts
 repo: https://...              # optional
 demo: https://...              # optional
 ```
@@ -80,25 +82,15 @@ Writing (`src/content/writing/<slug>.md`): `title`, `date`, `summary`, `tags`, a
 
 Nothing else should need to change. If adding a project requires editing a page or component, fix the template so the next one doesn't.
 
-## Design system
+## Design direction
 
-The approved design is "Workbench" with a navy accent. The full spec is in `docs/design-spec.md`, and `docs/reference/workbench.html` is the approved mockup. Match it.
+The live design is "Midnight Garden" (deep green and navy, warm paper text, one soft accent per project, Big Shoulders Display, Instrument Serif and Sans, Geist Mono), planned in `docs/garden-redesign-plan.md`. It came out of an open experiment, and Spencer has removed the earlier design restrictions (the "Workbench" spec, light-only, the navy accent, Geist-only type, pill and frame shapes, and the restrained-motion rule). Treat `docs/design-spec.md` and `docs/reference/workbench.html` as history, not rules.
 
-- **Light only.** There is no dark mode and no dark section with light text. This was Spencer's explicit call because dark sections look AI-generated to him.
-- **Tokens:** `--bg #fafaf9`, `--tint #f2f3f1`, `--fg #18191b`, `--muted #5b5f66`, `--rule #e4e5e2`, `--accent #2148b8` (navy, the only accent), `--accent-ink #fafaf9`, with shadows tinted from `rgb(24 40 80)`. Never use pure `#000` or `#fff`.
-- **Type:** Geist for everything, and Geist Mono only for pills, chips, the email address and captions. No serif.
-- **Shape:** 999px pills and buttons, 14px frames and cards, 34px phone frame.
-- **Screenshots** always sit in a browser frame or a phone frame. Confidential work uses a diagram instead.
-- **Motion:** use exactly the motion in the reference page (hero load-in, scroll reveal, hover states) and nothing more until Spencer asks. Keep it restrained and purposeful. Animate only `transform` and `opacity`, use IntersectionObserver for scroll reveals, and wrap all motion in `prefers-reduced-motion: no-preference`.
-
-### Using the taste-skill
-
-Use `.claude/skills/design-taste-frontend/SKILL.md` for any visual work. It was reviewed for safety on 2026-10-02 and copied in by hand. Do not install or update it with `npx skills add`, because that pulls in unreviewed changes. These project rules override the skill where they conflict:
-
-- Light only, even though the skill asks for dark mode.
-- Fonts are Geist and Geist Mono, as decided above.
-- Astro and plain CSS, not the skill's framework defaults.
-- The skill's 20- and 25-word caps apply to the hero subtext only. Body copy follows the voice rules below.
+- Spencer's own reactions are the bar. He will say what he likes and what he hates, and that overrides any default taste.
+- Colors, type, layout, motion, dark or light, and styling tools are all open. Add fonts or packages when the design needs them.
+- Keep accessibility basics (readable contrast, `prefers-reduced-motion` respected for non-essential motion) and the no-sideways-scrolling check below.
+- Do not use the design-taste-frontend skill. Spencer had it removed on 2026-10-20, and it should not be reinstalled.
+- The copy rules below still apply to every word on the site.
 
 ## Copy rules
 
