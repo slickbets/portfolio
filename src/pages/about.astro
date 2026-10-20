@@ -1,6 +1,10 @@
 ---
 // Words from docs/core-copy.md (approved 2026-10-02). Date ranges use "to" per the copy rules.
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import me from '../assets/about/me.jpg';
+import bridge from '../assets/about/golden-gate.jpg';
+import columns from '../assets/about/athens.jpg';
 
 // Tells search engines who this page is about. Facts only from this site.
 const profile = {
@@ -117,6 +121,14 @@ const roles = [
       <p>Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and take care of our two dogs, Zoey and Traeger.</p>
     </section>
 
+    <section class="photos" aria-label="Photos">
+      <Image class="ph ph-me" src={me} alt="Spencer Solomon in a navy cap, glasses and a red plaid jacket, standing in front of a large orange maple tree in autumn." widths={[640, 1000, 1640]} sizes="(min-width: 900px) 820px, 100vw" loading="eager" />
+      <div class="pair">
+        <Image class="ph" src={bridge} alt="The Golden Gate Bridge seen across the water from a hillside path, under a clear blue sky." widths={[400, 800]} sizes="(min-width: 900px) 400px, 50vw" />
+        <Image class="ph" src={columns} alt="A long row of white marble columns beside a stone walkway, under a blue sky with streaky clouds." widths={[400, 800]} sizes="(min-width: 900px) 400px, 50vw" />
+      </div>
+    </section>
+
     <section id="resume" class="resume">
       <h2>Experience</h2>
       <ul class="roles">
@@ -152,6 +164,12 @@ const roles = [
   li::marker { color: var(--accent); }
   section a:not(.more):not(.btn) { color: var(--accent); }
   strong { font-weight: 600; }
+
+  .photos { gap: clamp(10px, 1.6vw, 16px); }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: inherit; }
+  .ph { width: 100%; height: auto; border-radius: 18px; display: block; box-shadow: 0 24px 60px -28px rgb(var(--shadow) / .7); }
+  .ph-me { aspect-ratio: 3 / 2; object-fit: cover; object-position: 50% 30%; }
+  .pair .ph { aspect-ratio: 4 / 5; object-fit: cover; }
 
   /* Company on the left, role and years on the right, like a printed résumé. */
   .roles { list-style: none; padding: 0; border-top: 1px solid var(--rule); gap: 0; }
