@@ -6,8 +6,7 @@ This repo is Spencer Solomon's portfolio site. It supports his search for produc
 
 - Astro, fully static output. No server code, database, login or CMS.
 - Content is Markdown or MDX in Astro content collections.
-- Plain CSS with custom properties in `src/styles/global.css`. No Tailwind and no UI kit.
-- Fonts are self-hosted with `@fontsource-variable/geist` and `@fontsource-variable/geist-mono`.
+- Styling and fonts are open (see Design direction). Use whatever serves the design.
 - Hosting is Cloudflare Workers with static assets (Cloudflare's current recommendation for static Astro sites), built by Workers Builds from the `main` branch on GitHub. Settings are in `wrangler.jsonc`, and the Node version is in `.node-version`. Analytics is Cloudflare Web Analytics, which sets no cookies.
 - Images go through `astro:assets` (`<Image />`) so they are resized and served as WebP.
 
@@ -40,7 +39,6 @@ public/
   resume.pdf                     résumé with no phone number
   robots.txt                     points to the sitemap
 scripts/check-copy.mjs           the copy check behind npm run lint:copy
-.claude/skills/design-taste-frontend/SKILL.md   the reviewed taste-skill, copied in by hand
 ```
 
 ## Content model
@@ -80,25 +78,15 @@ Writing (`src/content/writing/<slug>.md`): `title`, `date`, `summary`, `tags`, a
 
 Nothing else should need to change. If adding a project requires editing a page or component, fix the template so the next one doesn't.
 
-## Design system
+## Design direction
 
-The approved design is "Workbench" with a navy accent. The full spec is in `docs/design-spec.md`, and `docs/reference/workbench.html` is the approved mockup. Match it.
+The visual design is an open experiment, and Spencer has removed the earlier design restrictions (the "Workbench" spec, light-only, the navy accent, Geist-only type, pill and frame shapes, and the restrained-motion rule). Treat `docs/design-spec.md` and `docs/reference/workbench.html` as history, not rules.
 
-- **Light only.** There is no dark mode and no dark section with light text. This was Spencer's explicit call because dark sections look AI-generated to him.
-- **Tokens:** `--bg #fafaf9`, `--tint #f2f3f1`, `--fg #18191b`, `--muted #5b5f66`, `--rule #e4e5e2`, `--accent #2148b8` (navy, the only accent), `--accent-ink #fafaf9`, with shadows tinted from `rgb(24 40 80)`. Never use pure `#000` or `#fff`.
-- **Type:** Geist for everything, and Geist Mono only for pills, chips, the email address and captions. No serif.
-- **Shape:** 999px pills and buttons, 14px frames and cards, 34px phone frame.
-- **Screenshots** always sit in a browser frame or a phone frame. Confidential work uses a diagram instead.
-- **Motion:** use exactly the motion in the reference page (hero load-in, scroll reveal, hover states) and nothing more until Spencer asks. Keep it restrained and purposeful. Animate only `transform` and `opacity`, use IntersectionObserver for scroll reveals, and wrap all motion in `prefers-reduced-motion: no-preference`.
-
-### Using the taste-skill
-
-Use `.claude/skills/design-taste-frontend/SKILL.md` for any visual work. It was reviewed for safety on 2026-10-02 and copied in by hand. Do not install or update it with `npx skills add`, because that pulls in unreviewed changes. These project rules override the skill where they conflict:
-
-- Light only, even though the skill asks for dark mode.
-- Fonts are Geist and Geist Mono, as decided above.
-- Astro and plain CSS, not the skill's framework defaults.
-- The skill's 20- and 25-word caps apply to the hero subtext only. Body copy follows the voice rules below.
+- Spencer's own reactions are the bar. He will say what he likes and what he hates, and that overrides any default taste.
+- Colors, type, layout, motion, dark or light, and styling tools are all open. Add fonts or packages when the design needs them.
+- Keep accessibility basics (readable contrast, `prefers-reduced-motion` respected for non-essential motion) and the no-sideways-scrolling check below.
+- Do not use the design-taste-frontend skill. Spencer had it removed on 2026-10-20, and it should not be reinstalled.
+- The copy rules below still apply to every word on the site.
 
 ## Copy rules
 
