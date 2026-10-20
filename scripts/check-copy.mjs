@@ -2,7 +2,7 @@
 // Fails, naming the file and line, on:
 //   - em-dashes or en-dashes anywhere in src/
 //   - anything that looks like a phone number in src/ or in the text of public/resume.pdf
-//   - Block, Square, Cash App or Afterpay in the support-content case study
+//   - Square, Cash App or Afterpay in the support-content case study (Block itself may be named)
 import { readFile, readdir } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
@@ -13,7 +13,7 @@ const textTypes = new Set(['.astro', '.md', '.mdx', '.ts', '.js', '.mjs', '.css'
 const dashes = /[–—]/;
 // 555-123-4567, (555) 123-4567, 555.123.4567, +1 555 123 4567, 5551234567
 const phone = /(?:\+?1[\s.-]?)?(?:\(\d{3}\)\s?|\b\d{3}[\s.-])\d{3}[\s.-]\d{4}\b|\b\d{10}\b/;
-const brands = /\b(?:Block|Square|Cash App|Afterpay)\b/;
+const brands = /\b(?:Square|Cash App|Afterpay)\b/;
 const supportCase = 'src/content/projects/support-content-hub/';
 
 const problems = [];

@@ -1,6 +1,6 @@
 ---
-title: "Moving a fintech's support content off Zendesk"
-summary: "I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
+title: "Moving Block's support content off Zendesk"
+summary: "I led the support-content side of Block's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
 status: Shipped
 type: Work
 year: 2026
@@ -9,7 +9,7 @@ featured: 1
 tags: [internal-tools, ai-building, product]
 proof: "Launched to about 1,000 support agents"
 proofNote: "An agent knowledge base that went from my side prototype to production"
-cardSummary: "I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and the agent knowledge base."
+cardSummary: "I led the support-content side of Block's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and the agent knowledge base."
 stats:
   - { value: "~1,000", label: "support agents using the knowledge base" }
   - { value: "~1,800", label: "missed article links found" }
@@ -17,13 +17,13 @@ stats:
   - { value: "1,000+", label: "support articles migrated" }
 ---
 
-**Shipped.** I led the support-content migration during a leading fintech company's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.
+**Shipped.** I led the support-content migration during Block's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.
 
 ## The problem
 
 The company was moving its support operation off Zendesk, its help desk, before the contract ended. A product manager led that larger platform move to Salesforce. The support content alone was more than 1,000 internal support articles plus more than 2,000 "macros," the canned replies agents send customers. All of this content had to move to new platforms before the deadline, and nothing agents relied on could break.
 
-It sat inside a bigger effort. The company had several consumer brands, each with its own support-content tool, and leadership wanted fewer tools doing the same job.
+It sat inside a bigger effort. Block had several consumer brands, each with its own support-content tool, and leadership wanted fewer tools doing the same job.
 
 I was the program lead for the content migration: deciding what moved, where it went, and making sure it worked when it got there.
 
