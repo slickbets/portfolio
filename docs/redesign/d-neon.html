@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup D: Neon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300..900&family=Geist+Mono:wght@400..700&family=Geist:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  /* Neon: dark plum, hot magenta and acid green, amber only as a spark. Doubled (echoed) type and big lowercase. */
+  :root { --bg: hsl(326 70% 4%); --bg2: hsl(326 50% 8%); --fg: hsl(326 30% 95%); --mut: hsl(326 12% 70%); --mag: hsl(326 100% 58%); --acid: hsl(97 100% 58%); --amber: hsl(58 100% 62%); --rule: hsl(326 25% 20%); --disp: "Unbounded", system-ui, sans-serif; --sans: "Geist", system-ui, sans-serif; --mono: "Geist Mono", monospace; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 400 18px/1.55 var(--sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,p { margin: 0; } img { display: block; max-width: 100%; height: auto; } a { color: inherit; }
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: .09; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .glow { position: fixed; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(90px); opacity: .45; pointer-events: none; z-index: 0; }
+  .glow.a { background: var(--mag); left: -20vmax; top: -22vmax; }
+  .glow.b { background: var(--acid); right: -30vmax; top: 30vh; opacity: .22; }
+  main, header, footer { position: relative; z-index: 1; }
+  .wrap { max-width: 1360px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 56px); }
+
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .mark { display: flex; align-items: center; gap: 12px; text-decoration: none; font: 700 15px var(--disp); }
+  .rings { position: relative; width: 22px; height: 32px; }
+  .rings i { position: absolute; left: 0; width: 22px; height: 16px; border: 2.5px solid var(--acid); border-radius: 50%; }
+  .rings i:first-child { top: 0; border-color: var(--mag); } .rings i:last-child { top: 12px; }
+  nav { display: flex; gap: 8px; }
+  nav a { text-decoration: none; font: 500 14px var(--mono); padding: 10px 16px; border: 1px solid var(--rule); border-radius: 999px; transition: .25s; }
+  nav a:hover { border-color: var(--acid); color: var(--acid); transform: translateY(-2px); }
+
+  .hero { padding-block: clamp(24px, 5vh, 64px) clamp(36px, 6vh, 72px); position: relative; }
+  .hero h1 { font: 900 clamp(34px, 6.6vw, 112px)/.9 var(--disp); letter-spacing: -.05em; position: relative; z-index: 2; text-transform: lowercase; }
+  .hero h1 .l1 { display: block; }
+  .echo { display: block; color: transparent; -webkit-text-stroke: 2px var(--acid); text-shadow: .045em .045em 0 var(--mag); }
+  .hero .sub { display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: center; justify-content: space-between; margin-top: clamp(24px, 4vh, 48px); }
+  .hero .sub p { max-width: 34ch; font-size: clamp(18px, 1.7vw, 22px); color: var(--mut); }
+  .btn { display: inline-flex; font: 600 15px var(--mono); padding: 17px 26px; border-radius: 999px; border: 1.5px solid var(--fg); text-decoration: none; transition: transform .25s, box-shadow .25s, background .25s; }
+  .btn.hot { background: var(--acid); color: var(--bg); border-color: var(--acid); box-shadow: 0 0 0 0 var(--acid); }
+  .btn:hover { transform: translateY(-3px) rotate(-1.5deg); }
+  .btn.hot:hover { box-shadow: 0 0 40px -4px var(--acid); }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .float { position: absolute; transition: transform .2s ease-out; will-change: transform; pointer-events: none; }
+  .float .browser { box-shadow: 0 30px 80px -20px rgb(0 0 0 / .8), 0 0 0 1px var(--rule); }
+  .f1 { right: 0; top: 36%; width: min(34%, 480px); z-index: 1; transform: translate(calc(var(--mx, 0) * 18px), calc(var(--my, 0) * 18px)) rotate(5deg); }
+  .f2 { right: min(30%, 430px); top: 56%; width: min(10%, 130px); z-index: 3; transform: translate(calc(var(--mx, 0) * -26px), calc(var(--my, 0) * -26px)) rotate(-8deg); }
+  .browser { border-radius: 14px; overflow: hidden; background: var(--bg2); }
+  .browser .bar { height: 26px; display: flex; gap: 6px; align-items: center; padding-left: 12px; background: var(--bg2); border-bottom: 1px solid var(--rule); }
+  .browser .bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--mag); } .browser .bar i:nth-child(2) { background: var(--amber); } .browser .bar i:nth-child(3) { background: var(--acid); }
+  .phone { border-radius: 24px; overflow: hidden; border: 5px solid var(--fg); box-shadow: 0 20px 50px -10px rgb(0 0 0 / .8); }
+
+  .strip { border-block: 1px solid var(--rule); background: var(--mag); color: var(--bg); overflow: hidden; white-space: nowrap; transform: rotate(-1.4deg); margin-block: 24px 40px; width: 104%; margin-left: -2%; }
+  .strip div { display: inline-flex; animation: run 34s linear infinite; }
+  .strip span { font: 800 clamp(20px, 2.4vw, 32px) var(--disp); padding: 14px 28px; text-transform: lowercase; letter-spacing: -.03em; }
+  .strip span:nth-child(even) { color: var(--bg); opacity: .55; }
+  @keyframes run { to { transform: translateX(-50%); } }
+
+  .proj { display: grid; grid-template-columns: 1fr; gap: 28px; padding-block: clamp(40px, 8vw, 110px); position: relative; border-bottom: 1px solid var(--rule); }
+  .proj .num { font: 900 clamp(120px, 24vw, 340px)/.8 var(--disp); letter-spacing: -.08em; color: transparent; -webkit-text-stroke: 1.5px var(--rule); position: absolute; right: 0; top: 24px; z-index: 0; user-select: none; }
+  .proj > * { position: relative; z-index: 1; }
+  .proj .top { display: flex; gap: 12px; align-items: center; font: 500 14px var(--mono); color: var(--mut); }
+  .chip { padding: 6px 12px; border-radius: 999px; border: 1px solid currentColor; }
+  .shipped { color: var(--acid); } .retired { color: var(--mag); } .proto { color: var(--amber); }
+  .proj h2 { font: 800 clamp(26px, 3.9vw, 62px)/1 var(--disp); letter-spacing: -.05em; text-transform: lowercase; }
+  .proj p.sum { max-width: 46ch; color: var(--mut); }
+  .proof { font: 900 clamp(44px, 7vw, 108px)/.9 var(--disp); letter-spacing: -.06em; color: var(--acid); text-shadow: .04em .04em 0 var(--mag); }
+  .proof small { display: block; font: 400 15px/1.4 var(--sans); letter-spacing: 0; text-shadow: none; color: var(--mut); max-width: 36ch; margin-top: 14px; }
+  .shot { transform: rotate(var(--r, -2deg)); transition: transform .5s cubic-bezier(.16,1,.3,1); max-width: 880px; }
+  .proj:hover .shot { transform: rotate(0) scale(1.02); }
+  .layout-r { display: grid; gap: 32px; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; }
+  .stats4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .stats4 div { padding: 22px; border: 1px solid var(--rule); border-radius: 18px; background: var(--bg2); }
+  .stats4 strong { display: block; font: 800 clamp(28px, 3.4vw, 46px)/1 var(--disp); letter-spacing: -.05em; color: var(--acid); }
+  .stats4 span { font-size: 14px; color: var(--mut); }
+  .more { font: 600 15px var(--mono); color: var(--acid); text-decoration: none; }
+  .more:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .pair { position: relative; } .pair .phone { position: absolute; width: 21%; right: 5%; bottom: -12%; transform: rotate(6deg); }
+
+  .contact { padding-block: clamp(72px, 12vw, 160px) 48px; text-align: left; }
+  .contact h2 { font: 900 clamp(48px, 13vw, 220px)/.9 var(--disp); letter-spacing: -.065em; text-transform: lowercase; }
+  .contact h2 .echo { display: inline; }
+  .contact .line { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; margin-top: 36px; }
+  .contact .email { font: 600 clamp(16px, 2vw, 24px) var(--mono); color: var(--acid); }
+  .contact p { color: var(--mut); max-width: 44ch; margin-top: 20px; }
+  footer { border-top: 1px solid var(--rule); padding-block: 26px; font: 400 14px var(--mono); color: var(--mut); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 28px; }
+  footer a { text-decoration: none; }
+
+  .rv { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .strip div { animation: none; } .rv { opacity: 1; transform: none; } .float { transition: none; } }
+  @media (max-width: 900px) {
+    .float { display: none; }
+    .layout-r { grid-template-columns: 1fr; }
+    nav a:not(:last-child) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="glow a"></div><div class="glow b"></div>
+<header><div class="wrap">
+  <a class="mark" href="#"><span class="rings"><i></i><i></i></span>spencer solomon</a>
+  <nav aria-label="Main"><a href="#">work</a><a href="#">about</a><a href="#contact">say hi</a></nav>
+</div></header>
+
+<main>
+  <section class="wrap hero" id="hero">
+    <h1><span class="l1">built with ai.</span><span class="echo">shipped to real users.</span></h1>
+    <div class="sub">
+      <p>Work tools and personal products I built with AI and put in front of real users.</p>
+      <div class="btns"><a class="btn hot" href="#work">see my work</a><a class="btn" href="#">résumé</a></div>
+    </div>
+    <div class="float f1" aria-hidden="true"><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="../../src/content/projects/auction-draft/tv-board.png" alt="" width="1411" height="724"></div></div>
+    <div class="float f2" aria-hidden="true"><div class="phone"><img src="../../src/content/projects/auction-draft/manager-phone.png" alt="" width="375" height="812"></div></div>
+  </section>
+
+  <div class="strip" aria-hidden="true"><div>
+    <span>claude code</span><span>python</span><span>react</span><span>shipped to real users</span><span>typescript</span><span>contentful</span><span>socket.io</span><span>shipped to real users</span>
+    <span>claude code</span><span>python</span><span>react</span><span>shipped to real users</span><span>typescript</span><span>contentful</span><span>socket.io</span><span>shipped to real users</span>
+  </div></div>
+
+  <div class="wrap" id="work">
+    <article class="proj rv">
+      <div class="num" aria-hidden="true">1</div>
+      <div class="top"><span class="chip shipped">shipped</span><span>work, 2026</span></div>
+      <div class="layout-r">
+        <div style="display:grid;gap:22px">
+          <h2>moving a fintech's support content off zendesk</h2>
+          <p class="sum">I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production.</p>
+          <a class="more" href="#">read the case study →</a>
+        </div>
+        <div class="stats4">
+          <div><strong>~1,000</strong><span>support agents using the knowledge base</span></div>
+          <div><strong>~1,800</strong><span>missed article links found</span></div>
+          <div><strong>10,000+</strong><span>support tickets analyzed</span></div>
+          <div><strong>1,000+</strong><span>support articles migrated</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="proj rv">
+      <div class="num" aria-hidden="true">2</div>
+      <div class="top"><span class="chip retired">retired</span><span>personal, 2026</span></div>
+      <div class="layout-r">
+        <div style="display:grid;gap:22px">
+          <h2>slick bets: an nba prediction model</h2>
+          <div class="proof">71.5%<small>of winners picked correctly over 648 games, each locked in before tip-off</small></div>
+          <a class="more" href="#">read the case study →</a>
+        </div>
+        <div class="shot" style="--r:2.5deg"><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="../../src/content/projects/slick-bets/home-picks.png" alt="Slick Bets daily picks table with matchups, picks, win probability and predicted spreads" width="1093" height="570"></div></div>
+      </div>
+    </article>
+
+    <article class="proj rv" style="border-bottom:0">
+      <div class="num" aria-hidden="true">3</div>
+      <div class="top"><span class="chip proto">prototype</span><span>personal, 2026</span></div>
+      <div class="layout-r">
+        <div style="display:grid;gap:22px">
+          <h2>a live auction draft room for my fantasy league</h2>
+          <p class="sum">Built in six days, then shelved when testing showed what drafters actually needed. Every bid is logged, so a server restart loses nothing.</p>
+          <a class="more" href="#">read the case study →</a>
+        </div>
+        <div class="pair"><div class="shot"><div class="browser"><div class="bar"><i></i><i></i><i></i></div><img src="../../src/content/projects/auction-draft/tv-board.png" alt="Draft room TV board showing every team's budget, the nomination clock and recent sales" width="1411" height="724"></div></div><div class="phone"><img src="../../src/content/projects/auction-draft/manager-phone.png" alt="" width="375" height="812"></div></div>
+      </div>
+    </article>
+  </div>
+
+  <section class="wrap contact rv" id="contact">
+    <h2>say <span class="echo">hi.</span></h2>
+    <p>Hiring for a product, program or builder role? Email is the best way to reach me.</p>
+    <div class="line"><a class="email" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a><div class="btns"><a class="btn hot" href="#">résumé (pdf)</a><a class="btn" href="#">linkedin</a><a class="btn" href="#">github</a></div></div>
+  </section>
+</main>
+<footer><div class="wrap"><span>spencer solomon, springfield, mo</span><span>built by directing claude code</span></div></footer>
+
+<script>
+  // Parallax: mouse position sets two CSS variables, the transforms do the rest.
+  const hero = document.getElementById('hero');
+  if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    hero.addEventListener('pointermove', e => { const r = hero.getBoundingClientRect(); hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5) * 2); hero.style.setProperty('--my', ((e.clientY - r.top) / r.height - .5) * 2); });
+  }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
