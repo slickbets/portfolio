@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup I: Desktop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  /* Desktop: the portfolio as an operating system. Teal desktop, indigo title bars, a yellow sticky note,
+     rose for alerts. Windows drag, focus, minimize, maximize and close. The taskbar clock is live. */
+  :root {
+    --desk: hsl(178 100% 25%); --face: hsl(178 6% 79%); --face2: hsl(178 8% 86%);
+    --hi: hsl(178 20% 97%); --lo: hsl(178 6% 50%); --dk: hsl(178 30% 7%);
+    --title: linear-gradient(90deg, hsl(256 72% 28%), hsl(256 58% 52%));
+    --title-off: linear-gradient(90deg, hsl(178 4% 50%), hsl(178 6% 70%));
+    --note: hsl(58 100% 74%); --sel: hsl(60 100% 62%); --rose: hsl(333 82% 52%); --txt: hsl(178 30% 8%);
+    --pix: "Pixelify Sans", system-ui, sans-serif; --sans: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace; --hand: "Caveat", cursive;
+    --out: inset -1px -1px var(--dk), inset 1px 1px var(--hi), inset -2px -2px var(--lo), inset 2px 2px var(--face2);
+    --in: inset -1px -1px var(--hi), inset 1px 1px var(--dk), inset -2px -2px var(--face2), inset 2px 2px var(--lo);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--desk); color: var(--txt); font: 400 15px/1.5 var(--sans); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, p { margin: 0; }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+
+  .desk { position: absolute; inset: 0 0 44px 0; overflow: hidden;
+    background: repeating-conic-gradient(hsl(178 100% 23%) 0 25%, transparent 0 50%) 0 0 / 4px 4px, var(--desk); }
+  .wall { position: absolute; right: 4%; bottom: 6%; font: 700 clamp(60px, 9vw, 140px)/.9 var(--pix); color: hsl(178 100% 21%); text-align: right; pointer-events: none; user-select: none; }
+
+  .icons { position: absolute; left: 10px; top: 10px; display: grid; grid-auto-flow: row; gap: 6px; z-index: 1; }
+  .ico { display: grid; justify-items: center; gap: 4px; width: 92px; padding: 6px 4px; background: none; border: 1px dashed transparent; color: hsl(0 0% 100%); text-decoration: none; cursor: pointer; text-align: center; }
+  .ico svg { width: 36px; height: 36px; image-rendering: pixelated; }
+  .ico span { font: 500 13px/1.2 var(--pix); text-shadow: 1px 1px 0 var(--dk); padding: 1px 3px; }
+  .ico:hover span, .ico:focus-visible span { background: hsl(256 72% 34%); }
+  .ico:focus-visible { outline: none; border-color: hsl(0 0% 100% / .8); }
+
+  .win { position: absolute; display: flex; flex-direction: column; background: var(--face); box-shadow: var(--out), 6px 8px 0 hsl(178 100% 12% / .45); padding: 3px; min-width: 260px; max-width: calc(100% - 16px); }
+  .win.closed, .win.min { display: none; }
+  .win.max { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; max-width: none; }
+  .win.max .body { flex: 1; overflow: auto; }
+  .tb { display: flex; align-items: center; gap: 6px; height: 26px; padding: 0 3px 0 6px; background: var(--title-off); color: hsl(0 0% 100%); cursor: grab; user-select: none; touch-action: none; }
+  .win.active .tb { background: var(--title); }
+  .tb:active { cursor: grabbing; }
+  .tb h2 { flex: 1; font: 600 14px/1 var(--pix); letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tb svg { width: 16px; height: 16px; flex: none; }
+  .ctl { display: flex; gap: 2px; }
+  .ctl button { width: 20px; height: 18px; display: grid; place-items: center; background: var(--face); border: 0; box-shadow: var(--out); cursor: pointer; font: 700 12px/1 var(--pix); padding: 0; color: var(--txt); }
+  .ctl button:active { box-shadow: var(--in); }
+  .ctl button[data-act="close"] { margin-left: 2px; }
+  .ctl button[data-act="close"]:hover { background: var(--rose); color: hsl(0 0% 100%); }
+  .menu { display: flex; gap: 2px; padding: 2px 4px; font-size: 13px; }
+  .menu span { padding: 1px 6px; } .menu span:first-letter { text-decoration: underline; }
+  .body { padding: 14px; background: var(--face); }
+  .sunk { box-shadow: var(--in); background: hsl(0 0% 100%); padding: 3px; }
+  .status { display: flex; gap: 3px; padding: 3px 0 0; font-size: 12px; }
+  .status span { flex: 1; box-shadow: var(--in); padding: 2px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-width: 96px; padding: 8px 16px; background: var(--face); box-shadow: var(--out); border: 0; text-decoration: none; font: 600 14px/1 var(--pix); cursor: pointer; color: var(--txt); }
+  .btn:active { box-shadow: var(--in); transform: translate(1px, 1px); }
+  .btn.def { outline: 1px solid var(--dk); outline-offset: -5px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* read_me.txt holds the hero */
+  #w-readme h1 { font: 700 clamp(30px, 3.3vw, 50px)/1.02 var(--pix); letter-spacing: -.01em; }
+  #w-readme h1 mark { background: var(--sel); color: var(--txt); padding: 0 .08em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  #w-readme .lede { font-size: 17px; margin: 14px 0 18px; max-width: 40ch; }
+  .fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  .field { box-shadow: var(--in); background: hsl(0 0% 100%); padding: 8px 10px; }
+  .field b { display: block; font: 700 26px/1 var(--pix); color: hsl(256 72% 34%); }
+  .field span { font-size: 12px; line-height: 1.3; display: block; margin-top: 4px; }
+  .badge { display: inline-block; font: 600 12px/1 var(--pix); padding: 4px 8px; color: hsl(0 0% 100%); background: hsl(256 72% 34%); }
+  .badge.rose { background: var(--rose); } .badge.gold { background: hsl(45 90% 40%); }
+  .win h3 { font: 700 20px/1.15 var(--pix); margin: 8px 0 6px; }
+  .win p.sum { font-size: 14px; }
+  .lnk { font-weight: 600; color: hsl(256 72% 34%); }
+  .list { box-shadow: var(--in); background: hsl(0 0% 100%); margin-top: 10px; }
+  .list div { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: baseline; padding: 6px 10px; border-bottom: 1px dotted var(--lo); }
+  .list div:last-child { border-bottom: 0; }
+  .list b { font: 700 20px/1 var(--pix); color: hsl(256 72% 34%); }
+  .list span { font-size: 13px; }
+  .shotpair { position: relative; margin-bottom: 26px; }
+  .shotpair .ph { position: absolute; width: 22%; right: 4%; bottom: -24px; box-shadow: var(--out); background: var(--face); padding: 3px; }
+
+  .term .body { background: hsl(256 40% 6%); color: hsl(178 80% 62%); font: 400 13.5px/1.55 var(--mono); padding: 12px 14px; min-height: 210px; white-space: pre-wrap; }
+  .term .p { color: var(--sel); }
+  .cur { display: inline-block; width: .6em; height: 1.1em; background: hsl(178 80% 62%); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .note { position: absolute; width: 230px; background: var(--note); padding: 16px 16px 18px; box-shadow: 4px 6px 0 hsl(178 100% 12% / .4); transform: rotate(-2.5deg); font: 700 23px/1.15 var(--hand); color: hsl(256 60% 22%); cursor: grab; user-select: none; touch-action: none; }
+  .note::before { content: ""; position: absolute; top: -10px; left: 50%; width: 70px; height: 20px; transform: translateX(-50%) rotate(2deg); background: hsl(0 0% 100% / .45); }
+  .note a { font: 500 13px var(--mono); display: block; margin-top: 10px; word-break: break-all; }
+
+  .field-row { display: grid; grid-template-columns: 70px 1fr; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 13px; }
+  .field-row .sunk { padding: 5px 8px; font: 500 13px var(--mono); }
+  .msg { min-height: 90px; padding: 10px; font-size: 14px; }
+
+  .taskbar { position: fixed; left: 0; right: 0; bottom: 0; height: 44px; background: var(--face); box-shadow: inset 0 2px var(--hi), inset 0 1px var(--face2); display: flex; align-items: center; gap: 6px; padding: 4px 4px 2px; z-index: 9000; }
+  .start { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px 0 8px; background: var(--face); box-shadow: var(--out); border: 0; font: 700 16px var(--pix); cursor: pointer; }
+  .start[aria-expanded="true"] { box-shadow: var(--in); }
+  .start i { width: 20px; height: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .start i b { background: hsl(256 72% 40%); } .start i b:nth-child(2) { background: var(--rose); } .start i b:nth-child(3) { background: var(--sel); } .start i b:nth-child(4) { background: var(--desk); }
+  .tasks { flex: 1; display: flex; gap: 4px; min-width: 0; overflow: hidden; }
+  .task { flex: 0 1 180px; min-width: 0; height: 34px; padding: 0 10px; text-align: left; background: var(--face); box-shadow: var(--out); border: 0; font: 600 13px var(--pix); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+  .task.on { box-shadow: var(--in); background: repeating-conic-gradient(var(--face2) 0 25%, var(--face) 0 50%) 0 0 / 2px 2px; }
+  .tray { height: 34px; display: flex; align-items: center; gap: 10px; padding: 0 12px; box-shadow: var(--in); font: 500 13px var(--pix); white-space: nowrap; }
+  .tray small { font-size: 12px; opacity: .75; }
+
+  .startmenu { position: fixed; left: 4px; bottom: 44px; width: 270px; background: var(--face); box-shadow: var(--out), 4px 4px 0 hsl(178 100% 10% / .4); padding: 3px; display: none; grid-template-columns: 30px 1fr; z-index: 9001; }
+  .startmenu.open { display: grid; }
+  .startmenu .side { background: linear-gradient(0deg, hsl(256 72% 28%), hsl(256 58% 52%)); color: hsl(0 0% 100%); writing-mode: vertical-rl; transform: rotate(180deg); font: 700 18px var(--pix); padding: 10px 4px; letter-spacing: .04em; }
+  .startmenu .side b { color: var(--sel); font-weight: 700; }
+  .startmenu ul { list-style: none; margin: 0; padding: 2px; }
+  .startmenu li a, .startmenu li button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 10px; background: none; border: 0; text-align: left; text-decoration: none; font: 600 15px var(--pix); cursor: pointer; }
+  .startmenu li a:hover, .startmenu li button:hover, .startmenu li a:focus-visible, .startmenu li button:focus-visible { background: hsl(256 72% 34%); color: hsl(0 0% 100%); outline: none; }
+  .startmenu hr { border: 0; border-top: 1px solid var(--lo); border-bottom: 1px solid var(--hi); margin: 4px 2px; }
+
+  .boot, .off { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; background: hsl(256 40% 6%); color: hsl(0 0% 100%); font: 600 18px var(--pix); text-align: center; }
+  .boot b { display: block; font-size: 44px; margin-bottom: 18px; } .boot b em { font-style: normal; color: var(--sel); }
+  .boot .bar { display: block; width: 220px; height: 16px; margin: 0 auto 12px; box-shadow: inset 0 0 0 2px hsl(0 0% 100% / .7); padding: 3px; }
+  .boot .bar i { display: block; height: 100%; background: repeating-linear-gradient(90deg, hsl(178 80% 50%) 0 12px, transparent 12px 15px); transform-origin: left; animation: load .95s steps(14) forwards; }
+  @keyframes load { from { transform: scaleX(0); } }
+  .boot.gone { opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .off { display: none; color: hsl(28 100% 60%); font-size: 24px; cursor: pointer; padding: 24px; }
+  .off.on { display: grid; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .win.pop { animation: pop .18s steps(4) both; }
+    @keyframes pop { from { transform: scale(.88); opacity: 0; } }
+  }
+  @media (prefers-reduced-motion: reduce) { .boot { display: none; } .cur { animation: none; } }
+
+  /* Phones: no dragging. The windows become a scrolling stack, and every window is shown. */
+  @media (max-width: 820px) {
+    body { overflow: auto; height: auto; }
+    .desk { position: relative; inset: auto; min-height: 100dvh; padding: 10px 10px 64px; display: flex; flex-direction: column; gap: 16px; overflow: visible; }
+    .wall { display: none; }
+    .icons { position: static; grid-auto-flow: column; grid-auto-columns: 84px; overflow-x: auto; padding-bottom: 4px; }
+    .ico { width: 84px; }
+    .win, .note { position: static !important; width: auto !important; transform: none; }
+    .win.closed, .win.min { display: flex; }
+    .ctl { display: none; }
+    .tb { cursor: default; }
+    .fields { grid-template-columns: 1fr; }
+    .tray small { display: none; }
+    .task { display: none; }
+    .icons { order: -2; } #w-readme { order: -1; } #w-fin { order: 1; } #w-slick { order: 2; } #w-draft { order: 3; } .note { order: 4; } #w-mail { order: 5; } #w-term { order: 6; }
+  }
+</style>
+</head>
+<body>
+<div class="boot" id="boot" aria-hidden="true"><div><b>Spencer<em>OS</em></b><span class="bar"><i></i></span>loading 3 projects</div></div>
+<div class="off" id="off" role="button" tabindex="0">It's now safe to close this tab. Or click anywhere to start again.</div>
+
+<div class="desk" id="desk">
+  <div class="wall" aria-hidden="true">Spencer<br>OS</div>
+
+  <nav class="icons" aria-label="Desktop">
+    <button class="ico" data-open="w-readme"><svg viewBox="0 0 32 32" shape-rendering="crispEdges"><path fill="#fff" stroke="#111" d="M7.5 3.5h12l5 5v20h-17z"/><path fill="#cde" stroke="#111" d="M19.5 3.5v5h5"/><path stroke="#111" d="M10 13h11M10 16h11M10 19h11M10 22h7"/></svg><span>read_me.txt</span></button>
+    <button class="ico" data-open="w-fin"><svg viewBox="0 0 32 32" shape-rendering="crispEdges"><path fill="#e8b93a" stroke="#111" d="M2.5 8.5h10l2 3h15v16h-27z"/><path fill="#f6d36b" d="M3 13h26v2H3z"/></svg><span>Support content</span></button>
+    <button class="ico" data-open="w-slick"><svg viewBox="0 0 32 32" shape-rendering="crispEdges"><path fill="#fff" stroke="#111" d="M3.5 5.5h25v21h-25z"/><path fill="#2f1b8a" d="M4 6h24v4H4z"/><path fill="#d6246e" d="M8 19h4v5H8z"/><path fill="#2f1b8a" d="M14 15h4v9h-4z"/><path fill="#e8b93a" d="M20 12h4v12h-4z"/></svg><span>Slick Bets</span></button>
+    <button class="ico" data-open="w-draft"><svg viewBox="0 0 32 32" shape-rendering="crispEdges"><path fill="#12161f" stroke="#111" d="M2.5 5.5h27v18h-27z"/><path fill="#e8b93a" d="M5 12h5v4H5zM11 12h5v4h-5zM17 12h5v4h-5zM23 12h4v4h-4zM5 17h5v4H5z"/><path fill="#fff" d="M12 8h8v2h-8z"/><path fill="#8a9" stroke="#111" d="M12.5 23.5h7v3h-7zM8.5 26.5h15v2h-15z"/></svg><span>Draft Room</span></button>
+    <button class="ico" data-open="w-term"><svg viewBox="0 0 32 32" shape-rendering="crispEdges"><path fill="#14102a" stroke="#111" d="M3.5 5.5h25v21h-25z"/><path fill="#3fd9cf" d="M7 11h2v2H7zM9 13h2v2H9zM7 15h2v2H7zM13 17h7v2h-7z"/></svg><span>Terminal</span></button>
+    <button class="ico" data-open="w-mail"><svg viewBox="0 0 32 32" shape-rendering="crispEdges"><path fill="#fff" stroke="#111" d="M3.5 8.5h25v16h-25z"/><path fill="none" stroke="#111" d="M4 9l12 9 12-9"/><path fill="#d6246e" d="M22 4h6v6h-6z"/></svg><span>Contact</span></button>
+    <a class="ico" href="#"><svg viewBox="0 0 32 32" shape-rendering="crispEdges"><path fill="#fff" stroke="#111" d="M7.5 3.5h12l5 5v20h-17z"/><path fill="#d6246e" d="M5 16h18v6H5z"/><path fill="#fff" d="M7 17h2v4H7zM9 17h1v2H9zM11 17h2v4h-2zM13 18h1v2h-1zM15 17h3v1h-2v1h2v1h-2v1h-1z"/></svg><span>Résumé.pdf</span></a>
+  </nav>
+
+  <section class="win" id="w-slick" data-title="Slick Bets" data-x=".6" data-y=".34" style="width:500px" aria-labelledby="t-slick">
+    <header class="tb" data-drag><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#fff" d="M1 2h14v12H1z"/><path fill="#e8b93a" d="M10 6h3v7h-3z"/><path fill="#d6246e" d="M3 9h3v4H3z"/></svg><h2 id="t-slick">Slick Bets</h2><div class="ctl"><button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div></header>
+    <div class="menu" aria-hidden="true"><span>File</span><span>View</span><span>Picks</span><span>Help</span></div>
+    <div class="body">
+      <div class="sunk"><img src="../../src/content/projects/slick-bets/home-picks.png" alt="Slick Bets daily picks table with matchups, picks, win probability and predicted spreads" width="1093" height="570"></div>
+      <h3>Slick Bets: an NBA prediction model</h3>
+      <p class="sum">My first Claude Code project: an NBA prediction app that ran live through the 2025-26 season.</p>
+      <div class="fields">
+        <div class="field"><b>71.5%</b><span>of winners picked correctly</span></div>
+        <div class="field"><b>463/648</b><span>games, locked in before tip-off</span></div>
+        <div class="field"><b><span class="badge rose">Retired</span></b><span>Personal, 2026</span></div>
+      </div>
+      <p style="margin-top:12px"><a class="lnk" href="#">Read the case study</a></p>
+    </div>
+    <div class="status"><span>NBA 2025-26</span><span>648 games</span></div>
+  </section>
+
+  <section class="win" id="w-fin" data-title="Support content" data-x=".47" data-y=".06" style="width:440px" aria-labelledby="t-fin">
+    <header class="tb" data-drag><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#e8b93a" d="M1 4h5l1 2h8v8H1z"/></svg><h2 id="t-fin">Support content: Properties</h2><div class="ctl"><button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div></header>
+    <div class="body">
+      <span class="badge">Shipped</span> <span style="font-size:13px">Work, 2026</span>
+      <h3>Moving a fintech's support content off Zendesk</h3>
+      <p class="sum">I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production.</p>
+      <div class="list">
+        <div><b>~1,000</b><span>support agents using the knowledge base</span></div>
+        <div><b>~1,800</b><span>missed article links found</span></div>
+        <div><b>10,000+</b><span>support tickets analyzed</span></div>
+        <div><b>1,000+</b><span>support articles migrated</span></div>
+      </div>
+      <p style="margin-top:12px"><a class="lnk" href="#">Read the case study</a></p>
+    </div>
+  </section>
+
+  <section class="win closed" id="w-draft" data-title="Draft Room" data-x=".34" data-y=".08" style="width:560px" aria-labelledby="t-draft">
+    <header class="tb" data-drag><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#12161f" d="M1 2h14v10H1z"/><path fill="#e8b93a" d="M3 6h3v2H3zM7 6h3v2H7zM11 6h2v2h-2z"/></svg><h2 id="t-draft">Draft Room</h2><div class="ctl"><button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div></header>
+    <div class="body">
+      <div class="shotpair"><div class="sunk"><img src="../../src/content/projects/auction-draft/tv-board.png" alt="Draft room TV board showing every team's budget, the nomination clock and recent sales" width="1411" height="724"></div><div class="ph"><img src="../../src/content/projects/auction-draft/manager-phone.png" alt="" width="375" height="812"></div></div>
+      <span class="badge gold">Prototype</span> <span style="font-size:13px">Personal, 2026</span>
+      <h3>A live auction draft room for my fantasy league</h3>
+      <p class="sum">Built in six days, then shelved when testing showed what drafters actually needed. Every bid is logged, so a server restart loses nothing.</p>
+      <p style="margin-top:12px"><a class="lnk" href="#">Read the case study</a></p>
+    </div>
+  </section>
+
+  <section class="win closed term" id="w-term" data-title="Terminal" data-x=".085" data-y=".58" style="width:470px" aria-labelledby="t-term">
+    <header class="tb" data-drag><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#14102a" d="M1 2h14v12H1z"/><path fill="#3fd9cf" d="M3 5h1v1H3zM4 6h1v1H4zM3 7h1v1H3zM6 9h4v1H6z"/></svg><h2 id="t-term">Terminal</h2><div class="ctl"><button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div></header>
+    <div class="body" id="termout" aria-live="off"></div>
+  </section>
+
+  <section class="win closed" id="w-mail" data-title="New message" data-x=".3" data-y=".2" style="width:480px" aria-labelledby="t-mail">
+    <header class="tb" data-drag><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#fff" d="M1 4h14v9H1z"/><path fill="#111" d="M2 5h1v1H2zM3 6h1v1H3zM4 7h2v1H4zM6 8h4v1H6zM10 7h2v1h-2zM12 6h1v1h-1zM13 5h1v1h-1z"/></svg><h2 id="t-mail">New message</h2><div class="ctl"><button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div></header>
+    <div class="body">
+      <div class="field-row"><span>To:</span><span class="sunk">spencerwsolomon@gmail.com</span></div>
+      <div class="field-row"><span>Subject:</span><span class="sunk">A product, program or builder role</span></div>
+      <div class="sunk msg">Hiring for a product, program or builder role? Email is the best way to reach me.</div>
+      <div class="btns" style="margin-top:12px"><a class="btn def" href="mailto:spencerwsolomon@gmail.com">Send</a><button class="btn" id="copy">Copy address</button><a class="btn" href="#">LinkedIn</a><a class="btn" href="#">GitHub</a></div>
+    </div>
+  </section>
+
+  <div class="note" data-drag data-x=".8" data-y=".05" role="note">Hiring for a product, program or builder role? Email me!<a href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a></div>
+
+  <section class="win" id="w-readme" data-title="read_me.txt" data-x=".085" data-y=".05" style="width:560px" aria-labelledby="t-readme">
+    <header class="tb" data-drag><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#fff" d="M3 1h7l3 3v11H3z"/><path fill="#111" d="M5 6h6v1H5zM5 8h6v1H5zM5 10h4v1H5z"/></svg><h2 id="t-readme">read_me.txt</h2><div class="ctl"><button data-act="min" aria-label="Minimize">_</button><button data-act="max" aria-label="Maximize">□</button><button data-act="close" aria-label="Close">×</button></div></header>
+    <div class="menu" aria-hidden="true"><span>File</span><span>Edit</span><span>Format</span><span>Help</span></div>
+    <div class="body">
+      <h1>Built with AI. <mark>Shipped to real users.</mark></h1>
+      <p class="lede">Work tools and personal products I built with AI and put in front of real users.</p>
+      <div class="btns"><button class="btn def" id="see">See my work</button><a class="btn" href="#">Résumé</a></div>
+    </div>
+    <div class="status"><span>Spencer Solomon, Springfield, MO</span><span>3 projects</span></div>
+  </section>
+</div>
+
+<div class="startmenu" id="menu" role="menu">
+  <div class="side" aria-hidden="true">Spencer<b>OS</b></div>
+  <ul>
+    <li><button data-open-work role="menuitem">Work</button></li>
+    <li><a href="#" role="menuitem">About</a></li>
+    <li><button data-open="w-mail" role="menuitem">Contact</button></li>
+    <li><a href="#" role="menuitem">Résumé (PDF)</a></li>
+    <li><button data-open="w-term" role="menuitem">Terminal</button></li>
+    <li><hr></li>
+    <li><a href="#" role="menuitem">LinkedIn</a></li>
+    <li><a href="#" role="menuitem">GitHub</a></li>
+    <li><hr></li>
+    <li><button id="shutdown" role="menuitem">Shut down</button></li>
+  </ul>
+</div>
+<div class="taskbar">
+  <button class="start" id="start" aria-expanded="false" aria-controls="menu"><i aria-hidden="true"><b></b><b></b><b></b><b></b></i>Start</button>
+  <div class="tasks" id="tasks"></div>
+  <div class="tray"><small>Springfield, MO</small><span id="clock"></span></div>
+</div>
+
+<script>
+  const desk = document.getElementById('desk'), tasks = document.getElementById('tasks');
+  const all = [...document.querySelectorAll('.win, .note')], wins = all.filter(w => w.classList.contains('win'));
+  const phone = matchMedia('(max-width: 820px)'), calm = matchMedia('(prefers-reduced-motion: reduce)');
+  let z = 10;
+
+  // Windows are placed from fractions of the desktop size, then kept fully on screen.
+  function place(w) {
+    const r = desk.getBoundingClientRect();
+    const x = Math.max(8, Math.min(parseFloat(w.dataset.x) * r.width, r.width - w.offsetWidth - 8));
+    const y = Math.max(8, Math.min(parseFloat(w.dataset.y) * r.height, r.height - w.offsetHeight - 8));
+    w.style.left = x + 'px'; w.style.top = y + 'px'; w.dataset.placed = 1;
+  }
+  function focus(w) { all.forEach(o => o.classList.remove('active')); w.classList.add('active'); w.style.zIndex = ++z; sync(); }
+  function open(id) {
+    const w = document.getElementById(id);
+    w.classList.remove('closed', 'min');
+    if (!w.dataset.placed && !phone.matches) place(w);
+    focus(w); w.classList.remove('pop'); void w.offsetWidth; w.classList.add('pop');
+    if (phone.matches) w.scrollIntoView({ behavior: calm.matches ? 'auto' : 'smooth', block: 'start' });
+    if (id === 'w-term') typeTerm();
+  }
+  function sync() {
+    tasks.innerHTML = '';
+    wins.filter(w => !w.classList.contains('closed')).forEach(w => {
+      const b = document.createElement('button');
+      b.className = 'task' + (w.classList.contains('active') && !w.classList.contains('min') ? ' on' : '');
+      b.textContent = w.dataset.title;
+      b.onclick = () => { if (b.classList.contains('on')) { w.classList.add('min'); w.classList.remove('active'); sync(); } else open(w.id); };
+      tasks.appendChild(b);
+    });
+  }
+
+  wins.forEach(w => w.querySelector('.ctl').addEventListener('click', e => {
+    const act = e.target.closest('button')?.dataset.act; if (!act) return;
+    if (act === 'close') { w.classList.add('closed'); w.classList.remove('active'); }
+    if (act === 'min') { w.classList.add('min'); w.classList.remove('active'); }
+    if (act === 'max') { w.classList.toggle('max'); focus(w); }
+    sync();
+  }));
+  all.forEach(w => w.addEventListener('pointerdown', () => focus(w)));
+
+  // Dragging by the title bar (or anywhere on the sticky note).
+  document.querySelectorAll('[data-drag]').forEach(handle => handle.addEventListener('pointerdown', e => {
+    if (phone.matches || e.target.closest('button, a')) return;
+    const w = handle.closest('.win, .note') || handle;
+    if (w.classList.contains('max')) return;
+    const dx = e.clientX - w.offsetLeft, dy = e.clientY - w.offsetTop, r = desk.getBoundingClientRect();
+    e.preventDefault();
+    const move = ev => {
+      w.style.left = Math.max(80 - w.offsetWidth, Math.min(ev.clientX - dx, r.width - 80)) + 'px';
+      w.style.top = Math.max(0, Math.min(ev.clientY - dy, r.height - 30)) + 'px';
+    };
+    const up = () => { removeEventListener('pointermove', move); removeEventListener('pointerup', up); removeEventListener('pointercancel', up); };
+    addEventListener('pointermove', move); addEventListener('pointerup', up); addEventListener('pointercancel', up);
+  }));
+
+  document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => { open(b.dataset.open); closeMenu(); }));
+  function openWork() {
+    [['w-draft', .30, .06], ['w-slick', .38, .14], ['w-fin', .46, .22]].forEach(([id, x, y]) => {
+      const w = document.getElementById(id); w.dataset.x = x; w.dataset.y = y; w.dataset.placed = '';
+      open(id);
+    });
+    closeMenu();
+  }
+  document.getElementById('see').addEventListener('click', openWork);
+  document.querySelector('[data-open-work]').addEventListener('click', openWork);
+
+  // Start menu
+  const start = document.getElementById('start'), menu = document.getElementById('menu');
+  function closeMenu() { menu.classList.remove('open'); start.setAttribute('aria-expanded', 'false'); }
+  start.addEventListener('click', e => { e.stopPropagation(); const o = menu.classList.toggle('open'); start.setAttribute('aria-expanded', o); });
+  document.addEventListener('click', e => { if (!menu.contains(e.target) && e.target !== start) closeMenu(); });
+  const off = document.getElementById('off');
+  document.getElementById('shutdown').addEventListener('click', () => { closeMenu(); off.classList.add('on'); });
+  off.addEventListener('click', () => off.classList.remove('on'));
+
+  document.getElementById('copy').addEventListener('click', async e => {
+    try { await navigator.clipboard.writeText('spencerwsolomon@gmail.com'); e.target.textContent = 'Copied'; }
+    catch { location.href = 'mailto:spencerwsolomon@gmail.com'; }
+  });
+
+  // Live clock: the taskbar shows the visitor's local time.
+  const clock = document.getElementById('clock');
+  const tick = () => { clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); };
+  tick(); setInterval(tick, 10000);
+
+  // Terminal types out the project list the first time it opens.
+  const lines = [
+    ['$ ', 'ls projects'], ['', 'support-content  slick-bets  auction-draft'],
+    ['$ ', 'cat status'],
+    ['', 'support-content   shipped     ~1,000 agents use it'],
+    ['', 'slick-bets        retired     71.5% winners picked'],
+    ['', 'auction-draft     prototype   built in 6 days'],
+    ['$ ', 'open read_me.txt']
+  ];
+  let typed = false;
+  async function typeTerm() {
+    if (typed) return; typed = true;
+    const out = document.getElementById('termout'); out.textContent = '';
+    for (const [p, t] of lines) {
+      const row = document.createElement('div'); out.appendChild(row);
+      if (p) { const s = document.createElement('span'); s.className = 'p'; s.textContent = 'spencer@os:~' + p; row.appendChild(s); }
+      const txt = document.createTextNode(''); row.appendChild(txt);
+      for (const ch of t) { txt.data += ch; if (!calm.matches && p) await new Promise(r => setTimeout(r, 38)); }
+      if (!calm.matches) await new Promise(r => setTimeout(r, p ? 220 : 90));
+    }
+    const c = document.createElement('span'); c.className = 'cur'; out.lastChild.append(' ', c);
+  }
+
+  // Boot, then lay out the desktop.
+  function boot() {
+    if (!phone.matches) all.filter(w => !w.classList.contains('closed')).forEach(place);
+    document.getElementById('w-readme').classList.add('active');
+    document.getElementById('w-readme').style.zIndex = ++z;
+    sync();
+    const b = document.getElementById('boot');
+    setTimeout(() => { b.classList.add('gone'); setTimeout(() => b.remove(), 300); if (phone.matches) typeTerm(); else setTimeout(() => { open('w-term'); focus(document.getElementById('w-readme')); }, 500); }, calm.matches ? 0 : 1050);
+  }
+  document.fonts.ready.then(boot);
+</script>
+</body>
+</html>
