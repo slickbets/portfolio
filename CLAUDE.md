@@ -108,7 +108,7 @@ These apply to every word on the site, including alt text and share text.
 ## Confidentiality rules
 
 - Nothing confidential from any employer: no internal tool names, people's names, ticket numbers, internal URLs, dollar figures, unconfirmed metrics, internal screenshots or data.
-- **The support-content case study never names Block or its brands (Square, Cash App, Afterpay).** It says "a leading fintech." Block may be named on About and the résumé. Public vendor names (Zendesk, Salesforce Knowledge, Contentful, Bloomfire) are fine.
+- **The support-content case study names Block but never its brands (Square, Cash App, Afterpay).** Block may also be named on About and the résumé. Public vendor names (Zendesk, Salesforce Knowledge, Contentful, Bloomfire) are fine.
 - **Credit:** Spencer led the content migration only. A product manager led the broader CRM migration. Copy must credit her role and must never imply Spencer led it.
 - The phone number never appears anywhere on the site, including `resume.pdf`.
 
