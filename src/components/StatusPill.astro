@@ -10,14 +10,19 @@ const { status } = Astro.props;
 <span class="pill">{status}</span>
 
 <style>
+  /* A dark pill with a glowing accent dot, like the wheel cards' status. */
   .pill {
-    display: inline-block;
-    padding: 8px 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px 8px 10px;
     border-radius: 999px;
-    background: var(--accent);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--cream);
+    box-shadow: inset 0 0 0 1px var(--rule);
     font: 600 13px/1 var(--mono);
     text-transform: uppercase;
     letter-spacing: .1em;
   }
+  .pill::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 </style>
