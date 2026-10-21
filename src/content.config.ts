@@ -26,6 +26,10 @@ const projects = defineCollection({
       cardSummary: z.string().optional(),
       // Optional colors for this project's card and page. Without it, see src/lib/themes.ts.
       theme: z.object({ accent: hex, bg: hex, bg2: hex, glow: hex }).optional(),
+      // The at-a-glance block under a project title. Each is one plain sentence.
+      role: z.string().optional(),
+      timeline: z.string().optional(),
+      outcome: z.string().optional(),
       stats: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
       repo: z.url().optional(),
       demo: z.url().optional(),

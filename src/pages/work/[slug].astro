@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import ProjectVisual from '../../components/ProjectVisual.astro';
 import StatusPill from '../../components/StatusPill.astro';
 import EmailCopy from '../../components/EmailCopy.astro';
+import Stats from '../../components/Stats.astro';
 import { themeAt } from '../../lib/themes';
 
 export async function getStaticPaths() {
@@ -18,7 +19,8 @@ export async function getStaticPaths() {
 }
 
 const { project, next, theme } = Astro.props;
-const { title, summary, status, type, year, stack, repo, demo } = project.data;
+const { title, summary, status, type, year, stack, repo, demo, role, timeline, outcome, stats, cover } = project.data;
+const brief = [['My role', role], ['Timeline', timeline], ['Outcome', outcome]].filter(([, v]) => v);
 const { Content } = await render(project);
 ---
 
@@ -26,11 +28,22 @@ const { Content } = await render(project);
   <div class="wrap case">
     <header class="head">
       <a class="back" href="/work">← All work</a>
+      <p class="eyebrow"><StatusPill status={status} /><span>{type}, {year}</span></p>
       <h1>{title}</h1>
       <p class="sum">{summary}</p>
-      <dl class="facts">
-        <div><dt>Status</dt><dd><StatusPill status={status} /></dd></div>
-        <div><dt>Type</dt><dd>{type}, {year}</dd></div>
+    </header>
+
+    <div class="lead-visual">
+      <ProjectVisual project={project} width={1100} whole priority showStats />
+    </div>
+
+    <section class="brief" aria-label="At a glance">
+      {brief.length > 0 && (
+        <dl class="brief-main">
+          {brief.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+        </dl>
+      )}
+      <dl class="brief-meta">
         <div>
           <dt>Built with</dt>
           <dd><ul class="chips">{stack.map((item) => <li>{item}</li>)}</ul></dd>
@@ -38,9 +51,9 @@ const { Content } = await render(project);
         {repo && <div><dt>Code</dt><dd><a href={repo}>GitHub repository</a></dd></div>}
         {demo && <div><dt>Demo</dt><dd><a href={demo}>Live site</a></dd></div>}
       </dl>
-    </header>
+    </section>
 
-    <ProjectVisual project={project} width={1100} whole priority showStats />
+    {cover && stats && <div class="stat-band"><Stats stats={stats} /></div>}
 
     <article class="article">
       <Content />
@@ -67,30 +80,40 @@ const { Content } = await render(project);
 </Base>
 
 <style>
-  .head { padding-block: clamp(36px, 6vw, 72px) 28px; display: grid; gap: 18px; max-width: 880px; }
-  .back { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--muted); text-decoration: none; justify-self: start; padding-block: 10px; }
-  .back:hover { color: var(--fg); text-decoration: underline; text-underline-offset: .22em; }
-  h1 { font: 900 var(--t56)/.92 var(--disp); letter-spacing: 0; max-width: 18ch; }
-  .sum { font-size: var(--t22); line-height: 1.4; color: var(--muted); max-width: 60ch; text-wrap: pretty; }
+  /* One centered reading column (--col, about 75 characters per line) shared by the header, the brief and the article, with
+     media breaking out to --wide. Everything left-aligns to the same edge. */
+  .case { --col: 640px; --wide: 1100px; }
+  .head, .brief, .stat-band, .article { width: 100%; max-width: var(--col); margin-inline: auto; }
+  .lead-visual { width: 100%; max-width: var(--wide); margin-inline: auto; }
 
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 18px 32px;
-    border-top: 1px solid var(--rule);
-    padding-top: 20px;
-    margin: 6px 0 0;
-  }
-  .facts div { display: grid; gap: 6px; align-content: start; min-width: 0; }
-  .facts dt { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
-  .facts dd { margin: 0; font: 500 var(--t14)/1.45 var(--sans); }
-  .facts a { color: var(--fg); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; text-decoration-color: color-mix(in oklab, var(--fg) 55%, transparent); }
-  .facts a:hover { text-decoration-color: var(--fg); }
+  .head { padding-block: clamp(20px, 3.5vw, 44px) 0; display: grid; gap: 16px; }
+  .back { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--muted); text-decoration: none; justify-self: start; padding-block: 15px; margin-block: -15px 0; }
+  .back:hover { color: var(--fg); text-decoration: underline; text-underline-offset: .22em; }
+  .eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; font: 500 var(--t12)/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  h1 { font: 900 var(--t56)/.92 var(--disp); letter-spacing: 0; }
+  .sum { font-size: var(--t22); line-height: 1.4; color: var(--muted-strong); text-wrap: pretty; }
+
+  /* At a glance: role, timeline and outcome, then the stack and links. */
+  .brief { margin-top: clamp(32px, 5vw, 56px); border: 1px solid var(--rule); border-radius: 22px; background: var(--tint); overflow: hidden; }
+  .brief dl { margin: 0; }
+  .brief dt { font: 500 var(--t12)/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .brief dd { margin: 0; }
+  .brief-main { display: grid; gap: 20px; padding: 24px 24px 22px; }
+  .brief-main div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: baseline; }
+  .brief-main dd { font: 500 var(--t18)/1.45 var(--sans); color: var(--fg); text-wrap: pretty; }
+  .brief-meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; padding: 18px 24px 20px; border-top: 1px solid var(--rule); }
+  .brief-meta div { display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .brief-meta a { display: inline-block; padding-block: 13px; margin-block: -13px; font: 500 var(--t14)/1.45 var(--sans); color: var(--fg); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; text-decoration-color: color-mix(in oklab, var(--fg) 55%, transparent); }
+  .brief-meta a:hover { text-decoration-color: var(--fg); }
+
+  .stat-band { margin-top: 20px; }
+  .stat-band :global(dd) { white-space: nowrap; }
+  .lead-visual { margin-top: clamp(24px, 3vw, 36px); }
 
   .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
   .chips li { font: 400 12px/1 var(--mono); white-space: nowrap; padding: 6px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); }
 
-  .end { border-top: 1px solid var(--rule); padding-block: clamp(36px, 6vw, 64px) clamp(56px, 8vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
+  .end { width: 100%; max-width: var(--wide); margin-inline: auto; border-top: 1px solid var(--rule); padding-block: clamp(36px, 6vw, 64px) clamp(56px, 8vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
   .next { display: grid; gap: 10px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 22px; text-decoration: none; background: var(--tint); transition: border-color .3s, transform .5s var(--ease); }
   .next:hover { border-color: var(--accent); transform: translateY(-3px); }
   .next-label { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--fg); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; text-decoration-color: color-mix(in oklab, var(--fg) 55%, transparent); }
@@ -108,7 +131,33 @@ const { Content } = await render(project);
   .article :global(.callout-stats strong) { font: 900 var(--t40)/.9 var(--disp); color: var(--accent); letter-spacing: 0; }
   .article :global(.callout-stats span) { font-size: var(--t14); line-height: 1.45; color: var(--muted-strong); }
 
-  .article { max-width: 680px; padding-block: 36px 56px; display: grid; gap: 18px; }
+  .article { padding-block: clamp(40px, 6vw, 72px) 56px; display: grid; gap: 18px; }
+  .article > :global(p:first-child) { font-size: var(--t22); line-height: 1.4; color: var(--muted-strong); }
+
+  /* A paragraph holding one screenshot becomes a wide figure in a browser frame. The caption is the
+     italic line written right under it in the Markdown. */
+  .article :global(p:has(> img:only-child)) {
+    margin: 22px calc(50% - min(var(--wide) / 2, 50vw - var(--pad))) 0;
+    border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; background: var(--bg);
+    box-shadow: 0 30px 60px -32px rgb(var(--shadow) / .5);
+  }
+  .article :global(p:has(> img:only-child))::before {
+    content: ""; display: block; height: 28px; background:
+      radial-gradient(circle at 16px 50%, var(--dot) 4.5px, transparent 5px),
+      radial-gradient(circle at 31px 50%, var(--dot) 4.5px, transparent 5px),
+      radial-gradient(circle at 46px 50%, var(--dot) 4.5px, transparent 5px),
+      var(--chrome);
+  }
+  .article :global(p:has(> img:only-child) img) { display: block; width: 100%; height: auto; }
+
+  /* Two phone screenshots in one paragraph sit side by side in phone frames. */
+
+  .article :global(p:has(> img + img)) { margin-top: 22px; display: flex; justify-content: center; gap: clamp(16px, 4vw, 40px); }
+  .article :global(p:has(> img + img) img) { width: min(260px, calc(50% - 8px)); height: auto; padding: 7px; border-radius: 34px; background: var(--frame); box-shadow: 0 30px 60px -28px rgb(var(--shadow) / .6), inset 0 0 0 1px var(--rule); }
+
+  .article :global(p:has(> img) + p:has(> em:only-child)) { margin-top: -4px; font: 400 var(--t14)/1.45 var(--sans); color: var(--muted); }
+  .article :global(p:has(> img) + p:has(> em:only-child) em) { font-style: normal; }
+  .article :global(p:has(> img) + p:has(> em:only-child) + h2) { margin-top: 34px; }
   .article :global(h2) { font: 800 var(--t40)/.95 var(--disp); letter-spacing: 0; margin-top: 26px; }
   .article :global(p), .article :global(ul) { margin: 0; }
   .article :global(ul) { padding-left: 22px; display: grid; gap: 10px; }
@@ -120,6 +169,14 @@ const { Content } = await render(project);
   @media (max-width: 760px) {
     h1 { font-size: var(--t40); }
     .sum { font-size: var(--t18); line-height: 1.55; }
+    .brief-main { padding: 20px 18px; gap: 18px; }
+    .brief-main div { grid-template-columns: 1fr; gap: 8px; }
+    .brief-main dd { font-size: var(--t18); }
+    .brief-meta { grid-template-columns: 1fr; padding: 18px; }
+    .article > :global(p:first-child) { font-size: var(--t18); }
+    /* The commissioner screenshot is a wide desktop screen that turns unreadable on a phone, so it and its caption drop out. */
+    .article :global(p:has(> img[src*="commissioner-on-the-block"])),
+    .article :global(p:has(> img[src*="commissioner-on-the-block"]) + p:has(> em:only-child)) { display: none; }
     .next-title { font-size: var(--t22); }
     .cta h2 { font-size: var(--t28); }
     .article :global(h2) { font-size: var(--t28); }
