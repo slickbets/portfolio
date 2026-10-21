@@ -15,8 +15,8 @@
   --fg: color-mix(in oklab, var(--cream) 90%, var(--accent));
   --muted: color-mix(in oklab, var(--cream) 72%, var(--bg));
   --muted-strong: color-mix(in oklab, var(--cream) 82%, var(--bg));
-  --faint: color-mix(in oklab, var(--cream) 56%, var(--bg));
-  --rule: color-mix(in oklab, var(--cream) 45%, var(--bg));
+  --faint: color-mix(in oklab, var(--cream) 64%, var(--bg));
+  --rule: color-mix(in oklab, var(--cream) 50%, var(--bg));
   --tint: color-mix(in oklab, var(--bg-2) 70%, var(--bg));
   --accent-ink: var(--ink);
 
