@@ -68,7 +68,7 @@ const { Content } = await render(project);
 
 <style>
   .head { padding-block: clamp(36px, 6vw, 72px) 28px; display: grid; gap: 18px; max-width: 880px; }
-  .back { font: 500 14px/1 var(--mono); color: var(--muted); text-decoration: none; justify-self: start; padding-block: 10px; }
+  .back { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--muted); text-decoration: none; justify-self: start; padding-block: 10px; }
   .back:hover { color: var(--accent); }
   h1 { font: 900 clamp(48px, 7vw, 104px)/.88 var(--disp); text-transform: uppercase; letter-spacing: -.005em; max-width: 18ch; }
   .sum { font-size: clamp(18px, 1.8vw, 21px); color: var(--muted); max-width: 60ch; }
@@ -87,12 +87,12 @@ const { Content } = await render(project);
   .facts a { color: var(--accent); }
 
   .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips li { font: 400 12.5px/1 var(--mono); padding: 6px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); }
+  .chips li { font: 400 12px/1 var(--mono); padding: 6px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); }
 
   .end { border-top: 1px solid var(--rule); padding-block: clamp(36px, 6vw, 64px) clamp(56px, 8vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
   .next { display: grid; gap: 10px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 22px; text-decoration: none; background: var(--tint); transition: border-color .3s, transform .5s var(--ease); }
   .next:hover { border-color: var(--accent); transform: translateY(-3px); }
-  .next-label { font: 600 14px/1 var(--mono); color: var(--accent); }
+  .next-label { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--accent); }
   .next-title { font: 800 clamp(24px, 2.6vw, 34px)/.98 var(--disp); text-transform: uppercase; }
   .cta { display: grid; gap: 16px; justify-items: start; }
   .cta h2 { font: 800 clamp(30px, 3.4vw, 46px)/.95 var(--disp); text-transform: uppercase; }
