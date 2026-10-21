@@ -152,14 +152,14 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     letter-spacing: -.01em;
     transition: border-color .25s, color .25s, background-color .25s;
   }
-  .nav a:hover, .nav a[aria-current='page'] { border-color: var(--accent); color: var(--accent); }
+  .nav a:hover, .nav a[aria-current='page'] { border-color: var(--fg); color: var(--fg); }
   .nav a.cv { background: var(--fg); color: var(--ink); border-color: var(--fg); }
   .nav a.cv:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); }
 
   .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; padding-block: 28px 36px; font: 500 var(--t14)/1.4 var(--sans); color: var(--faint); }
   .foot nav { display: flex; flex-wrap: wrap; gap: 4px 22px; }
   .foot a { display: inline-block; font-weight: 600; letter-spacing: -.01em; text-decoration: none; color: var(--muted); padding-block: 12px; }
-  .foot a:hover { color: var(--accent); }
+  .foot a:hover { color: var(--fg); text-decoration: underline; text-underline-offset: .22em; }
   .foot span { padding-block: 12px; }
 
   @media (max-width: 520px) {
