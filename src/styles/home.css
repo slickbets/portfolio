@@ -63,6 +63,7 @@
 
 /* ---------- Work wheel ---------- */
 .work {
+  --r: 22px;
   --cw: clamp(276px, 76vw, 452px);
   --ch: calc(var(--cw) * 1.36);
   position: relative; overflow-x: clip;
