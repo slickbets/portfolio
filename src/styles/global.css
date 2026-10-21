@@ -98,7 +98,8 @@ header, main, footer { position: relative; z-index: 2; }
   color: var(--ink);
   padding: 10px 16px;
   border-radius: 999px;
-  font: 600 var(--t14) var(--mono);
+  font: 600 var(--t14) var(--sans);
+  letter-spacing: -.01em;
   text-decoration: none;
 }
 .skip:focus { top: 12px; }
@@ -120,7 +121,7 @@ header, main, footer { position: relative; z-index: 2; }
   color: var(--fg);
   text-decoration: none;
   white-space: nowrap;
-  font: 600 13px/1 var(--mono);
+  font: 600 var(--t14)/1 var(--sans);
   letter-spacing: -.01em;
   transition: transform .4s var(--ease), background-color .25s, border-color .25s, color .25s, box-shadow .25s;
 }
@@ -135,7 +136,7 @@ header, main, footer { position: relative; z-index: 2; }
 .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font: 500 var(--t12)/1 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
 
 /* "Read the case study" style link. */
-.more { font: 600 13px/1 var(--mono); color: var(--accent); text-decoration: none; display: inline-flex; gap: 8px; align-items: center; justify-self: start; padding-block: 10px; }
+.more { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--accent); text-decoration: none; display: inline-flex; gap: 8px; align-items: center; justify-self: start; padding-block: 10px; }
 .more span { display: inline-block; transition: transform .4s var(--ease); }
 .more:hover span { transform: translateX(5px); }
 
@@ -157,7 +158,8 @@ header, main, footer { position: relative; z-index: 2; }
   border: 1.5px solid var(--rule);
   background: transparent;
   color: var(--fg);
-  font: 600 13px/1 var(--mono);
+  font: 600 var(--t14)/1 var(--sans);
+  letter-spacing: -.01em;
   cursor: pointer;
   transition: background-color .25s, color .25s, border-color .25s;
 }
