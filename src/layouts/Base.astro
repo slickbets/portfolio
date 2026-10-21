@@ -74,7 +74,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
         {links.map(({ href, label, hideOnPhone }) => (
           <a href={href} class={hideOnPhone ? 'hide-sm' : undefined} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
         ))}
-        <a class="cv" href="/resume.pdf">Résumé (PDF)</a>
+        <a class="cv" href="/resume.pdf"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M5.5 8.5 10 13l4.5-4.5M4 17h12"></path></svg>Résumé (PDF)</a>
       </nav>
     </header>
 
@@ -153,8 +153,10 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     transition: border-color .25s, color .25s, background-color .25s;
   }
   .nav a:hover, .nav a[aria-current='page'] { border-color: var(--fg); color: var(--fg); }
-  .nav a.cv { background: var(--fg); color: var(--ink); border-color: var(--fg); }
-  .nav a.cv:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+  /* The résumé link is an outline like the others, with a download icon so it still stands out
+     as the file. The only filled button in the first screen is the hero's "See my work". */
+  .nav a.cv { gap: 7px; }
+  .nav a.cv svg { width: 15px; height: 15px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; padding-block: 28px 36px; font: 500 var(--t14)/1.4 var(--sans); color: var(--faint); }
   .foot nav { display: flex; flex-wrap: wrap; gap: 4px 22px; }
