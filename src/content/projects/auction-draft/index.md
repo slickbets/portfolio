@@ -11,7 +11,15 @@ tags: [sports, product, ai-building]
 proof: "Picks up where it left off after a crash"
 proofNote: "Every bid is logged, so a server restart loses nothing"
 cover: ./tv-board.png
-coverAlt: "Draft room TV board showing every team's budget, the nomination clock and recent sales"
+coverAlt: "The draft room TV board during bidding: CeeDee Lamb on the block at $41, Team 7 leading with 22 seconds left, every team's remaining budget, and the three most recent sales"
+role: "I reviewed and approved a design spec and three build plans, then directed Claude Code one task at a time."
+timeline: "It took six days from spec to a working draft room."
+outcome: "It was never used in a real draft. Our league drafted on ESPN, whose free draft tool already shows the bye weeks, player news and depth charts mine lacked."
+stats:
+  - { value: "6 days", label: "from spec to a working draft room" }
+  - { value: "100", label: "randomized simulated drafts, checked for broken rules" }
+  - { value: "10", label: "bot teams in a full test draft over real connections" }
+  - { value: "3", label: "views: manager phones, a TV board and commissioner controls" }
 ---
 
 **Prototype.** The draft engine works end to end in testing. It was never used in a real draft.
@@ -26,11 +34,19 @@ I wanted a draft room that was free, reliable, and built around how our league a
 
 A live draft room that everyone joins from their phone, with a TV screen for the room.
 
+![A manager's phone during bidding: budget left, max bid and open spots at the top, the player on the block with the current bid and clock, and quick bid buttons](./manager-phone.png) ![The same phone screen two seconds before the player sells, with the card outlined in red and labeled Going twice](./manager-phone-going-twice.png)
+
+*A manager's phone with 26 seconds left on the 30-second bid clock, and the same screen at 2 seconds, going twice.*
+
 - **No accounts.** The commissioner gets a link to run the draft, a link for the TV board, and one invite link per team.
-- **Live auction.** Teams take turns nominating players. Bidding runs on a 10-second clock that resets with every bid. When the clock runs out, the player is sold and drops into the winning team's roster.
+- **Live auction.** Teams take turns nominating players. Bidding runs on a 30-second clock that resets with every bid. When the clock runs out, the player is sold and drops into the winning team's roster.
 - **The rules are enforced for you.** The app tracks every budget and roster limit, and it caps each bid so every team can still afford to fill its roster. A bid placed a split second too late is rejected rather than silently counted.
 - **Three views:** a phone screen for each manager, a TV board showing every roster and budget, and commissioner controls to start, pause, add time or bid for someone.
 - **It survives a crash.** Every draft action is saved to a log. If the server goes down, the draft comes back exactly where it was, paused, ready to resume.
+
+![The commissioner's screen: Start draft, Pause and +30s buttons, a picker to act as any team and nominate or bid for it, above CeeDee Lamb on the block at $41 with Team 7 leading and 22 seconds on the bid clock](./commissioner-on-the-block.png)
+
+*The commissioner's screen at the same moment as the TV board at the top of the page. From here the commissioner can pause, add 30 seconds, or nominate and bid on behalf of any team.*
 
 *Stack, for the curious: TypeScript throughout, with React for the screens, Node.js with live websocket connections for the bidding, and Postgres for the draft log. Player data comes from Sleeper's free API.*
 
@@ -49,6 +65,10 @@ It took six days from spec to a working draft room.
 ## Why I stopped
 
 When I tested it as a drafter, I saw the problem. I'd built the auction itself (bids, budgets, timers), but a drafter's real job is deciding who to bid on. For that you need bye weeks, recent player news and depth charts at hand, and my app had none of it. The free draft tool in ESPN's app already has all of that.
+
+![The manager view on a laptop: budget, max bid and open spots, the player on the block and bid buttons, with nothing about the player himself](./manager-going-once.png)
+
+*Everything a drafter needs to place a bid, and nothing that helps decide who to bid on.*
 
 Matching it was a data problem, not an engineering one, and it was more work than I could finish before our draft. So I stopped, and our league drafted on ESPN.
 

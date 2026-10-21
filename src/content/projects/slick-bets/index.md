@@ -13,6 +13,14 @@ proofNote: "648 games, each prediction locked in before tip-off"
 cardSummary: "My first Claude Code project: an NBA prediction app that ran live through the 2025-26 season."
 cover: ./home-picks.png
 coverAlt: "Slick Bets daily picks table with matchups, picks, win probability and predicted spreads"
+role: "I directed Claude Code through every part of it, made the calls on the model and the product, and reviewed everything before it shipped."
+timeline: "I built it over about ten weeks, and it ran live through the end of the 2025-26 NBA season."
+outcome: "A small group of friends used it, and I never promoted it. I never tracked betting profit, so I make no claims about beating the books."
+stats:
+  - { value: "71.5%", label: "of game winners picked correctly, tracked live" }
+  - { value: "648", label: "games predicted, each locked in before tip-off" }
+  - { value: "840", label: "combinations of settings backtested on 900+ games" }
+  - { value: "<10", label: "points median miss on the predicted spread" }
 ---
 
 **Retired.** It ran live through the 2025-26 NBA season, and it's dormant now.
@@ -34,10 +42,18 @@ Slick Bets is a web app that predicts every NBA game, every day.
 
 Under the hood, every team has an Elo rating, a score that rises and falls with each result. Bigger wins move it more. Each team has separate offense and defense ratings, and they combine into a predicted score for both teams.
 
+![Slick Bets Team Ratings page: a table ranking NBA teams by Elo rating with a tier for each, beside a bar chart of how many teams sit in each tier](./team-ratings.png)
+
+*The Team Ratings page ranks all 30 teams by Elo and sorts them into tiers.*
+
 The model then adjusts for three things:
 - **Injuries,** weighted by how much the missing player matters.
 - **Rest,** with a penalty for the second night of back-to-back games.
 - **Home court,** sized to each team's own home record.
+
+![Slick Bets Game Details page: notes on which teams are playing the second night of a back-to-back, above a table of every prediction with win chances, predicted spread and fair odds](./game-details.png)
+
+*Game Details lists every adjustment behind the day's picks, like a team on the second night of a back-to-back, above the full table of predictions and fair odds.*
 
 It runs itself. Every morning a scheduled job pulls yesterday's results, updates the ratings, checks injuries and odds, and makes the day's picks. Every code change runs the tests and deploys on its own.
 
@@ -62,6 +78,10 @@ Three decisions shaped it:
 Each one became a fix and a written rule in the project's instructions file, so Claude wouldn't repeat the mistake.
 
 ## Outcome
+
+![Slick Bets Model Accuracy page showing 648 games analyzed, 463 of 648 correct picks and 71.5% pick accuracy](./model-accuracy.png)
+
+*The app's own Model Accuracy page, which tracked every locked-in pick.*
 
 - **71.5% of winners picked correctly (463 of 648 games),** tracked live from mid-season through the end of 2025-26. Every prediction was locked in before tip-off. The median spread miss was under 10 points.
 - I retuned the model in early March using that season's games, so only the picks after that point are fully forward-looking.
