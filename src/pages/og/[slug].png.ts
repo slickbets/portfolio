@@ -24,8 +24,8 @@ export const getStaticPaths = (async () => {
     {
       params: { slug: 'home' },
       props: {
-        title: 'Built with AI. Shipped to real users.',
-        summary: 'Work tools and personal products I built with AI and put in front of real users.',
+        title: 'I ran the project, then built it.',
+        summary: "I'm Spencer, a PM who builds with AI. One tool reached about 1,000 Block agents.",
         theme: baseTheme,
       },
     },
