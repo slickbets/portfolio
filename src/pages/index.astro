@@ -65,9 +65,11 @@ const person = {
     </div>
   </section>
 
-  <div class="strip" aria-hidden="true">
-    <div class="strip-track">
-      {[0, 1].map(() => stack.map((name) => <><span>{name}</span><i></i></>))}
+  <div class="strip-bleed">
+    <div class="strip" aria-hidden="true">
+      <div class="strip-track">
+        {[0, 1].map(() => stack.map((name) => <><span>{name}</span><i></i></>))}
+      </div>
     </div>
   </div>
 

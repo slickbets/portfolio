@@ -17,6 +17,7 @@ import Base from '../layouts/Base.astro';
 
 <style>
   .notfound { padding-block: clamp(56px, 10vw, 128px); display: grid; gap: 22px; justify-items: start; }
-  h1 { font: 900 clamp(48px, 8vw, 120px)/.86 var(--disp); text-transform: uppercase; letter-spacing: -.005em; }
-  p { color: var(--muted); font-size: clamp(18px, 1.6vw, 20px); max-width: 44ch; }
+  h1 { font: 900 var(--tdisp)/.86 var(--disp); text-transform: uppercase; letter-spacing: -.005em; }
+  p { color: var(--muted); font-size: var(--t22); line-height: 1.4; max-width: 44ch; text-wrap: pretty; }
+  @media (max-width: 760px) { p { font-size: var(--t18); line-height: 1.55; } }
 </style>

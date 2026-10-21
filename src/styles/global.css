@@ -169,6 +169,10 @@ header, main, footer { position: relative; z-index: 2; }
 .js .rv { opacity: 0; transform: translateY(32px); transition: opacity 1s var(--ease), transform 1s var(--ease); transition-delay: var(--d, 0ms); }
 .js .rv.in { opacity: 1; transform: none; }
 
+@media (max-width: 760px) {
+  .email { font-size: var(--t18); }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
 }
