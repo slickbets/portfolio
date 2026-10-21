@@ -37,8 +37,8 @@ const projects = (await getCollection('projects')).sort(
 <style>
   .page { padding-block: clamp(36px, 6vw, 72px) clamp(56px, 8vw, 104px); display: grid; gap: clamp(28px, 4vw, 44px); }
   .intro { display: grid; gap: 12px; }
-  .intro p { color: var(--muted); font-size: clamp(17px, 1.6vw, 19px); max-width: 60ch; }
-  h1 { font: 900 clamp(64px, 9vw, 140px)/.82 var(--disp); text-transform: uppercase; letter-spacing: -.005em; }
+  .intro p { color: var(--muted); font-size: var(--t22); line-height: 1.4; max-width: 60ch; text-wrap: pretty; }
+  h1 { font: 900 var(--tdisp)/.82 var(--disp); text-transform: uppercase; letter-spacing: -.005em; }
 
   .list { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(20px, 3vw, 32px); }
   .card {
@@ -56,7 +56,7 @@ const projects = (await getCollection('projects')).sort(
   .card:hover { border-color: var(--accent); transform: translateY(-4px); }
   .visual { min-width: 0; }
   .txt { display: grid; gap: 14px; min-width: 0; }
-  h2 { font: 800 clamp(28px, 3vw, 42px)/.98 var(--disp); text-transform: uppercase; letter-spacing: .005em; }
+  h2 { font: 800 var(--t40)/.98 var(--disp); letter-spacing: 0; }
   h2 a { text-decoration: none; }
   /* The whole card is clickable through the title link. */
   h2 a::after { content: ''; position: absolute; inset: 0; border-radius: 22px; }
@@ -64,5 +64,9 @@ const projects = (await getCollection('projects')).sort(
 
   @media (max-width: 767px) {
     .card { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .intro p { font-size: var(--t18); line-height: 1.55; }
+    h2 { font-size: var(--t28); }
   }
 </style>
