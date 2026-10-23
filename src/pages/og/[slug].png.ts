@@ -58,6 +58,8 @@ export const GET: APIRoute<Props> = async ({ props }) => {
   const card = el(
     'div',
     {
+      // Satori 0.63+ defaults to content-box, which would add the padding outside the 1200x630 canvas.
+      boxSizing: 'border-box',
       width: 1200,
       height: 630,
       display: 'flex',
@@ -76,7 +78,7 @@ export const GET: APIRoute<Props> = async ({ props }) => {
       ]),
       el('div', { display: 'flex', flexDirection: 'column', gap: 24 }, [
         el('div', { fontFamily: 'Big Shoulders Display', fontSize: 104, lineHeight: 0.92, color: color.cream, textTransform: 'uppercase', maxWidth: 1040, lineClamp: 3 }, props.title),
-        el('div', { fontSize: 27, lineHeight: 1.4, color: color.muted, maxWidth: 980, lineClamp: 2 }, props.summary),
+        el('div', { fontSize: 27, lineHeight: 1.4, color: color.muted, maxWidth: 980, lineClamp: 3 }, props.summary),
       ]),
       el('div', { fontSize: 22, color: theme.accent, fontWeight: 600 }, 'spencerwsolomon.com'),
       el('div', { position: 'absolute', left: 0, right: 0, bottom: 0, height: 14, background: theme.accent }),
