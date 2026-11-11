@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redesign Mockups</title>
+<style>
+  /* A plain viewer for the nine mockups: one tab each, the page loads in the frame below. */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { display: flex; flex-direction: column; background: #e9e9e7; font: 14px/1.4 system-ui, -apple-system, sans-serif; color: #1b1b1d; }
+  .bar { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: #1b1b1d; color: #f4f4f2; flex-wrap: wrap; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+  .tabs button { border: 0; border-radius: 6px; padding: 8px 12px; background: #2e2e32; color: #d8d8d4; font: inherit; cursor: pointer; }
+  .tabs button:hover { background: #3c3c42; }
+  .tabs button[aria-selected="true"] { background: #f4f4f2; color: #1b1b1d; font-weight: 600; }
+  .tabs .round { opacity: .55; padding: 8px 4px 8px 10px; align-self: center; }
+  .tools { display: flex; gap: 8px; align-items: center; }
+  .tools button, .tools a { border: 1px solid #4a4a50; border-radius: 6px; padding: 7px 10px; background: none; color: #f4f4f2; font: inherit; cursor: pointer; text-decoration: none; }
+  .tools button[aria-pressed="true"] { background: #f4f4f2; color: #1b1b1d; }
+  .stage { flex: 1; display: flex; justify-content: center; min-height: 0; }
+  iframe { border: 0; width: 100%; height: 100%; background: #fff; }
+  .phone iframe { width: 390px; border-left: 1px solid #c9c9c5; border-right: 1px solid #c9c9c5; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="tabs" role="tablist" id="tabs">
+    <span class="round">Round 1</span>
+    <button role="tab" data-f="a-ledger">A Ledger</button>
+    <button role="tab" data-f="b-modules">B Modules</button>
+    <button role="tab" data-f="c-specimen">C Specimen</button>
+    <span class="round">Round 2</span>
+    <button role="tab" data-f="d-neon">D Neon</button>
+    <button role="tab" data-f="e-blocks">E Blocks</button>
+    <button role="tab" data-f="f-slip">F Slip</button>
+    <span class="round">Round 3</span>
+    <button role="tab" data-f="g-phi">G Phi</button>
+    <button role="tab" data-f="h-riso">H Riso</button>
+    <button role="tab" data-f="i-desktop">I Desktop</button>
+    <span class="round">Combined</span>
+    <button role="tab" data-f="j-mix">J Neon Blocks</button>
+    <span class="round">Round 4</span>
+    <button role="tab" data-f="k-wheel">K Wheel</button>
+  </div>
+  <div class="tools">
+    <button id="phone" aria-pressed="false">Phone width</button>
+    <a id="newtab" href="#" target="_blank" rel="noopener">Open alone</a>
+  </div>
+</div>
+<div class="stage" id="stage"><iframe id="frame" title="Mockup preview"></iframe></div>
+
+<script>
+  const tabs = [...document.querySelectorAll('[role="tab"]')], frame = document.getElementById('frame'), newtab = document.getElementById('newtab');
+  function show(f) {
+    const tab = tabs.find(t => t.dataset.f === f) || tabs[0];
+    tabs.forEach(t => t.setAttribute('aria-selected', t === tab));
+    frame.src = tab.dataset.f + '.html';
+    newtab.href = tab.dataset.f + '.html';
+    history.replaceState(null, '', '#' + tab.dataset.f);
+  }
+  tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.f)));
+  // Left and right arrow keys step through the tabs.
+  addEventListener('keydown', e => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const i = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true');
+    show(tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length].dataset.f);
+  });
+  document.getElementById('phone').addEventListener('click', e => {
+    const on = document.getElementById('stage').classList.toggle('phone');
+    e.currentTarget.setAttribute('aria-pressed', on);
+  });
+  show(location.hash.slice(1));
+</script>
+</body>
+</html>

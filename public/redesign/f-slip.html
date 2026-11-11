@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup F: Slip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Slip: the portfolio as a sportsbook. An odds board on the left, a sticky bet slip on the right that shows whatever you select. */
+  :root { --bg: hsl(97 35% 4%); --panel: hsl(97 22% 8%); --panel2: hsl(97 18% 12%); --line: hsl(97 14% 18%); --fg: hsl(97 20% 95%); --mut: hsl(97 8% 62%); --win: hsl(97 100% 56%); --hot: hsl(326 100% 60%); --amber: hsl(58 100% 62%); --c: "Barlow Condensed", sans-serif; --m: "IBM Plex Mono", monospace; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 400 16px/1.5 var(--m); -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,p { margin: 0; } img { display: block; max-width: 100%; height: auto; } a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  .topbar { background: var(--panel); border-bottom: 1px solid var(--line); }
+  .topbar .in { max-width: 1400px; margin-inline: auto; padding: 0 clamp(14px, 3vw, 40px); display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font: 800 26px var(--c); letter-spacing: .02em; text-transform: uppercase; text-decoration: none; display: flex; gap: 10px; align-items: center; }
+  .logo b { background: var(--win); color: var(--bg); padding: 0 8px; border-radius: 4px; }
+  .tabs { display: flex; gap: 4px; } .tabs a { font: 600 14px var(--m); text-decoration: none; padding: 10px 14px; border-radius: 6px; color: var(--mut); text-transform: uppercase; }
+  .tabs a.on { color: var(--bg); background: var(--win); } .tabs a:hover:not(.on) { color: var(--fg); background: var(--panel2); }
+
+  .ticker { border-bottom: 1px solid var(--line); overflow: hidden; background: var(--bg); white-space: nowrap; }
+  .ticker div { display: inline-flex; animation: tick 40s linear infinite; }
+  .ticker span { padding: 11px 26px; font: 500 14px var(--m); color: var(--mut); border-right: 1px solid var(--line); } .ticker b { color: var(--win); font-weight: 600; }
+  @keyframes tick { to { transform: translateX(-50%); } }
+
+  .page { max-width: 1400px; margin-inline: auto; padding: clamp(18px, 3vw, 36px) clamp(14px, 3vw, 40px) 0; display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 24px; align-items: start; }
+  .board h1 { font: 800 clamp(48px, 8.4vw, 132px)/.86 var(--c); text-transform: uppercase; letter-spacing: -.005em; }
+  .board h1 em { font-style: normal; color: var(--win); display: block; }
+  .board .lede { color: var(--mut); max-width: 44ch; margin-top: 18px; font-size: 17px; }
+  .board .btns { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .btn { display: inline-flex; font: 600 14px var(--m); text-transform: uppercase; padding: 14px 20px; border-radius: 6px; text-decoration: none; border: 1.5px solid var(--line); background: var(--panel2); transition: transform .15s; }
+  .btn:hover { transform: translateY(-2px); } .btn.win { background: var(--win); color: var(--bg); border-color: var(--win); } .btn.hot { background: var(--hot); border-color: var(--hot); color: #fff; }
+
+  .mkt { margin-top: clamp(28px, 4vw, 48px); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow: hidden; }
+  .mkt-h { display: grid; grid-template-columns: 1.6fr .7fr 1fr 40px; gap: 12px; padding: 12px 18px; font: 500 12px var(--m); text-transform: uppercase; letter-spacing: .08em; color: var(--mut); border-bottom: 1px solid var(--line); background: var(--panel2); }
+  .leg { display: grid; grid-template-columns: 1.6fr .7fr 1fr 40px; gap: 12px; align-items: center; padding: 22px 18px; border: 0; border-bottom: 1px solid var(--line); width: 100%; background: transparent; text-align: left; cursor: pointer; transition: background .2s; }
+  .leg:last-child { border-bottom: 0; } .leg:hover, .leg[aria-pressed="true"] { background: var(--panel2); }
+  .leg[aria-pressed="true"] { box-shadow: inset 4px 0 0 var(--win); }
+  .leg h2 { font: 700 clamp(24px, 2.8vw, 36px)/1 var(--c); text-transform: uppercase; letter-spacing: .01em; }
+  .leg small { display: block; color: var(--mut); font: 400 13px/1.4 var(--m); margin-top: 6px; }
+  .pill { font: 600 12px var(--m); text-transform: uppercase; padding: 5px 9px; border-radius: 4px; width: fit-content; }
+  .pill.s { background: var(--win); color: var(--bg); } .pill.r { background: var(--hot); color: #fff; } .pill.p { background: var(--amber); color: var(--bg); }
+  .odds { font: 800 clamp(30px, 3.4vw, 46px)/1 var(--c); color: var(--win); letter-spacing: .01em; } .odds small { display: block; font: 400 12px/1.3 var(--m); color: var(--mut); letter-spacing: 0; margin-top: 4px; max-width: 28ch; }
+  .plus { width: 36px; height: 36px; border-radius: 6px; border: 1.5px solid var(--line); display: grid; place-items: center; font: 600 20px var(--m); transition: .2s; }
+  .leg[aria-pressed="true"] .plus { background: var(--win); color: var(--bg); border-color: var(--win); }
+
+  .slip { position: sticky; top: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow: hidden; }
+  .slip-h { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: var(--win); color: var(--bg); font: 800 22px var(--c); text-transform: uppercase; letter-spacing: .03em; }
+  .slip-h span { font: 600 13px var(--m); background: var(--bg); color: var(--win); padding: 3px 9px; border-radius: 999px; }
+  .slip-b { padding: 18px; display: grid; gap: 14px; min-height: 420px; align-content: start; }
+  .slip-b .shot { border-radius: 8px; overflow: hidden; border: 1px solid var(--line); background: var(--bg); }
+  .slip-b .shot .bar { height: 22px; background: var(--panel2); display: flex; gap: 5px; align-items: center; padding-left: 10px; } .slip-b .shot .bar i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+  .slip-b h3 { font: 700 28px/1 var(--c); text-transform: uppercase; }
+  .slip-b p { color: var(--mut); font-size: 14px; }
+  .kv { display: grid; gap: 0; border-top: 1px dashed var(--line); }
+  .kv div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 13px; } .kv b { color: var(--win); font-weight: 600; text-align: right; }
+  .slip-f { padding: 16px 18px; border-top: 1px solid var(--line); background: var(--panel2); display: grid; gap: 10px; }
+  .slip-f .btn { justify-content: center; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .stats-grid div { background: var(--panel2); border-radius: 8px; padding: 14px; } .stats-grid b { display: block; font: 800 34px/1 var(--c); color: var(--win); } .stats-grid span { font-size: 12px; color: var(--mut); }
+  .phone-s { width: 34%; border: 4px solid var(--fg); border-radius: 18px; overflow: hidden; position: absolute; right: 14px; bottom: 14px; }
+
+  .contact { max-width: 1400px; margin: clamp(32px, 5vw, 56px) auto 0; padding-inline: clamp(14px, 3vw, 40px); }
+  .contact .c { border: 1.5px dashed var(--line); border-radius: 10px; padding: clamp(20px, 3vw, 40px); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: center; background: repeating-linear-gradient(135deg, transparent 0 14px, hsl(97 14% 7%) 14px 15px); }
+  .contact h2 { font: 800 clamp(34px, 4.6vw, 64px)/.95 var(--c); text-transform: uppercase; max-width: 18ch; } .contact h2 em { font-style: normal; color: var(--hot); }
+  .contact .email { font: 600 clamp(15px, 1.8vw, 22px) var(--m); color: var(--win); display: block; margin-top: 12px; }
+  footer { max-width: 1400px; margin: 0 auto; padding: 28px clamp(14px, 3vw, 40px); color: var(--mut); font-size: 13px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  @media (prefers-reduced-motion: reduce) { .ticker div { animation: none; } }
+  @media (max-width: 1000px) {
+    .page { grid-template-columns: 1fr; } .slip { position: static; order: -1; }
+    .mkt-h { display: none; }
+    .leg { grid-template-columns: 1fr 36px; } .leg .pill, .leg .odds { grid-column: 1; } .leg .plus { grid-column: 2; grid-row: 1; }
+    .tabs a:not(.on) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <a class="logo" href="#"><b>SS</b> Spencer Solomon</a>
+  <nav class="tabs" aria-label="Main"><a class="on" href="#">Work</a><a href="#">About</a><a href="#contact">Contact</a></nav>
+</div></div>
+<div class="ticker" aria-hidden="true"><div>
+  <span><b>~1,000</b> support agents on the knowledge base</span><span><b>71.5%</b> of winners picked correctly</span><span><b>648</b> games, locked in before tip-off</span><span><b>~1,800</b> missed article links found</span><span><b>10,000+</b> support tickets analyzed</span><span><b>1,000+</b> support articles migrated</span>
+  <span><b>~1,000</b> support agents on the knowledge base</span><span><b>71.5%</b> of winners picked correctly</span><span><b>648</b> games, locked in before tip-off</span><span><b>~1,800</b> missed article links found</span><span><b>10,000+</b> support tickets analyzed</span><span><b>1,000+</b> support articles migrated</span>
+</div></div>
+
+<main class="page">
+  <section class="board">
+    <h1>Built with AI.<em>Shipped to real users.</em></h1>
+    <p class="lede">Work tools and personal products I built with AI and put in front of real users.</p>
+    <div class="btns"><a class="btn win" href="#">See my work</a><a class="btn" href="#">Résumé</a></div>
+
+    <div class="mkt" role="group" aria-label="Projects">
+      <div class="mkt-h"><span>Project</span><span>Status</span><span>The number</span><span></span></div>
+      <button class="leg" aria-pressed="true" data-k="fin">
+        <span><h2>Moving a fintech's support content off Zendesk</h2><small>Work, 2026</small></span>
+        <span class="pill s">Shipped</span>
+        <span class="odds">~1,000<small>support agents using the knowledge base</small></span>
+        <span class="plus">+</span>
+      </button>
+      <button class="leg" aria-pressed="false" data-k="slick">
+        <span><h2>Slick Bets: an NBA prediction model</h2><small>Personal, 2026</small></span>
+        <span class="pill r">Retired</span>
+        <span class="odds">71.5%<small>of winners picked correctly over 648 games</small></span>
+        <span class="plus">+</span>
+      </button>
+      <button class="leg" aria-pressed="false" data-k="draft">
+        <span><h2>A live auction draft room for my fantasy league</h2><small>Personal, 2026</small></span>
+        <span class="pill p">Prototype</span>
+        <span class="odds">6 days<small>from idea to a working draft engine</small></span>
+        <span class="plus">+</span>
+      </button>
+    </div>
+  </section>
+
+  <aside class="slip" aria-live="polite">
+    <div class="slip-h">Selected <span id="n">1 of 3</span></div>
+    <div class="slip-b" id="slipbody"></div>
+    <div class="slip-f"><a class="btn win" href="#">Read the case study</a></div>
+  </aside>
+</main>
+
+<section class="contact" id="contact"><div class="c">
+  <div><h2>Hiring for a product, program or builder role? <em>Email me.</em></h2><a class="email" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a></div>
+  <div class="btns"><a class="btn win" href="#">Résumé (PDF)</a><a class="btn" href="#">LinkedIn</a><a class="btn" href="#">GitHub</a></div>
+</div></section>
+<footer><span>Spencer Solomon, Springfield, MO</span><span>Built by directing Claude Code</span></footer>
+
+<script>
+  // The slip swaps in whichever project is selected. Content is static, so it is built from this small table.
+  const data = {
+    fin: { t: "Moving a fintech's support content off Zendesk", p: "I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production.", stats: [["~1,000", "support agents using the knowledge base"], ["~1,800", "missed article links found"], ["10,000+", "support tickets analyzed"], ["1,000+", "support articles migrated"]] },
+    slick: { t: "Slick Bets", p: "My first Claude Code project: an NBA prediction app that ran live through the 2025-26 season.", img: ["../../src/content/projects/slick-bets/home-picks.png", "Slick Bets daily picks table with matchups, picks, win probability and predicted spreads", 1093, 570], kv: [["Winners picked", "71.5%"], ["Games tracked", "648"], ["Locked in", "before tip-off"], ["Status", "Retired"]] },
+    draft: { t: "Auction draft room", p: "Built in six days, then shelved when testing showed what drafters actually needed. Every bid is logged, so a server restart loses nothing.", img: ["../../src/content/projects/auction-draft/tv-board.png", "Draft room TV board showing every team's budget, the nomination clock and recent sales", 1411, 724], phone: "../../src/content/projects/auction-draft/manager-phone.png", kv: [["Built in", "6 days"], ["Bids logged", "every one"], ["Used in a real draft", "no"], ["Status", "Prototype"]] }
+  };
+  const body = document.getElementById('slipbody'), n = document.getElementById('n'), legs = [...document.querySelectorAll('.leg')];
+  function show(k) {
+    const d = data[k]; let h = '';
+    if (d.img) h += `<div class="shot" style="position:relative"><div class="bar"><i></i><i></i><i></i></div><img src="${d.img[0]}" alt="${d.img[1]}" width="${d.img[2]}" height="${d.img[3]}">${d.phone ? `<div class="phone-s"><img src="${d.phone}" alt="" width="375" height="812"></div>` : ''}</div>`;
+    h += `<h3>${d.t}</h3><p>${d.p}</p>`;
+    if (d.stats) h += `<div class="stats-grid">${d.stats.map(s => `<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`;
+    if (d.kv) h += `<div class="kv">${d.kv.map(r => `<div><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}</div>`;
+    body.innerHTML = h; n.textContent = (legs.findIndex(l => l.dataset.k === k) + 1) + ' of 3';
+    legs.forEach(l => l.setAttribute('aria-pressed', l.dataset.k === k));
+  }
+  legs.forEach(l => { l.addEventListener('click', () => show(l.dataset.k)); l.addEventListener('mouseenter', () => matchMedia('(hover: hover)').matches && show(l.dataset.k)); });
+  show('fin');
+</script>
+</body>
+</html>

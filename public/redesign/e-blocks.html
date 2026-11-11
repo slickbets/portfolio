@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup E: Blocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Geist+Mono:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  /* Blocks: full-bleed color slabs that stack like cards. Order is amber, magenta, acid, magenta, then ink (A B C B). */
+  :root { --amber: hsl(58 100% 62%); --mag: hsl(326 100% 56%); --acid: hsl(97 100% 56%); --ink: hsl(326 60% 5%); --paper: hsl(58 100% 96%); --f: "Bricolage Grotesque", system-ui, sans-serif; --mono: "Geist Mono", monospace; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ink); color: var(--ink); font: 400 18px/1.5 var(--f); font-variation-settings: "wdth" 100; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,p { margin: 0; } img { display: block; max-width: 100%; height: auto; } a { color: inherit; }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 18px clamp(16px, 3vw, 40px); mix-blend-mode: difference; color: #fff; }
+  .nav a { text-decoration: none; font: 600 15px var(--mono); }
+  .nav nav { display: flex; gap: clamp(14px, 2.4vw, 32px); }
+  .nav .name { font: 800 20px var(--f); letter-spacing: -.03em; font-variation-settings: "wdth" 75; }
+
+  .slab { min-height: 100dvh; padding: clamp(84px, 11vh, 120px) clamp(16px, 4vw, 64px) clamp(28px, 5vh, 56px); display: grid; align-content: space-between; gap: 24px; position: relative; overflow: hidden; }
+  @media (min-width: 1000px) and (min-height: 680px) { .slab { position: sticky; top: 0; height: 100dvh; } }
+  .b, .c { align-content: center; } .a { background: var(--amber); } .b { background: var(--mag); color: var(--paper); } .c { background: var(--acid); } .contact { background: var(--ink); color: var(--paper); }
+  .big { font-weight: 800; font-variation-settings: "wdth" 75; letter-spacing: -.028em; line-height: .86; text-transform: lowercase; }
+
+  .a h1 { font-size: clamp(48px, min(15.5vw, 21vh), 300px); }
+  .a h1 span { display: block; } .a h1 .alt { -webkit-text-stroke: 3px var(--ink); color: transparent; }
+  .a .row { display: flex; flex-wrap: wrap; gap: 20px 48px; justify-content: space-between; align-items: end; }
+  .a .row p { max-width: 30ch; font-size: clamp(19px, 2vw, 26px); font-weight: 500; line-height: 1.25; }
+  .btn { display: inline-flex; font: 600 15px var(--mono); padding: 17px 24px; background: var(--ink); color: var(--paper); text-decoration: none; border: 2px solid var(--ink); border-radius: 0; box-shadow: 5px 5px 0 var(--paper); transition: transform .15s, box-shadow .15s; }
+  .btn:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--paper); }
+  .btn.ghost { background: transparent; color: inherit; border-color: currentColor; box-shadow: none; } .btn.ghost:hover { transform: none; background: var(--ink); color: var(--paper); }
+  .btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .tag { display: inline-block; font: 700 13px var(--mono); padding: 6px 10px; border: 2px solid currentColor; text-transform: uppercase; letter-spacing: .04em; }
+
+  .p { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(20px, 4vw, 64px); align-items: center; }
+  .p .l { display: grid; gap: 18px; align-content: center; }
+  .p .meta { display: flex; gap: 12px; align-items: center; font: 500 14px var(--mono); }
+  .p h2 { font-size: clamp(32px, min(6.6vw, 11vh), 120px); }
+  .p .sum { max-width: 40ch; font-size: clamp(16px, 1.4vw, 20px); font-weight: 500; }
+  .proof { font-size: clamp(54px, min(9vw, 16vh), 170px); }
+  .proof small { display: block; font: 500 16px/1.3 var(--f); letter-spacing: 0; text-transform: none; margin-top: 10px; max-width: 32ch; font-variation-settings: "wdth" 100; }
+  .more { font: 700 15px var(--mono); }
+  .ghostnum { position: absolute; right: -2vw; bottom: -6vw; font-size: clamp(260px, 44vw, 720px); opacity: .14; line-height: .7; pointer-events: none; }
+  .frame { background: var(--ink); padding: 14px; box-shadow: 14px 14px 0 rgb(0 0 0 / .85); transform: rotate(var(--r, 1.5deg)); transition: transform .4s cubic-bezier(.16,1,.3,1); position: relative; z-index: 1; }
+  .frame:hover { transform: rotate(0); }
+  .frame img { width: 100%; }
+  .frame .phone { position: absolute; width: 22%; right: -4%; bottom: -14%; border: 5px solid var(--paper); border-radius: 22px; overflow: hidden; background: var(--ink); box-shadow: 8px 8px 0 rgb(0 0 0 / .85); }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 3px solid var(--ink); background: var(--paper); position: relative; z-index: 1; }
+  .stats div { padding: clamp(14px, 2vh, 28px); border: 1.5px solid var(--ink); }
+  .stats strong { display: block; font-weight: 800; font-size: clamp(32px, min(5.2vw, 10.5vh), 88px); letter-spacing: -.03em; line-height: .95; font-variation-settings: "wdth" 75; }
+  .stats span { font-size: 15px; font-weight: 500; }
+
+  .contact { place-content: center start; }
+  .contact h2 { font-size: clamp(60px, min(19vw, 32vh), 340px); color: var(--amber); }
+  .contact h2 span { color: var(--mag); }
+  .contact .email { font: 600 clamp(18px, 3vw, 36px) var(--mono); color: var(--acid); text-decoration: none; }
+  .contact .btn { background: var(--amber); color: var(--ink); border-color: var(--amber); box-shadow: 5px 5px 0 var(--mag); }
+  .contact .btn.ghost { background: transparent; color: var(--paper); border-color: var(--paper); }
+  .contact p { max-width: 42ch; font-size: 20px; }
+  .contact .foot { font: 400 13px var(--mono); opacity: .7; }
+
+  @media (prefers-reduced-motion: no-preference) { .a h1 span { animation: slide .9s cubic-bezier(.16,1,.3,1) both; } .a h1 span:nth-child(2) { animation-delay: .1s; } .a h1 span:nth-child(3) { animation-delay: .2s; } @keyframes slide { from { transform: translateY(40%); opacity: 0; } } }
+  @media (max-width: 999px) { .slab { min-height: 0; } .p { grid-template-columns: 1fr; } .frame .phone { right: 2%; } .ghostnum { display: none; } .frame { margin-bottom: 10%; } }
+</style>
+</head>
+<body>
+<header class="nav"><a class="name" href="#">spencer solomon</a><nav aria-label="Main"><a href="#">work</a><a href="#">about</a><a href="#contact">say hi</a></nav></header>
+
+<main>
+  <section class="slab a">
+    <span class="tag" style="justify-self:start">internal tools, sports, weather</span>
+    <h1 class="big"><span>built with ai.</span><span class="alt">shipped to</span><span>real users.</span></h1>
+    <div class="row">
+      <p>Work tools and personal products I built with AI and put in front of real users.</p>
+      <div class="btns"><a class="btn" href="#">see my work</a><a class="btn ghost" href="#">résumé</a></div>
+    </div>
+  </section>
+
+  <section class="slab b">
+    <div class="ghostnum big" aria-hidden="true">1</div>
+    <div class="p">
+      <div class="l">
+        <div class="meta"><span class="tag">shipped</span><span>work, 2026</span></div>
+        <h2 class="big">moving a fintech's support content off zendesk</h2>
+        <p class="sum">I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production.</p>
+        <a class="more" href="#">read the case study →</a>
+      </div>
+      <div class="stats" style="color:var(--ink)">
+        <div><strong>~1,000</strong><span>support agents using the knowledge base</span></div>
+        <div><strong>~1,800</strong><span>missed article links found</span></div>
+        <div><strong>10,000+</strong><span>support tickets analyzed</span></div>
+        <div><strong>1,000+</strong><span>support articles migrated</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slab c">
+    <div class="ghostnum big" aria-hidden="true">2</div>
+    <div class="p">
+      <div class="l">
+        <div class="meta"><span class="tag">retired</span><span>personal, 2026</span></div>
+        <h2 class="big">slick bets: an nba prediction model</h2>
+        <div class="proof big">71.5%<small>of winners picked correctly over 648 games, each locked in before tip-off</small></div>
+        <a class="more" href="#">read the case study →</a>
+      </div>
+      <div class="frame" style="--r:-1.8deg"><img src="../../src/content/projects/slick-bets/home-picks.png" alt="Slick Bets daily picks table with matchups, picks, win probability and predicted spreads" width="1093" height="570"></div>
+    </div>
+  </section>
+
+  <section class="slab b">
+    <div class="ghostnum big" aria-hidden="true">3</div>
+    <div class="p">
+      <div class="l">
+        <div class="meta"><span class="tag">prototype</span><span>personal, 2026</span></div>
+        <h2 class="big">a live auction draft room for my fantasy league</h2>
+        <p class="sum">Built in six days, then shelved when testing showed what drafters actually needed. Every bid is logged, so a server restart loses nothing.</p>
+        <a class="more" href="#">read the case study →</a>
+      </div>
+      <div class="frame"><img src="../../src/content/projects/auction-draft/tv-board.png" alt="Draft room TV board showing every team's budget, the nomination clock and recent sales" width="1411" height="724"><div class="phone"><img src="../../src/content/projects/auction-draft/manager-phone.png" alt="" width="375" height="812"></div></div>
+    </div>
+  </section>
+
+  <section class="slab contact" id="contact">
+    <h2 class="big">say <span>hi.</span></h2>
+    <div style="display:grid;gap:22px">
+      <p>Hiring for a product, program or builder role? Email is the best way to reach me.</p>
+      <a class="email" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+      <div class="btns"><a class="btn" href="#">résumé (pdf)</a><a class="btn ghost" href="#">linkedin</a><a class="btn ghost" href="#">github</a></div>
+    </div>
+    <span class="foot">spencer solomon, springfield, mo</span>
+  </section>
+</main>
+</body>
+</html>

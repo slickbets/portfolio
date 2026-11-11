@@ -2,3 +2,7 @@
 # file always gets a new URL. That makes it safe to let browsers keep them for a year.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Redesign mockups are preview-only. Keep them out of search results.
+/redesign/*
+  X-Robots-Tag: noindex

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup H: Riso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Riso: a two-ink zine. Everything is fluorescent pink, blue, or the purple you get where they overprint (multiply).
+     Screenshots are printed as one-ink duotones; hover one to see the real colors. The cover is the one symmetrical page. */
+  :root { --paper: hsl(42 38% 94%); --paper2: hsl(42 30% 88%); --pink: hsl(328 100% 63%); --blue: hsl(204 100% 33%); --f: "Archivo", system-ui, sans-serif; --m: "Space Mono", ui-monospace, monospace; }
+  * { box-sizing: border-box; }
+  html { overflow-x: clip; }
+  body { margin: 0; background: var(--paper); color: var(--blue); font: 400 18px/1.5 var(--f); -webkit-font-smoothing: antialiased; }
+  body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 90; mix-blend-mode: multiply; opacity: .55;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .28 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  h1, h2, h3, p { margin: 0; }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+  ::selection { background: var(--pink); color: var(--paper); }
+  .disp { font-family: var(--f); font-weight: 900; font-stretch: 125%; letter-spacing: -.035em; line-height: .88; text-transform: lowercase; }
+
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 18px clamp(16px, 4vw, 48px); }
+  .name { font: 900 20px var(--f); font-stretch: 125%; letter-spacing: -.03em; text-decoration: none; }
+  .top nav { display: flex; gap: 4px; }
+  .top nav a { font: 700 13px var(--m); text-decoration: none; padding: 8px 12px; }
+  .top nav a:hover { background: var(--pink); color: var(--paper); }
+
+  /* Cover: the one symmetrical page. */
+  .cover { position: relative; margin: 0 clamp(16px, 4vw, 48px); min-height: calc(100dvh - 76px); display: grid; place-content: center; justify-items: center; text-align: center; gap: 28px; padding: 64px 16px; overflow: hidden; border: 1.5px solid var(--blue); }
+  .reg { position: absolute; width: 28px; height: 28px; border: 1.5px solid var(--blue); border-radius: 50%; }
+  .reg::before, .reg::after { content: ""; position: absolute; background: var(--blue); }
+  .reg::before { left: 50%; top: -9px; bottom: -9px; width: 1.5px; transform: translateX(-50%); }
+  .reg::after { top: 50%; left: -9px; right: -9px; height: 1.5px; transform: translateY(-50%); }
+  .reg.tl { top: 14px; left: 14px; } .reg.tr { top: 14px; right: 14px; } .reg.bl { bottom: 14px; left: 14px; } .reg.br { bottom: 14px; right: 14px; }
+  .sun { position: absolute; left: 50%; top: 50%; width: min(70vmin, 660px); aspect-ratio: 1; border-radius: 50%; background: var(--pink); transform: translate(-50%, -36%); mix-blend-mode: multiply; }
+  .sun::after { content: ""; position: absolute; inset: -16%; border-radius: 50%; z-index: -1;
+    background-image: radial-gradient(circle, var(--pink) 34%, transparent 37%); background-size: 11px 11px;
+    -webkit-mask: radial-gradient(closest-side, #000 72%, transparent 100%); mask: radial-gradient(closest-side, #000 72%, transparent 100%); }
+  .cover h1 { position: relative; display: grid; justify-items: center; }
+  .cover h1 span { display: block; mix-blend-mode: multiply; }
+  .cover h1 .l1 { color: var(--pink); font-size: clamp(36px, 6.2vw, 108px); }
+  .cover h1 .l2, .cover h1 .l3 { color: var(--blue); font-size: clamp(44px, 8.6vw, 150px); }
+  .cover p { position: relative; max-width: 30ch; font-size: clamp(18px, 1.7vw, 22px); font-weight: 600; mix-blend-mode: multiply; }
+  .btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; position: relative; }
+  .btn { font: 700 14px var(--m); padding: 14px 22px; background: var(--blue); color: var(--paper); border: 2px solid var(--blue); text-decoration: none; box-shadow: 5px 5px 0 var(--pink); transition: transform .15s, box-shadow .15s; }
+  .btn:hover { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--pink); }
+  .btn.ghost { background: var(--paper); color: var(--blue); }
+  .sticker { position: absolute; right: clamp(16px, 5vw, 72px); bottom: clamp(16px, 6vh, 64px); width: clamp(96px, 11vw, 150px); color: var(--paper); }
+  .sticker svg { width: 100%; height: auto; display: block; }
+
+  /* Spreads. The ink alternates pink, blue, pink so no two neighbors match. */
+  .spread { margin: clamp(72px, 10vw, 140px) clamp(16px, 4vw, 48px) 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); align-items: center; position: relative; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font: 700 13px var(--m); }
+  .box { border: 2px solid currentColor; padding: 4px 9px; text-transform: uppercase; letter-spacing: .06em; }
+  .box.pink { background: var(--pink); color: var(--paper); border-color: var(--pink); }
+  .txt { display: grid; gap: 20px; align-content: center; }
+  .txt h2 { font-size: clamp(34px, 4.2vw, 66px); }
+  .txt p { font-weight: 500; max-width: 42ch; }
+  .more { font: 700 14px var(--m); text-decoration: none; justify-self: start; border-bottom: 2px solid var(--pink); padding-bottom: 2px; }
+  .more:hover { background: var(--pink); color: var(--paper); }
+
+  .panel { grid-column: 1 / 7; position: relative; background: var(--pink); color: var(--paper); padding: clamp(28px, 4.5vw, 64px); transform: rotate(-1.4deg); }
+  .panel::after { content: ""; position: absolute; inset: auto 0 0 0; height: 45%; background-image: radial-gradient(circle, var(--paper) 28%, transparent 31%); background-size: 9px 9px; -webkit-mask: linear-gradient(transparent, #000); mask: linear-gradient(transparent, #000); opacity: .5; }
+  .panel .big { font-size: clamp(54px, 7.2vw, 124px); position: relative; z-index: 1; }
+  .panel p { position: relative; z-index: 1; font-weight: 800; font-size: clamp(18px, 1.8vw, 24px); max-width: 22ch; margin-top: 14px; }
+  .tape { position: absolute; width: 128px; height: 32px; background: hsl(50 60% 86% / .72); mix-blend-mode: multiply; z-index: 2; }
+  .s1 .txt { grid-column: 8 / 13; }
+  .stats { display: grid; border-top: 2px solid var(--blue); }
+  .stats div { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: baseline; padding-block: 10px; border-bottom: 2px solid var(--blue); }
+  .stats b { font: 900 clamp(26px, 2.6vw, 38px)/1 var(--f); font-stretch: 125%; letter-spacing: -.03em; }
+  .stats span { font-size: 15px; font-weight: 500; }
+
+  .duo { position: relative; background: var(--paper); isolation: isolate; overflow: hidden; --ink: var(--blue); }
+  .duo.pink { --ink: var(--pink); }
+  .duo img { width: 100%; filter: grayscale(1) contrast(1.15) brightness(1.2); mix-blend-mode: multiply; transition: filter .45s; }
+  .duo::after { content: ""; position: absolute; inset: 0; background: var(--ink); mix-blend-mode: screen; pointer-events: none; transition: opacity .45s; }
+  .duo:hover img { filter: none; mix-blend-mode: normal; }
+  .duo:hover::after { opacity: 0; }
+  .cap { font: 400 12px var(--m); margin-top: 8px; }
+
+  .s2 .shots { grid-column: 1 / 9; position: relative; display: grid; gap: 18px; }
+  .s2 .over { position: absolute; right: -2%; top: 46%; font-size: clamp(80px, 13vw, 220px); color: var(--pink); mix-blend-mode: multiply; pointer-events: none; z-index: 3; }
+  .s2 .txt { grid-column: 9 / 13; }
+
+  .s3 .txt { grid-column: 1 / 6; }
+  .s3 .shots { grid-column: 6 / 13; position: relative; margin-bottom: 8%; }
+  .s3 .phone { position: absolute; width: 23%; right: 5%; bottom: -12%; border-radius: 22px; border: 4px solid var(--blue); mix-blend-mode: multiply; }
+  .stamp { position: absolute; left: -7%; top: -16%; width: clamp(110px, 13vw, 180px); color: var(--blue); transform: rotate(-14deg); mix-blend-mode: multiply; z-index: 3; }
+  .stamp svg { width: 100%; height: auto; display: block; }
+
+  /* Contact: a flyer with tear-off tabs. Each tab copies the email address. */
+  .flyer { margin: clamp(90px, 12vw, 170px) clamp(16px, 4vw, 48px) 0; display: grid; justify-items: center; }
+  .sheet { position: relative; width: min(100%, 860px); background: hsl(42 45% 97%); padding: clamp(28px, 5vw, 56px) clamp(20px, 4vw, 48px) 0; box-shadow: 0 2px 0 var(--paper2), 0 30px 60px -30px hsl(204 60% 20% / .45); transform: rotate(.8deg); }
+  .pin { position: absolute; top: -12px; left: 50%; width: 26px; height: 26px; border-radius: 50%; background: var(--pink); transform: translateX(-50%); box-shadow: inset -4px -4px 0 hsl(328 80% 48%); }
+  .sheet h2 { font-size: clamp(34px, 5.6vw, 76px); text-align: center; }
+  .sheet h2 em { font-style: normal; color: var(--pink); mix-blend-mode: multiply; }
+  .sheet > p { text-align: center; font-weight: 600; margin: 18px auto 28px; max-width: 36ch; }
+  .tabs { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 2px dashed var(--blue); }
+  .tab { appearance: none; border: 0; border-left: 2px dashed var(--blue); background: none; color: var(--blue); cursor: pointer; height: 230px; padding: 14px 0; font: 700 13px var(--m); writing-mode: vertical-rl; transform: rotate(180deg); transform-origin: center; transition: background .2s; display: flex; align-items: center; justify-content: center; }
+  .tab:first-child { border-left: 0; }
+  .tab:hover { background: hsl(328 100% 63% / .14); }
+  .tab.torn { animation: tear .7s cubic-bezier(.5, 0, .75, 0) forwards; }
+  @keyframes tear { 30% { transform: rotate(186deg) translateY(-6px); } to { transform: rotate(200deg) translateY(-120px); opacity: 0; } }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, calc(100% + 40px)); background: var(--pink); color: var(--paper); font: 700 14px var(--m); padding: 12px 18px; transition: transform .35s cubic-bezier(.16, 1, .3, 1); z-index: 80; }
+  .toast.show { transform: translate(-50%, 0); }
+  .links { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 44px; }
+  footer { margin-top: clamp(72px, 10vw, 120px); padding: 22px clamp(16px, 4vw, 48px) 30px; border-top: 1.5px solid var(--blue); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; font: 400 13px var(--m); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sticker svg { animation: spin 22s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .cover h1 span, .cover p, .cover .btns { animation: ink .9s cubic-bezier(.16, 1, .3, 1) both; }
+    .cover h1 .l2 { animation-delay: .08s; } .cover h1 .l3 { animation-delay: .16s; } .cover p { animation-delay: .26s; } .cover .btns { animation-delay: .34s; }
+    @keyframes ink { from { opacity: 0; transform: translate(-6px, 4px); } }
+  }
+  @media (max-width: 860px) {
+    .spread { grid-template-columns: 1fr; }
+    .spread > * { grid-column: 1 / -1 !important; }
+    .s2 .over { position: static; text-align: right; margin-top: -.45em; }
+    .stamp { left: auto; right: 2%; top: -18%; }
+    .sticker { display: none; }
+    .sun { width: 92vw; transform: translate(-50%, -24%); }
+    .tabs { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .tab:nth-child(n+6) { display: none; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="name" href="#">spencer solomon</a>
+  <nav aria-label="Main"><a href="#work">work</a><a href="#">about</a><a href="#contact">contact</a></nav>
+</header>
+
+<section class="cover">
+  <i class="reg tl" aria-hidden="true"></i><i class="reg tr" aria-hidden="true"></i><i class="reg bl" aria-hidden="true"></i><i class="reg br" aria-hidden="true"></i>
+  <div class="sun" aria-hidden="true"></div>
+  <h1 class="disp"><span class="l1">built with ai.</span><span class="l2">shipped to</span><span class="l3">real users.</span></h1>
+  <p>Work tools and personal products I built with AI and put in front of real users.</p>
+  <div class="btns"><a class="btn" href="#work">see my work</a><a class="btn ghost" href="#">résumé</a></div>
+  <div class="sticker" aria-hidden="true">
+    <svg viewBox="0 0 200 200"><defs><path id="ring" d="M100 100m-70 0a70 70 0 1 1 140 0a70 70 0 1 1-140 0"/></defs><circle cx="100" cy="100" r="98" fill="hsl(328 100% 63%)"/><circle cx="100" cy="100" r="44" fill="none" stroke="currentColor" stroke-width="3"/><text fill="currentColor" font-family="Space Mono" font-weight="700" font-size="16" letter-spacing="2.4"><textPath href="#ring">BUILT BY DIRECTING CLAUDE CODE • </textPath></text><text x="100" y="111" text-anchor="middle" fill="currentColor" font-family="Archivo" font-weight="900" font-size="30">ai</text></svg>
+  </div>
+</section>
+
+<main id="work">
+  <article class="spread s1">
+    <div class="panel">
+      <i class="tape" style="top:-14px;left:12%;transform:rotate(-5deg)" aria-hidden="true"></i>
+      <i class="tape" style="bottom:-12px;right:8%;transform:rotate(4deg)" aria-hidden="true"></i>
+      <div class="big disp">~1,000</div>
+      <p>support agents use the knowledge base I built.</p>
+    </div>
+    <div class="txt">
+      <div class="meta"><span class="box pink">shipped</span><span>work, 2026</span></div>
+      <h2 class="disp">moving a fintech's support content off zendesk</h2>
+      <p>I led the support-content side of a fintech's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production.</p>
+      <div class="stats">
+        <div><b>~1,800</b><span>missed article links found</span></div>
+        <div><b>10,000+</b><span>support tickets analyzed</span></div>
+        <div><b>1,000+</b><span>support articles migrated</span></div>
+      </div>
+      <a class="more" href="#">read the case study →</a>
+    </div>
+  </article>
+
+  <article class="spread s2">
+    <div class="shots">
+      <figure style="margin:0"><div class="duo"><img src="../../src/content/projects/slick-bets/home-picks.png" alt="Slick Bets daily picks table with matchups, picks, win probability and predicted spreads" width="1093" height="570"></div><figcaption class="cap">printed in blue. hover for the real colors.</figcaption></figure>
+      <div class="duo pink"><img src="../../src/content/projects/slick-bets/model-accuracy.png" alt="Overall accuracy panel: 648 games analyzed, 463 of 648 correct picks, 71.5% pick accuracy" width="996" height="248"></div>
+      <div class="over disp" aria-hidden="true">71.5%</div>
+    </div>
+    <div class="txt">
+      <div class="meta"><span class="box">retired</span><span>personal, 2026</span></div>
+      <h2 class="disp">slick bets: an nba prediction model</h2>
+      <p>My first Claude Code project. It picked 463 of 648 NBA winners correctly (71.5%), with every prediction locked in before tip-off, and ran live through the 2025-26 season.</p>
+      <a class="more" href="#">read the case study →</a>
+    </div>
+  </article>
+
+  <article class="spread s3">
+    <div class="txt">
+      <div class="meta"><span class="box pink">prototype</span><span>personal, 2026</span></div>
+      <h2 class="disp">a live auction draft room for my fantasy league</h2>
+      <p>Built in six days, then shelved when testing showed what drafters actually needed. Every bid is logged, so a server restart loses nothing.</p>
+      <a class="more" href="#">read the case study →</a>
+    </div>
+    <div class="shots">
+      <div class="stamp" aria-hidden="true">
+        <svg viewBox="0 0 200 200"><defs><path id="ring2" d="M100 100m-74 0a74 74 0 1 1 148 0a74 74 0 1 1-148 0"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="100" cy="100" r="54" fill="none" stroke="currentColor" stroke-width="2.5"/><text fill="currentColor" font-family="Space Mono" font-weight="700" font-size="17" letter-spacing="2.6"><textPath href="#ring2">PROTOTYPE • BUILT IN SIX DAYS • </textPath></text><text x="100" y="98" text-anchor="middle" fill="currentColor" font-family="Archivo" font-weight="900" font-size="34">6</text><text x="100" y="124" text-anchor="middle" fill="currentColor" font-family="Space Mono" font-weight="700" font-size="15">DAYS</text></svg>
+      </div>
+      <div class="duo pink"><img src="../../src/content/projects/auction-draft/tv-board.png" alt="Draft room TV board showing every team's budget, the nomination clock and recent sales" width="1411" height="724"></div>
+      <div class="duo phone"><img src="../../src/content/projects/auction-draft/manager-phone.png" alt="" width="375" height="812"></div>
+    </div>
+  </article>
+
+  <section class="flyer" id="contact">
+    <div class="sheet">
+      <i class="pin" aria-hidden="true"></i>
+      <h2 class="disp">hiring for a product, program or <em>builder</em> role?</h2>
+      <p>Email is the best way to reach me. Tear off a tab to copy my address.</p>
+      <div class="tabs">
+        <button class="tab">spencerwsolomon@gmail.com</button><button class="tab">spencerwsolomon@gmail.com</button><button class="tab">spencerwsolomon@gmail.com</button><button class="tab">spencerwsolomon@gmail.com</button><button class="tab">spencerwsolomon@gmail.com</button><button class="tab">spencerwsolomon@gmail.com</button><button class="tab">spencerwsolomon@gmail.com</button>
+      </div>
+    </div>
+    <div class="links"><a class="btn" href="#">résumé (pdf)</a><a class="btn ghost" href="#">linkedin</a><a class="btn ghost" href="#">github</a></div>
+  </section>
+</main>
+<footer><span>spencer solomon, springfield, mo</span><span>printed in two inks: fluorescent pink and blue</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const email = 'spencerwsolomon@gmail.com', toast = document.getElementById('toast');
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(email); toast.textContent = 'copied: ' + email; }
+    catch { location.href = 'mailto:' + email; return; }
+    if (matchMedia('(prefers-reduced-motion: no-preference)').matches) tab.classList.add('torn');
+    toast.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => toast.classList.remove('show'), 2200);
+  }));
+</script>
+</body>
+</html>
