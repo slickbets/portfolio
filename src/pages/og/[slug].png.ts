@@ -24,8 +24,8 @@ export const getStaticPaths = (async () => {
     {
       params: { slug: 'home' },
       props: {
-        title: 'I ran the project, then built it.',
-        summary: "I'm Spencer, a PM who builds with AI. One tool reached about 1,000 Block agents.",
+        title: 'From the roadmap to the repo.',
+        summary: "I'm Spencer, a PM who builds. My prototype went to production at Block.",
         theme: baseTheme,
       },
     },

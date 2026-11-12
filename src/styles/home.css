@@ -27,13 +27,13 @@
 
 .hero-foot { display: grid; gap: 22px; margin-top: 28px; max-width: 420px; }
 .hero-foot p { font-size: var(--t22); line-height: 1.4; color: var(--muted); max-width: 32ch; }
-/* From 1280 the subhead sits beside "then built it." Below that it stacks under the headline,
+/* From 1280 the subhead sits beside "the repo." Below that it stacks under the headline,
    because between 1200 and 1279 the two nearly touched. */
 @media (min-width: 1280px) {
   .hero { padding-bottom: clamp(56px, 8vh, 88px); }
   .hero-foot { position: absolute; left: 0; bottom: -48px; margin: 0; gap: 18px; }
-  /* The serif line tucks up beside PROJECT. so the three lines lock together. */
-  .l3 { margin-top: -.26em; margin-left: 3.08em; }
+  /* The serif line tucks up beside ROADMAP TO so the three lines lock together. */
+  .l3 { margin-top: -.26em; margin-left: 4.4em; }
 }
 
 /* Load-in: letters rise out of their line, the serif words swing in, then the swoosh draws. */
@@ -146,7 +146,7 @@
 /* The text sheet fades up over the cover art. */
 .wcard-body::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 84px; pointer-events: none;
   background: linear-gradient(180deg, color-mix(in srgb, var(--deep) 0%, transparent), color-mix(in srgb, var(--deep) 62%, transparent) 42%, color-mix(in srgb, var(--sheet) 88%, var(--deep)) 78%, var(--sheet)); }
-.wcard h3 { font: 800 var(--t22)/1 var(--disp); text-transform: none; letter-spacing: .005em; text-wrap: balance; }
+.wcard h3 { font: 800 var(--t22)/1 var(--disp); text-transform: none; letter-spacing: .005em; text-wrap: balance; max-width: 16em; }
 .wcard .sum { font-size: var(--t18); line-height: 1.5; max-width: 560px; color: color-mix(in oklab, var(--cream) 74%, var(--c) 6%); }
 .tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li {
@@ -237,7 +237,7 @@ html:not(.js) .wcard { position: relative; flex: none; width: var(--cw); height:
   .email { font-size: 18px; }
 }
 @media (max-width: 520px) {
-  .headline { font-size: clamp(52px, 20vw, 96px); }
+  .headline { font-size: clamp(52px, 18.5vw, 90px); }
   .l3 { margin-top: .08em; }
   .btn { padding: 0 20px; }
 }

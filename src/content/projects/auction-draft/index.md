@@ -8,8 +8,8 @@ stack: [TypeScript, React, Node.js, Socket.IO, Postgres, Claude Code]
 featured: 3
 repo: https://github.com/slickbets/auction-draft
 tags: [sports, product, ai-building]
-proof: "Picks up where it left off after a crash"
-proofNote: "Every bid is logged, so a server restart loses nothing"
+proof: "100 simulated drafts, no broken rules"
+proofNote: "Plus a full 10-team draft run by bots."
 cover: ./tv-board.png
 coverAlt: "The draft room TV board during bidding: CeeDee Lamb on the block at $41, Team 7 leading with 22 seconds left, every team's remaining budget, and the three most recent sales"
 role: "I reviewed and approved a design spec and three build plans, then directed Claude Code one task at a time."
