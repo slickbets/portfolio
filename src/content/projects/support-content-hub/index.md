@@ -1,5 +1,5 @@
 ---
-title: "Moving Block's support content off Zendesk"
+title: "The tools behind Block's move off Zendesk"
 summary: "I led the support-content side of Block's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
 status: Shipped
 type: Work
@@ -7,17 +7,17 @@ year: 2026
 stack: [React, Vite, Contentful, Salesforce Knowledge, Zendesk API, Claude Code]
 featured: 1
 tags: [internal-tools, ai-building, product]
-proof: "Launched to about 1,000 support agents"
-proofNote: "An agent knowledge base that went from my side prototype to production"
-cardSummary: "I led the support-content side of Block's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and the agent knowledge base."
+proof: "Went from my side prototype to production"
+proofNote: "Launched to about 100 Block support agents"
+cardSummary: "I ran the support-content side of Block's move off Zendesk. When the standard reports fell short, I built a matcher that found about 1,800 missed article links, and a knowledge base that went to production."
 stats:
-  - { value: "~1,000", label: "support agents using the knowledge base" }
+  - { value: "About 100", label: "support agents using the knowledge base" }
   - { value: "~1,800", label: "missed article links found" }
   - { value: "10,000+", label: "support tickets analyzed" }
   - { value: "1,000+", label: "support articles migrated" }
 role: "I was the program lead for the content migration. A product manager led the larger platform move to Salesforce."
 timeline: "I led the content migration from Q1 2026 and handed it off in May 2026, when it was nearly complete."
-outcome: "The knowledge base launched to about 1,000 support agents at one brand, and the migration was scoped on corrected data, with a clear list of what to migrate and what to archive."
+outcome: "The knowledge base launched to about 100 support agents at one brand, and the migration was scoped on corrected data, with a clear list of what to migrate and what to archive."
 ---
 
 **Shipped.** I led the support-content migration during Block's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.
@@ -34,7 +34,7 @@ I was the program lead for the content migration: deciding what moved, where it 
 
 The usual tools ran out quickly, so I built what was missing.
 
-- **An agent knowledge base.** Agents needed somewhere to find articles after the move. I built a prototype on Contentful, a content platform. Product leadership approved it, and it went into the production app with versions for two brands. It launched to about 1,000 support agents at one brand. The second brand's version was built and planned to go live, but hadn't launched yet.
+- **An agent knowledge base.** Agents needed somewhere to find articles after the move. I built a prototype on Contentful, a content platform. Product leadership approved it, and it went into the production app with versions for two brands. It launched to about 100 support agents at one brand. The second brand's version was built and planned to go live, but hadn't launched yet.
 - **A matching engine for articles and macros.** To migrate safely, we had to know which macros pointed to which support articles. The existing mapping looked complete, but it wasn't. I built a matcher that compared every article with every macro in several passes, from exact title matches to fuzzy ones. It found about 1,800 links the original mapping had missed, which was over 40% of the total. That changed which macros we treated as documented, and it changed the migration scope.
 - **A usage analysis for macros.** The help desk's built-in reports couldn't tell us which macros agents actually used. So I sampled more than 10,000 support tickets and pulled every macro use out of them. That showed which macros to migrate, which to rewrite, and which to retire. It also settled a debate about how far back we needed to look before archiving one.
 
@@ -59,7 +59,7 @@ The knowledge base went through engineering review before production. Engineers 
 
 ## Outcome
 
-- The knowledge base prototype was approved, built out for two brands, and shipped to production, where about 1,000 agents at one brand were using it.
+- The knowledge base prototype was approved, built out for two brands, and shipped to production, where about 100 agents at one brand were using it.
 - The migration was scoped on corrected data, which meant fewer missed dependencies and a clear list of what to migrate and what to archive.
 - When I handed off the content migration in May 2026, it was nearly complete.
 

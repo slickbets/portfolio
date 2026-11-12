@@ -20,8 +20,8 @@ const stack = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([name]) => 
 // Tells search engines who this site is about, so a search for the name can show a profile.
 // Short chapters from the About page, each beside one of Spencer's own photos.
 const chapters = [
-  { n: '01', label: 'The day job', rot: '-2.5deg', photo: me, alt: 'Spencer Solomon in a navy cap, glasses and a red plaid jacket, standing in front of a large orange maple tree in autumn.', text: "I'm a Staff Technical Project Manager at SentinelOne, based in Springfield, Missouri. My job has always been getting complicated technical work across the finish line: migrations, rollouts and projects that touch a dozen teams." },
-  { n: '02', label: 'Early 2026', rot: '2deg', photo: bridge, alt: 'The Golden Gate Bridge seen across the water from a hillside path, under a clear blue sky.', text: 'In early 2026 that changed. With AI coding tools, mainly Claude Code, I started building the tools myself instead of only coordinating the people who build them.' },
+  { n: '01', label: 'The day job', rot: '-2.5deg', photo: me, alt: 'Spencer Solomon in a navy cap, glasses and a red plaid jacket, standing in front of a large orange maple tree in autumn.', text: "I'm a Staff Technical Project Manager at SentinelOne, based in Springfield, Missouri. Before that I spent nine years at Block, Jack Henry and Pondurance. The job has always been getting complicated technical work finished: migrations, rollouts and projects that touch a dozen teams." },
+  { n: '02', label: 'The switch', rot: '2deg', photo: bridge, alt: 'The Golden Gate Bridge seen across the water from a hillside path, under a clear blue sky.', text: 'In early 2026 I started building the tools myself, mostly with Claude Code, instead of only coordinating the people who build them. One of them went to production at Block.' },
   { n: '03', label: 'Off the clock', rot: '-1.5deg', photo: columns, alt: 'A long row of white marble columns beside a stone walkway, under a blue sky with streaky clouds.', text: "Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and take care of our two dogs, Zoey and Traeger." },
 ];
 
@@ -50,13 +50,13 @@ const person = {
   <section class="hero wrap" aria-labelledby="hero-title">
     <div class="hero-type">
       <h1 class="headline" id="hero-title">
-        <span class="sr-only">I ran the project, then built it.</span>
-        <span class="line l1" aria-hidden="true" data-split>I ran the</span>
-        <span class="line l2" aria-hidden="true" data-split>project.</span>
-        <span class="line l3" aria-hidden="true"><em>then built it.</em><svg class="swoosh" viewBox="0 0 400 30"><path d="M6 21 C 110 8, 250 4, 394 15" pathLength="1"></path></svg></span>
+        <span class="sr-only">From the roadmap to the repo.</span>
+        <span class="line l1" aria-hidden="true" data-split>From the</span>
+        <span class="line l2" aria-hidden="true" data-split>roadmap to</span>
+        <span class="line l3" aria-hidden="true"><em>the repo.</em><svg class="swoosh" viewBox="0 0 400 30"><path d="M6 21 C 110 8, 250 4, 394 15" pathLength="1"></path></svg></span>
       </h1>
       <div class="hero-foot">
-        <p>I'm Spencer, a PM who builds with AI. One tool reached about 1,000 Block agents.</p>
+        <p>I'm Spencer, a PM who builds. My prototype went to production at Block.</p>
         <div class="btns">
           <a class="btn primary" href="#work">See my work <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"></path></svg></a>
         </div>
@@ -77,7 +77,7 @@ const person = {
   <section class="about wrap" id="about" aria-labelledby="about-title">
     <div class="about-l">
       <p class="kicker rv"><span class="kicker-dot" aria-hidden="true"></span>About</p>
-      <h2 class="about-title rv" id="about-title">I'm Spencer. I&nbsp;build software by directing AI, and&nbsp;I <em>ship&nbsp;it.</em></h2>
+      <h2 class="about-title rv" id="about-title">I used to coordinate the builders. Now I build too.</h2>
       <a class="more rv" href="/about">More about me <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 4l6 6-6 6"></path></svg></a>
     </div>
     <div class="chapters">
@@ -97,8 +97,8 @@ const person = {
     <div class="contact-card rv">
       <div>
         <p class="kicker kicker-ink"><span class="kicker-dot" aria-hidden="true"></span>Contact</p>
-        <h2>Hiring for a product, program or builder role?</h2>
-        <p>I want a role where I decide what to build and then build it, in fintech, sports tech or internal tools. I'm in Springfield, MO and open to remote. Email is the fastest way to reach me.</p>
+        <h2>Hiring a PM who builds?</h2>
+        <p>I'm looking for a role where I decide what to build and then build it, as a PM who builds, a product engineer or a solutions engineer, in fintech, sports tech or internal tools. I'm in Springfield, MO and open to remote. Email is the fastest way to reach me.</p>
       </div>
       <div class="contact-r">
         <EmailCopy />
