@@ -1,7 +1,7 @@
 // Copy check, run with `npm run lint:copy`. See "Checks before every commit" in CLAUDE.md.
 // Fails, naming the file and line, on:
 //   - em-dashes or en-dashes anywhere in src/
-//   - anything that looks like a phone number in src/ or in the text of public/resume.pdf
+//   - anything that looks like a phone number in src/ or in the text of assets-hidden/resume.pdf
 //   - Square, Cash App or Afterpay in the support-content case study (Block itself may be named)
 import { readFile, readdir } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
@@ -41,7 +41,7 @@ for await (const path of walk(join(root, 'src'))) {
 }
 
 // The résumé PDF is only checked for phone numbers. Dashes are fine there.
-const pdfPath = join(root, 'public/resume.pdf');
+const pdfPath = join(root, 'assets-hidden/resume.pdf');
 try {
   const pdf = await getDocument({ data: new Uint8Array(await readFile(pdfPath)), verbosity: 0 }).promise;
   for (let n = 1; n <= pdf.numPages; n++) {
@@ -55,11 +55,11 @@ try {
     }
     lines.push(current);
     lines.forEach((line, i) => {
-      if (phone.test(line)) problems.push(`public/resume.pdf page ${n}, line ${i + 1}  looks like a phone number: ${line.trim()}`);
+      if (phone.test(line)) problems.push(`assets-hidden/resume.pdf page ${n}, line ${i + 1}  looks like a phone number: ${line.trim()}`);
     });
   }
 } catch (error) {
-  if (error.code === 'ENOENT') problems.push('public/resume.pdf  is missing');
+  if (error.code === 'ENOENT') problems.push('assets-hidden/resume.pdf  is missing');
   else throw error;
 }
 

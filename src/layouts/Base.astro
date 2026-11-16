@@ -5,6 +5,7 @@ import '@fontsource/instrument-serif/latin-400-italic.css';
 import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
 import { baseTheme, themeStyle, type Theme } from '../lib/themes';
+import { HOLDING } from '../lib/site';
 
 interface Props {
   /** The browser tab and share title. */
@@ -35,7 +36,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 ---
 
 <!doctype html>
-<html lang="en" style={themeStyle(theme)}>
+<html lang="en" class:list={{ holding: HOLDING }} style={themeStyle(theme)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -70,12 +71,14 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
         <span class="mark-badge" aria-hidden="true">S</span>
         <span class="mark-name">Spencer Solomon</span>
       </a>
-      <nav class="nav" aria-label="Main">
-        {links.map(({ href, label, hideOnPhone }) => (
-          <a href={href} class={hideOnPhone ? 'hide-sm' : undefined} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
-        ))}
-        <a class="cv" href="/resume.pdf"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M5.5 8.5 10 13l4.5-4.5M4 17h12"></path></svg>Résumé (PDF)</a>
-      </nav>
+      {!HOLDING && (
+        <nav class="nav" aria-label="Main">
+          {links.map(({ href, label, hideOnPhone }) => (
+            <a href={href} class={hideOnPhone ? 'hide-sm' : undefined} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
+          ))}
+          <a class="cv" href="/resume.pdf"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M5.5 8.5 10 13l4.5-4.5M4 17h12"></path></svg>Résumé (PDF)</a>
+        </nav>
+      )}
     </header>
 
     <main id="main">
@@ -84,11 +87,13 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 
     <footer class="wrap foot">
       <span>Spencer Solomon, Springfield, MO</span>
-      <nav aria-label="Contact">
-        <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
-        <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
-        <a href="https://github.com/slickbets">GitHub</a>
-      </nav>
+      {!HOLDING && (
+        <nav aria-label="Contact">
+          <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+          <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+          <a href="https://github.com/slickbets">GitHub</a>
+        </nav>
+      )}
     </footer>
 
     <script>
@@ -169,4 +174,12 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     .mark-name { display: none; }
     .nav a { padding: 0 14px; }
   }
+
+  /* Holding page: keep the name visible on phones (the nav is hidden, so there is room),
+     and fill the viewport so the pitch sits in the middle of the screen. */
+  :global(html.holding) .mark-name { display: unset; }
+  :global(html.holding), :global(html.holding body) { min-height: 100svh; }
+  :global(html.holding body) { display: flex; flex-direction: column; }
+  :global(html.holding #main) { flex: 1; display: flex; flex-direction: column; }
+  :global(html.holding .holding-hero) { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 24px 8px; }
 </style>

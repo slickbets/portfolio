@@ -8,6 +8,7 @@ import { createRequire } from 'node:module';
 import { Resvg } from '@resvg/resvg-js';
 import satori from 'satori';
 import { baseTheme, themeAt, type Theme } from '../../lib/themes';
+import { HOLDING } from '../../lib/site';
 
 interface Props {
   title: string;
@@ -25,14 +26,18 @@ export const getStaticPaths = (async () => {
       params: { slug: 'home' },
       props: {
         title: 'From the roadmap to the repo.',
-        summary: "I'm Spencer, a PM who builds. My prototype went to production at Block.",
+        summary: HOLDING
+          ? 'Spencer Solomon, a PM who builds.'
+          : "I'm Spencer, a PM who builds. My prototype went to production at Block.",
         theme: baseTheme,
       },
     },
-    ...projects.map((project, i) => ({
-      params: { slug: project.id },
-      props: { title: project.data.title, summary: project.data.summary, theme: themeAt(i, project.data.theme) },
-    })),
+    ...(HOLDING
+      ? []
+      : projects.map((project, i) => ({
+          params: { slug: project.id },
+          props: { title: project.data.title, summary: project.data.summary, theme: themeAt(i, project.data.theme) },
+        }))),
   ];
 }) satisfies GetStaticPaths;
 
