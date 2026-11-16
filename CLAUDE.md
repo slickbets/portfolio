@@ -36,12 +36,15 @@ src/
     og/[slug].png.ts             share images (1200x630), drawn at build time for home and each project
   styles/global.css              design tokens and base styles (Midnight Garden)
   styles/home.css                homepage hero, stack strip, project wheel, contact card
+  lib/site.ts                    HOLDING flag for the public holding page
   lib/themes.ts                  per-project color presets
   scripts/wheel.js               headline load-in, wheel and page color blending
 public/
-  resume.pdf                     résumé with no phone number
   robots.txt                     points to the sitemap
+assets-hidden/
+  resume.pdf                     résumé, kept out of the deploy while the holding page is on
 scripts/check-copy.mjs           the copy check behind npm run lint:copy
+src/lib/site.ts                  HOLDING flag: true serves the short public page
 ```
 
 ## Content model
@@ -121,8 +124,19 @@ These apply to every word on the site, including alt text and share text.
    - anything that looks like a phone number
    - "Block", "Square", "Cash App" or "Afterpay" inside `src/content/projects/support-content-hub/`
 
-   It scans the text of `public/resume.pdf` for phone numbers only. Dashes are allowed in the PDF.
+   It scans the text of `assets-hidden/resume.pdf` for phone numbers only. Dashes are allowed in the PDF.
 4. Look at the changed pages at phone width (375px) and desktop width. There should be no sideways scrolling.
+
+## Holding page
+
+While Spencer is job hunting, the public site is a short holding page: his name, the line "From the roadmap to the repo.", his email with a copy button, and a LinkedIn link. The full site stays in the repo.
+
+To turn the holding page on or off, set `HOLDING` in `src/lib/site.ts` and run `npm run build`.
+
+- `HOLDING = true` (current): the homepage uses `src/components/HomeHolding.astro`. `/about`, `/work`, `/work/*` and `/resume.pdf` 301 to `/` (the build writes `dist/_redirects` and removes those pages from `dist`). The sitemap lists only `/`. The résumé stays in `assets-hidden/` and is not deployed. The branch `full-site-snapshot` points at the last full-site commit on `main` as a restore point.
+- `HOLDING = false`: the homepage uses `src/components/HomeFull.astro`, the about and work pages are built as usual, and the résumé is copied from `assets-hidden/resume.pdf` to `dist/resume.pdf`. No holding redirects are written.
+
+Do not move the résumé back to `public/` to restore the full site. Flipping the flag is enough.
 
 ## Deploys
 

@@ -1,15 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+import { HOLDING } from '../lib/site';
 ---
 
 <Base title="Page not found | Spencer Solomon" description="This page doesn't exist on spencerwsolomon.com." noindex>
   <div class="wrap">
     <section class="notfound">
       <h1>That page doesn't exist.</h1>
-      <p>The link may be old, or the address may have a typo. You can head back home or look through my work instead.</p>
+      <p>The link may be old, or the address may have a typo. You can head back home{!HOLDING && ' or look through my work instead'}.</p>
       <div class="btns">
         <a class="btn primary" href="/">Go to the homepage</a>
-        <a class="btn" href="/work">See my work</a>
+        {!HOLDING && <a class="btn" href="/work">See my work</a>}
       </div>
     </section>
   </div>
