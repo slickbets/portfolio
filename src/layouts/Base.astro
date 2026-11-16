@@ -59,8 +59,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     <meta name="twitter:image" content={imageUrl} />
     <meta name="theme-color" content={theme.bg} />
     <script is:inline>document.documentElement.classList.add('js');</script>
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <slot name="head" />
   </head>
   <body>
