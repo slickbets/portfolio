@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProjectVisual from '../../components/ProjectVisual.astro';
-import ContactBlock from '../../components/ContactBlock.astro';
 import Arrow from '../../components/Arrow.astro';
 import TeamRatings from '../../components/visuals/TeamRatings.astro';
 import GameDetails from '../../components/visuals/GameDetails.astro';
@@ -75,7 +74,4 @@ const segments = await caseStudySegments(project.rendered?.html ?? '', project.i
       </a>
     </div>
   </section>
-  <ContactBlock heading="Get in touch" headingId="cta-title" page>
-    If you're hiring for a product, program or builder role, email is the best way to reach me.
-  </ContactBlock>
 </Base>
