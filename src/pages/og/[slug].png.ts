@@ -29,7 +29,7 @@ export const getStaticPaths = (async () => {
         title: 'From the roadmap to the repo.',
         summary: HOLDING
           ? 'Spencer Solomon, a PM who builds.'
-          : "I'm Spencer, a PM who builds. My prototype went to production at Block.",
+          : "I'm Spencer, a PM who builds.",
         accent: palette.coral,
       },
     },
