@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { cp, rm, writeFile } from 'node:fs/promises';
+import { rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HOLDING } from './src/lib/site.ts';
@@ -38,9 +38,6 @@ function holdingIntegration() {
           await rm(join(dist, 'work'), { recursive: true, force: true });
           await writeFile(join(dist, '_redirects'), HOLDING_REDIRECTS);
           logger.info('Holding page: removed about/work from dist and wrote _redirects.');
-        } else {
-          await cp(join(root, 'assets-hidden', 'resume.pdf'), join(dist, 'resume.pdf'));
-          logger.info('Full site: copied assets-hidden/resume.pdf into dist.');
         }
       },
     },
