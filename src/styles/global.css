@@ -249,9 +249,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .foot-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
 .foot nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
 .socials { display: flex; align-items: center; gap: 8px; list-style: none; margin: 0 -9px 0 4px; padding: 0; }
-.foot .socials a { display: grid; place-items: center; width: 40px; height: 40px; color: var(--muted); transition: color .2s var(--ease), transform .2s var(--ease); }
-.foot .socials a:hover { color: var(--ink); text-decoration: none; transform: translateY(-2px); }
-.socials svg { width: 22px; height: 22px; fill: currentColor; }
+.foot .socials a { display: grid; place-items: center; width: 40px; height: 40px; color: var(--ink); transition: color .2s var(--ease), transform .2s var(--ease); }
+.foot .socials a:hover { color: var(--coral); text-decoration: none; transform: translateY(-2px); }
+.socials svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .foot a { color: var(--ink); text-decoration: none; }
 .foot a:hover { text-decoration: underline; }
 
