@@ -72,7 +72,6 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
         {!HOLDING && (
           <nav class="nav" aria-label="Main">
             {links.map(({ href, label }) => <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
-            <a class="cta" href="/#contact">Contact</a>
           </nav>
         )}
       </div>

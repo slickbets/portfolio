@@ -76,9 +76,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   transition: background-color .3s var(--ease);
 }
 .nav a:hover { background: color-mix(in srgb, var(--surface) 70%, transparent); }
-.nav a.cta { background: var(--ink); color: var(--surface); padding: 0 20px; margin-left: 4px; }
-.nav a.cta:hover { background: color-mix(in srgb, var(--ink) 86%, var(--coral)); }
-.nav a[aria-current="page"]:not(.cta) { background: var(--surface); font-weight: 600; }
+.nav a[aria-current="page"] { background: var(--surface); font-weight: 600; }
 
 /* Hero */
 .hero { padding: clamp(48px, 8vw, 112px) 0 0; }
@@ -286,7 +284,6 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   .hero-photo { width: 100%; border-radius: var(--r-lg) var(--r-lg) 0 0; aspect-ratio: 4 / 4.2; }
   .hero-photo img { object-position: 44% 40%; }
   .nav a { padding: 0 12px; }
-  .nav a.cta { min-height: 40px; padding: 0 16px; margin-left: 2px; }
   .mark-name { display: none; }
   .top-in { min-height: 64px; }
   .pair { grid-template-columns: 1fr; }
