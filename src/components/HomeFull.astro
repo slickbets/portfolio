@@ -1,30 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import ProjectWheel from './ProjectWheel.astro';
-import EmailCopy from './EmailCopy.astro';
+import Headline from './Headline.astro';
+import ProjectCard from './ProjectCard.astro';
+import ContactBlock from './ContactBlock.astro';
+import Arrow from './Arrow.astro';
+import { orderedProjects } from '../lib/projects';
 import me from '../assets/about/me.jpg';
 import bridge from '../assets/about/golden-gate.jpg';
 import columns from '../assets/about/athens.jpg';
-import '../styles/home.css';
 
-const projects = await getCollection('projects');
-const featured = projects.filter(({ data }) => data.featured !== undefined).sort((a, b) => a.data.featured! - b.data.featured!);
+const featured = (await orderedProjects()).filter(({ project }) => project.data.featured !== undefined);
 
-// The strip under the headline lists every tool in a project's stack, most-used first.
-const counts = new Map<string, number>();
-for (const { data } of projects) for (const item of data.stack) counts.set(item, (counts.get(item) ?? 0) + 1);
-const stack = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([name]) => name);
+// The tools line in About: the tools used across the projects, most-used first.
+const tools = ['Claude Code', 'React', 'TypeScript', 'Node.js', 'Python', 'Postgres'];
 
 // Tells search engines who this site is about, so a search for the name can show a profile.
-// Short chapters from the About page, each beside one of Spencer's own photos.
-const chapters = [
-  { n: '01', label: 'The day job', rot: '-2.5deg', photo: me, alt: 'Spencer Solomon in a navy cap, glasses and a red plaid jacket, standing in front of a large orange maple tree in autumn.', text: "I'm a Staff Technical Project Manager at SentinelOne, based in Springfield, Missouri. Before that I spent nine years at Block, Jack Henry and Pondurance. The job has always been getting complicated technical work finished: migrations, rollouts and projects that touch a dozen teams." },
-  { n: '02', label: 'The switch', rot: '2deg', photo: bridge, alt: 'The Golden Gate Bridge seen across the water from a hillside path, under a clear blue sky.', text: 'In early 2026 I started building the tools myself, mostly with Claude Code, instead of only coordinating the people who build them. One of them went to production at Block.' },
-  { n: '03', label: 'Off the clock', rot: '-1.5deg', photo: columns, alt: 'A long row of white marble columns beside a stone walkway, under a blue sky with streaky clouds.', text: "Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and take care of our two dogs, Zoey and Traeger." },
-];
-
 const person = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -40,77 +31,76 @@ const person = {
 };
 ---
 
-<Base
-  title="Spencer Solomon | building w/ AI tools"
-  description="Technical PM who builds with AI. Projects, case studies and the tools I've shipped."
->
+<Base title="Spencer Solomon | building w/ AI tools" description="Technical PM who builds with AI. Projects, case studies and the tools I've shipped.">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
 
-  <!-- Hero: the headline rises in letter by letter once the fonts are ready (see src/scripts/wheel.js). -->
-  <section class="hero wrap" aria-labelledby="hero-title">
-    <div class="hero-type">
-      <h1 class="headline" id="hero-title">
-        <span class="sr-only">From the roadmap to the repo.</span>
-        <span class="line l1" aria-hidden="true" data-split>From the</span>
-        <span class="line l2" aria-hidden="true" data-split>roadmap to</span>
-        <span class="line l3" aria-hidden="true"><em>the repo.</em><svg class="swoosh" viewBox="0 0 400 30"><path d="M6 21 C 110 8, 250 4, 394 15" pathLength="1"></path></svg></span>
-      </h1>
+  <!-- Hero: type first, with two small drawn pills inside the line. Then Spencer's photo, which the work sheet rises over. -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <Headline />
       <div class="hero-foot">
-        <p>I'm Spencer, a PM who builds. My prototype went to production at Block.</p>
-        <div class="btns">
-          <a class="btn primary" href="#work">See my work <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"></path></svg></a>
-        </div>
+        <p class="lede rv" style="--d:180ms">I'm Spencer, a PM who builds. My prototype went to production at Block.</p>
+        <a class="btn btn-ink rv" style="--d:240ms" href="#work">See my work
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"></path></svg>
+        </a>
       </div>
+    </div>
+    <figure class="hero-photo wrap rv" style="--d:200ms">
+      <Image src={me} alt="Spencer Solomon in a navy cap, glasses and a red plaid jacket, standing in front of a large orange maple tree in autumn." widths={[900, 1400, 2000]} sizes="(min-width: 1300px) 1240px, 100vw" loading="eager" />
+      <figcaption class="photo-tag">Spencer Solomon, Springfield, MO</figcaption>
+    </figure>
+  </section>
+
+  <!-- Work: a lighter sheet that rises over the peach field, with no hard rule between them. -->
+  <section class="work sheet" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker"><span class="dot" aria-hidden="true"></span>Featured work</p>
+        <h2 id="work-title">Three builds, three different endings.</h2>
+      </div>
+      {featured.map(({ project, color }, i) => <ProjectCard project={project} color={color} flip={i % 2 === 1} />)}
     </div>
   </section>
 
-  <div class="strip-bleed">
-    <div class="strip" aria-hidden="true">
-      <div class="strip-track">
-        {[0, 1].map(() => stack.map((name) => <><span>{name}</span><i></i></>))}
+  <!-- About: back on the peach field. Photos share one clean crop shape. -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="wrap about-in">
+      <div class="about-l">
+        <div class="about-sticky">
+          <p class="kicker rv"><span class="dot" aria-hidden="true"></span>About</p>
+          <h2 class="rv" id="about-title">I used to coordinate the builders. Now I build too.</h2>
+          <div class="chapter-lead rv">
+            <p class="ch-label"><b>01</b>The day job</p>
+            <p>I'm a Staff Technical Project Manager at SentinelOne, based in Springfield, Missouri. I joined SentinelOne in May 2026. Before that I spent nine years at Block, Jack Henry and Pondurance. The job has always been getting complicated technical work finished: migrations, rollouts and projects that touch a dozen teams.</p>
+          </div>
+          <div class="tools rv">
+            <p class="ch-label">Built with</p>
+            <ul class="tags" aria-label="Tools across my projects">{tools.map((tool) => <li>{tool}</li>)}</ul>
+          </div>
+          <a class="more rv" href="/about">More about me <Arrow /></a>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <ProjectWheel projects={featured} />
-
-  <section class="about wrap" id="about" aria-labelledby="about-title">
-    <div class="about-l">
-      <p class="kicker rv"><span class="kicker-dot" aria-hidden="true"></span>About</p>
-      <h2 class="about-title rv" id="about-title">I used to coordinate the builders. Now I build too.</h2>
-      <a class="more rv" href="/about">More about me <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 4l6 6-6 6"></path></svg></a>
-    </div>
-    <div class="chapters">
-      {chapters.map(({ n, label, rot, photo, alt, text }) => (
-        <figure class="chapter rv" style={`--rot:${rot}`}>
-          <div class="photo"><Image src={photo} alt={alt} widths={[360, 640]} sizes="(min-width: 1000px) 420px, 62vw" /></div>
-          <figcaption>
-            <span class="ch-label"><b>{n}</b>{label}</span>
-            <p>{text}</p>
-          </figcaption>
+      <div class="chapters">
+        <figure class="chapter rv">
+          <div class="photo">
+            <Image src={bridge} alt="The Golden Gate Bridge seen across the water from a hillside path, under a clear blue sky." widths={[480, 800]} sizes="(min-width: 900px) 380px, 90vw" />
+            <span class="photo-tag"><b>02</b>The switch</span>
+          </div>
+          <figcaption><p>In early 2026, while I was at Block, I started building the tools myself, mostly with Claude Code, instead of only coordinating the people who build them. One of them went to production at Block.</p></figcaption>
         </figure>
-      ))}
+        <figure class="chapter rv" style="--d:100ms">
+          <div class="photo">
+            <Image src={columns} alt="A long row of white marble columns beside a stone walkway, under a blue sky with streaky clouds." widths={[480, 800]} sizes="(min-width: 900px) 380px, 90vw" style="object-position: 50% 60%" />
+            <span class="photo-tag"><b>03</b>Off the clock</span>
+          </div>
+          <figcaption><p>Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and take care of our two dogs, Zoey and Traeger.</p></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <section class="contact wrap" id="contact">
-    <div class="contact-card rv">
-      <div>
-        <p class="kicker kicker-ink"><span class="kicker-dot" aria-hidden="true"></span>Contact</p>
-        <h2>Hiring a PM who builds?</h2>
-        <p>I'm looking for a role where I decide what to build and then build it, as a PM who builds, a product engineer or a solutions engineer, in fintech, sports tech or internal tools. I'm in Springfield, MO and open to remote. Email is the fastest way to reach me.</p>
-      </div>
-      <div class="contact-r">
-        <EmailCopy />
-        <div class="btns">
-          <a class="btn btn-ink" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
-          <a class="btn btn-line" href="https://github.com/slickbets">GitHub</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Contact: one big mint field. -->
+  <ContactBlock heading="Hiring a PM who builds?">
+    I'm looking for a role where I decide what to build and then build it, as a PM who builds, a product engineer or a solutions engineer, in fintech, sports tech or internal tools. I'm in Springfield, MO and open to remote. Email is the fastest way to reach me.
+  </ContactBlock>
 </Base>
-
-<script>
-  import '../scripts/wheel.js';
-</script>

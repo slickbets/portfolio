@@ -1,0 +1,36 @@
+---
+// The Auction Draft TV board, rebuilt as HTML from values in auction-draft/tv-board.png.
+// Small: the bid area and the first five budgets (cards). Full: all ten budgets and recent sales (case study).
+interface Props {
+  full?: boolean;
+}
+const { full = false } = Astro.props;
+const budgets = [200, 200, 101, 200, 182, 200, 200, 200, 200, 200];
+const teams = full ? budgets : budgets.slice(0, 5);
+const sales = [
+  ['Josh Allen', 'Team 5', 18],
+  ['Justin Jefferson', 'Team 3', 47],
+  ['Christian McCaffrey', 'Team 3', 52],
+];
+---
+
+<figure class:list={['board', { 'board-full': full }]}>
+  <figcaption>Draft room TV board</figcaption>
+  <div class="block">
+    <p class="block-label">On the block</p>
+    <p class="block-player"><span class="pos">WR</span>CeeDee Lamb <small>DAL</small></p>
+    <p class="block-bid">$41</p>
+    <p class="block-lead">Team 7 leading, <b>22</b> sec</p>
+  </div>
+  <ul class="teams" aria-label="Remaining budgets">
+    {teams.map((budget, i) => <li><span>Team {i + 1}</span><b>${budget}</b></li>)}
+  </ul>
+  {full && (
+    <div class="sales">
+      <p class="block-label">Recent sales</p>
+      <ul>
+        {sales.map(([player, team, price]) => <li>{player} to {team} <b>${price}</b></li>)}
+      </ul>
+    </div>
+  )}
+</figure>

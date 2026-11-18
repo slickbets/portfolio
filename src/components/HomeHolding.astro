@@ -1,9 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import EmailCopy from './EmailCopy.astro';
-import '../styles/home.css';
+import Headline from './Headline.astro';
 
 const linkedin = 'https://www.linkedin.com/in/spencerwsolomon/';
+const email = 'spencerwsolomon@gmail.com';
 
 const person = {
   '@context': 'https://schema.org',
@@ -25,48 +25,21 @@ const person = {
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
 
-  <section class="hero wrap holding-hero" aria-labelledby="hero-title">
-    <div class="hero-type">
-      <h1 class="headline" id="hero-title">
-        <span class="sr-only">From the roadmap to the repo.</span>
-        <span class="line l1" aria-hidden="true" data-split>From the</span>
-        <span class="line l2" aria-hidden="true" data-split>roadmap to</span>
-        <span class="line l3" aria-hidden="true"><em>the repo.</em><svg class="swoosh" viewBox="0 0 400 30"><path d="M6 21 C 110 8, 250 4, 394 15" pathLength="1"></path></svg></span>
-      </h1>
-      <div class="holding-contact">
-        <EmailCopy />
-        <a class="holding-in" href={linkedin}>LinkedIn</a>
+  <section class="hero holding-hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <Headline />
+      <div class="hero-foot">
+        <div class="email-row rv" style="--d:180ms">
+          <a class="email" href={`mailto:${email}`}>{email}</a>
+          <button class="btn btn-soft btn-sm" type="button" data-copy={email}>Copy email</button>
+        </div>
+        <a class="btn btn-ink rv" style="--d:240ms" href={linkedin}>LinkedIn</a>
       </div>
     </div>
   </section>
 </Base>
 
-<script>
-  import '../scripts/wheel.js';
-</script>
-
 <style>
-  .holding-hero { padding-top: 0; padding-bottom: 0; }
-  .holding-contact { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 36px; }
-  .holding-in {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    padding: 0 16px;
-    border-radius: 999px;
-    border: 1px solid var(--rule);
-    text-decoration: none;
-    font: 600 var(--t14)/1 var(--sans);
-    letter-spacing: -.01em;
-    color: var(--fg);
-    transition: border-color .25s, background-color .25s, color .25s;
-  }
-  .holding-in:hover { border-color: var(--fg); }
-
-  /* home.css styles the contact email for the accent card (ink on accent). On the holding
-     page the email sits on the dark background, so it uses the cream text colors instead. */
-  .holding-hero :global(.email) { color: var(--fg); text-decoration-color: color-mix(in oklab, var(--fg) 55%, transparent); }
-  .holding-hero :global(.email):hover { text-decoration-color: var(--fg); }
-  .holding-hero :global(.copy) { border-color: var(--rule); color: var(--fg); }
-  .holding-hero :global(.copy):hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+  .holding-hero { padding-bottom: clamp(72px, 12vw, 176px); }
+  .holding-hero .email-row { margin-bottom: 0; }
 </style>

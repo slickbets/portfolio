@@ -1,0 +1,35 @@
+---
+// The mint contact field that ends the homepage, About and case studies. The text under the heading is the slot.
+
+interface Props {
+  heading: string;
+  /** id of the heading, for aria-labelledby. */
+  headingId?: string;
+  /** Inner pages add spacing so the field sits under a sheet. The homepage does not. */
+  page?: boolean;
+}
+const { heading, headingId = 'contact-title', page = false } = Astro.props;
+const email = 'spencerwsolomon@gmail.com';
+---
+
+<section class:list={['contact', { 'page-contact': page }]} id="contact" aria-labelledby={headingId}>
+  <div class="wrap">
+    <div class="contact-field rv">
+      <div class="contact-l">
+        <p class="kicker kicker-ink"><span class="dot" aria-hidden="true"></span>Contact</p>
+        <h2 id={headingId}>{heading}</h2>
+        <p><slot /></p>
+      </div>
+      <div class="contact-r">
+        <div class="email-row">
+          <a class="email" href={`mailto:${email}`}>{email}</a>
+          <button class="btn btn-soft btn-sm" type="button" data-copy={email}>Copy email</button>
+        </div>
+        <div class="btns">
+          <a class="btn btn-ink" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+          <a class="btn btn-soft" href="https://github.com/slickbets">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

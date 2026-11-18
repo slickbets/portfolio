@@ -1,0 +1,30 @@
+---
+// The Current Elo Rankings screen from slick-bets/team-ratings.png, rebuilt as HTML with the same values.
+const teams = [
+  [1, 'NYK', 'New York Knicks', 1632, '+132', 'Championship'],
+  [2, 'SAS', 'San Antonio Spurs', 1624, '+124', 'Championship'],
+  [3, 'OKC', 'Oklahoma City Thunder', 1606, '+106', 'Championship'],
+  [4, 'BOS', 'Boston Celtics', 1568, '+68', 'Contender'],
+  [5, 'DET', 'Detroit Pistons', 1564, '+64', 'Contender'],
+  [6, 'CHA', 'Charlotte Hornets', 1560, '+60', 'Contender'],
+  [7, 'DEN', 'Denver Nuggets', 1546, '+46', 'Playoff'],
+  [8, 'HOU', 'Houston Rockets', 1536, '+36', 'Playoff'],
+  [9, 'TOR', 'Toronto Raptors', 1535, '+35', 'Playoff'],
+  [10, 'CLE', 'Cleveland Cavaliers', 1535, '+35', 'Playoff'],
+  [11, 'LAL', 'Los Angeles Lakers', 1525, '+25', 'Playoff'],
+] as const;
+---
+
+<div class="app app-light">
+  <p class="app-title">Current Elo Rankings</p>
+  <div class="scroll">
+    <table class="dtable">
+      <thead><tr><th scope="col" class="n">#</th><th scope="col">Team</th><th scope="col" class="nm">Name</th><th scope="col" class="n">Elo</th><th scope="col" class="n">vs Avg</th><th scope="col">Tier</th></tr></thead>
+      <tbody>
+        {teams.map(([n, abbr, name, elo, vs, tier]) => (
+          <tr><td class="n">{n}</td><th scope="row">{abbr}</th><td class="nm">{name}</td><td class="n">{elo}</td><td class="n">{vs}</td><td><span class={`tier tier-${tier.toLowerCase()}`}>{tier}</span></td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
