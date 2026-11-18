@@ -133,7 +133,7 @@
 .bio-list li { background: var(--surface); border-radius: var(--r-md); padding: 16px 20px; font-size: 1.0625rem; line-height: 1.6; }
 .inline { display: inline-block; margin-left: 4px; font-weight: 600; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
 .about-me { margin: 0; position: sticky; top: 108px; aspect-ratio: 4 / 5; border-radius: var(--r-xl); overflow: hidden; }
-.about-me img { width: 100%; height: 100%; object-fit: cover; object-position: 45% 50%; }
+.about-me img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
 .about-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 32px); margin-top: clamp(56px, 7vw, 96px); }
 .about-pair .photo { aspect-ratio: 16 / 10; }
 

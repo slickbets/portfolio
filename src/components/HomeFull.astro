@@ -5,7 +5,7 @@ import Headline from './Headline.astro';
 import ProjectCard from './ProjectCard.astro';
 import Arrow from './Arrow.astro';
 import { orderedProjects } from '../lib/projects';
-import me from '../assets/about/me.jpg';
+import meWide from '../assets/about/me-wide.jpg';
 import bridge from '../assets/about/golden-gate.jpg';
 import columns from '../assets/about/athens.jpg';
 
@@ -45,7 +45,7 @@ const person = {
       </div>
     </div>
     <figure class="hero-photo wrap rv" style="--d:200ms">
-      <Image src={me} alt="Spencer Solomon in a navy cap, glasses and a red plaid jacket, standing in front of a large orange maple tree in autumn." widths={[900, 1400, 2000]} sizes="(min-width: 1300px) 1240px, 100vw" loading="eager" />
+      <Image src={meWide} alt="Spencer Solomon smiling in a gray suit, blue tie and ball cap, lit by a camera flash against a dark night sky." widths={[900, 1400, 2000]} sizes="(min-width: 1300px) 1240px, 100vw" loading="eager" />
     </figure>
   </section>
 
