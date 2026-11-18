@@ -1,0 +1,20 @@
+---
+// The support-content migration, drawn as a diagram because the work was confidential.
+interface Props {
+  /** Show the "confidential" note under the diagram (case study page). Cards leave it out. */
+  note?: boolean;
+}
+const { note = false } = Astro.props;
+---
+
+<div class="flow" role="img" aria-label="Diagram: the old help desk with over 1,000 articles and 2,000 macros flows through the tools I built, matching and usage analysis, into new content platforms and an agent knowledge base for support agents.">
+  <div class="node"><b>Old help desk</b><small>1,000+ articles, 2,000+ macros</small></div>
+  <span class="flow-line" aria-hidden="true"></span>
+  <div class="node node-hot"><b>Tools I built</b><small>Matching and usage analysis</small></div>
+  <span class="flow-line" aria-hidden="true"></span>
+  <div class="pair">
+    <div class="node"><b>New content platforms</b></div>
+    <div class="node"><b>Agent knowledge base</b><small>For support agents</small></div>
+  </div>
+</div>
+{note && <p class="vis-note">This was confidential internal work, so it's shown as a diagram instead of screenshots.</p>}

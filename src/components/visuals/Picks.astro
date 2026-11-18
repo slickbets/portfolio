@@ -1,0 +1,37 @@
+---
+// Slick Bets predictions as a real HTML table. Small: the card on the homepage and Work page.
+// Wide: the lead visual on the case study.
+import { predictions } from './predictions';
+
+interface Props {
+  wide?: boolean;
+}
+const { wide = false } = Astro.props;
+const rows = wide ? predictions : predictions.slice(0, 6);
+// The picked team's win probability: the home figure when the pick is the home team.
+const winFor = (p: (typeof predictions)[number]) => (p.pick === p.game.slice(-3) ? p.homeWin : p.awayWin);
+---
+
+{wide ? (
+  <figure class="picks picks-wide">
+    <figcaption>All Predictions <span>Slick Bets, 2025-26 season</span></figcaption>
+    <div class="scroll">
+      <table>
+        <thead><tr><th scope="col">Game</th><th scope="col">Pick</th><th scope="col" class="n">Home win %</th><th scope="col" class="n">Away win %</th><th scope="col" class="n">Predicted spread</th></tr></thead>
+        <tbody>
+          {rows.map((p) => <tr><th scope="row">{p.game}</th><td class="pick">{p.pick}</td><td class="n">{p.homeWin}</td><td class="n">{p.awayWin}</td><td class="n">{p.spread}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  </figure>
+) : (
+  <figure class="picks">
+    <figcaption>All Predictions</figcaption>
+    <table>
+      <thead><tr><th scope="col">Game</th><th scope="col">Pick</th><th scope="col">Win %</th><th scope="col">Spread</th></tr></thead>
+      <tbody>
+        {rows.map((p) => <tr><th scope="row">{p.game}</th><td class="pick">{p.pick}</td><td>{winFor(p)}</td><td>{p.spread}</td></tr>)}
+      </tbody>
+    </table>
+  </figure>
+)}

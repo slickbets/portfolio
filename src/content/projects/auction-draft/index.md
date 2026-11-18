@@ -44,7 +44,7 @@ A live draft room that everyone joins from their phone, with a TV screen for the
 - **Three views:** a phone screen for each manager, a TV board showing every roster and budget, and commissioner controls to start, pause, add time or bid for someone.
 - **It survives a crash.** Every draft action is saved to a log. If the server goes down, the draft comes back exactly where it was, paused, ready to resume.
 
-![The commissioner's screen: Start draft, Pause and +30s buttons, a picker to act as any team and nominate or bid for it, above CeeDee Lamb on the block at $41 with Team 7 leading and 22 seconds on the bid clock](./commissioner-on-the-block.png)
+![The commissioner's screen: Start draft, Pause and +30s buttons, a picker to act as any team and nominate or bid for it, above CeeDee Lamb on the block at $41 with Team 7 leading](./commissioner-on-the-block.png)
 
 *The commissioner's screen at the same moment as the TV board at the top of the page. From here the commissioner can pause, add 30 seconds, or nominate and bid on behalf of any team.*
 

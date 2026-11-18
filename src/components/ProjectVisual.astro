@@ -1,32 +1,36 @@
 ---
-// A project's picture: its cover in a browser frame, or its diagram if the work was confidential.
-// Used by the homepage rows, the Work list and project pages so they always agree.
-import type { CollectionEntry } from 'astro:content';
-import BrowserFrame from './BrowserFrame.astro';
-import Diagram from './Diagram.astro';
+// A project's picture, built as HTML from the values in its screenshots (a diagram for the confidential
+// work). "card" is the small version on the homepage and Work page, "lead" is the big one on the case study.
+// A new project with a cover image falls back to that image in a browser frame.
+import { Image } from 'astro:assets';
+import Flow from './visuals/Flow.astro';
+import Picks from './visuals/Picks.astro';
+import Board from './visuals/Board.astro';
+import type { Project } from '../lib/projects';
 
 interface Props {
-  project: CollectionEntry<'projects'>;
-  /** How wide the frame shows on desktop, in CSS pixels. */
-  width?: number;
-  /** Show the whole screenshot instead of the 16:10 crop. */
-  whole?: boolean;
-  priority?: boolean;
-  /** Show the project's stat row inside its diagram. */
-  showStats?: boolean;
+  project: Project;
+  variant?: 'card' | 'lead';
 }
 
-const { project, width, whole = false, priority = false, showStats = false } = Astro.props;
-const { cover, coverAlt, title } = project.data;
-
-const diagrams = new Set(['support-content-hub']);
-if (!cover && !diagrams.has(project.id)) {
-  throw new Error(`Project "${project.id}" needs a cover image or a diagram in ProjectVisual.astro.`);
+const { project, variant = 'card' } = Astro.props;
+const lead = variant === 'lead';
+const { cover, coverAlt } = project.data;
+const known = new Set(['support-content-hub', 'slick-bets', 'auction-draft']);
+if (!known.has(project.id) && !cover) {
+  throw new Error(`Project "${project.id}" needs a cover image, or a visual in ProjectVisual.astro.`);
 }
 ---
 
-{cover ? (
-  <BrowserFrame src={cover} alt={coverAlt ?? title} width={width} whole={whole} priority={priority} />
+{project.id === 'support-content-hub' ? (
+  <Flow note={lead} />
+) : project.id === 'slick-bets' ? (
+  <Picks wide={lead} />
+) : project.id === 'auction-draft' ? (
+  <Board full={lead} />
 ) : (
-  <Diagram stats={showStats ? project.data.stats : undefined} />
+  <div class="browser">
+    <span class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></span>
+    <Image src={cover!} alt={coverAlt ?? ''} widths={[640, 1100]} sizes={lead ? '860px' : '(min-width: 900px) 540px, 90vw'} />
+  </div>
 )}

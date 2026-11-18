@@ -1,0 +1,28 @@
+---
+// The Game Details screen from slick-bets/game-details.png, rebuilt as HTML with the same values.
+import { predictions } from './predictions';
+
+const notes = [
+  ['POR @ HOU', 'HOU on B2B (-35 Elo)'],
+  ['NYK @ DEN', 'DEN on B2B (-35 Elo)'],
+  ['NOP @ PHX', 'PHX on B2B (-35 Elo), NOP on B2B (-35 Elo)'],
+  ['LAC @ SAS', 'SAS on B2B (-35 Elo)'],
+  ['IND @ LAL', 'LAL on B2B (-35 Elo)'],
+];
+---
+
+<div class="app app-light">
+  <p class="app-title">Game Details</p>
+  <ul class="b2b">
+    {notes.map(([game, text]) => <li><b>{game}</b> {text}</li>)}
+    <li class="ok">Loaded odds from 3 sportsbooks</li>
+  </ul>
+  <div class="scroll">
+    <table class="dtable">
+      <thead><tr><th scope="col">Game</th><th scope="col">Pick</th><th scope="col" class="n">Home fair odds</th><th scope="col" class="n">Away fair odds</th><th scope="col">Home rest</th><th scope="col">Away rest</th></tr></thead>
+      <tbody>
+        {predictions.map((p) => <tr><th scope="row">{p.game}</th><td class="pick">{p.pick}</td><td class="n">{p.homeFair}</td><td class="n">{p.awayFair}</td><td>{p.homeRest}</td><td>{p.awayRest}</td></tr>)}
+      </tbody>
+    </table>
+  </div>
+</div>

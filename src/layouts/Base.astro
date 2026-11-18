@@ -1,10 +1,8 @@
 ---
-import '@fontsource-variable/big-shoulders-display';
-import '@fontsource-variable/instrument-sans';
-import '@fontsource/instrument-serif/latin-400-italic.css';
-import '@fontsource-variable/geist-mono';
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/dm-sans/opsz.css';
 import '../styles/global.css';
-import { baseTheme, themeStyle, type Theme } from '../lib/themes';
+import '../styles/pages.css';
 import { HOLDING } from '../lib/site';
 
 interface Props {
@@ -18,11 +16,11 @@ interface Props {
   type?: 'website' | 'article';
   /** Keep the page out of search results (the 404 page). */
   noindex?: boolean;
-  /** Colors for this page. Project pages pass their project's theme; everything else uses the first preset. */
-  theme?: Theme;
+  /** Extra class for <main>, so a page can set its own spacing. */
+  mainClass?: string;
 }
 
-const { title, description, image = '/og/home.png', type = 'website', noindex = false, theme = baseTheme } = Astro.props;
+const { title, description, image = '/og/home.png', type = 'website', noindex = false, mainClass } = Astro.props;
 
 const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/';
 const canonical = new URL(path, Astro.site).href;
@@ -30,13 +28,12 @@ const imageUrl = new URL(image, Astro.site).href;
 const links = [
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
-  { href: '/#contact', label: 'Contact', hideOnPhone: true },
 ];
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
 
 <!doctype html>
-<html lang="en" class:list={{ holding: HOLDING }} style={themeStyle(theme)}>
+<html lang="en" class:list={{ holding: HOLDING }}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -57,7 +54,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <meta name="theme-color" content={theme.bg} />
+    <meta name="theme-color" content="#F6D9C8" />
     <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -65,117 +62,41 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     <slot name="head" />
   </head>
   <body>
-    <div class="aura" aria-hidden="true"></div>
     <a class="skip" href="#main">Skip to content</a>
-    <header class="wrap top">
-      <a class="mark" href="/" aria-label="Spencer Solomon, home">
-        <span class="mark-badge" aria-hidden="true">S</span>
-        <span class="mark-name">Spencer Solomon</span>
-      </a>
-      {!HOLDING && (
-        <nav class="nav" aria-label="Main">
-          {links.map(({ href, label, hideOnPhone }) => (
-            <a href={href} class={hideOnPhone ? 'hide-sm' : undefined} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>
-          ))}
-        </nav>
-      )}
+    <header class="top">
+      <div class="wrap top-in">
+        <a class="mark" href="/" aria-label="Spencer Solomon, home">
+          <img class="mark-s" src="/favicon.svg" alt="" width="38" height="38" />
+          <span class="mark-name">Spencer Solomon</span>
+        </a>
+        {!HOLDING && (
+          <nav class="nav" aria-label="Main">
+            {links.map(({ href, label }) => <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
+            <a class="cta" href="/#contact">Contact</a>
+          </nav>
+        )}
+      </div>
     </header>
 
-    <main id="main">
+    <main id="main" class={mainClass}>
       <slot />
     </main>
 
-    <footer class="wrap foot">
-      <span>Spencer Solomon, Springfield, MO</span>
-      {!HOLDING && (
-        <nav aria-label="Contact">
-          <a class="mono" href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
-          <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
-          <a href="https://github.com/slickbets">GitHub</a>
-        </nav>
-      )}
+    <footer class="foot">
+      <div class="wrap foot-in">
+        <p>Spencer Solomon, Springfield, MO</p>
+        {!HOLDING && (
+          <nav aria-label="Contact">
+            <a href="mailto:spencerwsolomon@gmail.com">spencerwsolomon@gmail.com</a>
+            <a href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
+            <a href="https://github.com/slickbets">GitHub</a>
+          </nav>
+        )}
+      </div>
     </footer>
 
     <script>
-      // Scroll reveal. Elements marked .rv fade up when they reach the viewport. The .js class is
-      // set in the head, so nothing is hidden if scripts fail, and motion is skipped on request.
-      const items = document.querySelectorAll('.rv');
-      if ('IntersectionObserver' in window && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-        const groups = new Map<Element, number>();
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              entry.target.classList.add('in');
-              io.unobserve(entry.target);
-            }
-          },
-          { rootMargin: '0px 0px -12% 0px' },
-        );
-        for (const el of items) {
-          // Siblings that reveal together get a small stagger.
-          const parent = el.parentElement!;
-          const k = groups.get(parent) ?? 0;
-          groups.set(parent, k + 1);
-          (el as HTMLElement).style.setProperty('--d', `${Math.min(k, 6) * 70}ms`);
-          io.observe(el);
-        }
-      } else {
-        for (const el of items) el.classList.add('in');
-      }
+      import '../scripts/site.js';
     </script>
   </body>
 </html>
-
-<style>
-  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
-  .mark { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font: 800 var(--t22)/1 var(--disp); text-transform: uppercase; letter-spacing: .03em; padding-block: 4px; }
-  .mark-badge {
-    display: grid;
-    place-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 11px;
-    background: var(--accent);
-    color: var(--ink);
-    font: 900 var(--t22)/1 var(--disp);
-    transform: rotate(-8deg);
-    transition: transform .5s var(--ease);
-  }
-  .mark:hover .mark-badge { transform: rotate(8deg) scale(1.06); }
-
-  .nav { display: flex; gap: 6px; }
-  .nav a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    padding: 0 16px;
-    border-radius: 999px;
-    border: 1px solid var(--rule);
-    text-decoration: none;
-    font: 600 var(--t14)/1 var(--sans);
-    letter-spacing: -.01em;
-    transition: border-color .25s, color .25s, background-color .25s;
-  }
-  .nav a:hover, .nav a[aria-current='page'] { border-color: var(--fg); color: var(--fg); }
-
-  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; padding-block: 28px 36px; font: 500 var(--t14)/1.4 var(--sans); color: var(--faint); }
-  .foot nav { display: flex; flex-wrap: wrap; gap: 4px 22px; }
-  .foot a { display: inline-block; font-weight: 600; letter-spacing: -.01em; text-decoration: none; color: var(--muted); padding-block: 12px; }
-  .foot a:hover { color: var(--fg); text-decoration: underline; text-underline-offset: .22em; }
-  .foot span { padding-block: 12px; }
-
-  @media (max-width: 520px) {
-    .nav a.hide-sm { display: none; }
-    .mark-name { display: none; }
-    .nav a { padding: 0 14px; }
-  }
-
-  /* Holding page: keep the name visible on phones (the nav is hidden, so there is room),
-     and fill the viewport so the pitch sits in the middle of the screen. */
-  :global(html.holding) .mark-name { display: unset; }
-  :global(html.holding), :global(html.holding body) { min-height: 100svh; }
-  :global(html.holding body) { display: flex; flex-direction: column; }
-  :global(html.holding #main) { flex: 1; display: flex; flex-direction: column; }
-  :global(html.holding .holding-hero) { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 24px 8px; }
-</style>

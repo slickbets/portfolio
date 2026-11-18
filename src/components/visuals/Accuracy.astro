@@ -1,0 +1,17 @@
+---
+// The Overall Accuracy panel from slick-bets/model-accuracy.png, rebuilt as HTML with the same values.
+const stats = [
+  ['648', 'Games analyzed'],
+  ['463/648', 'Correct picks'],
+  ['71.5%', 'Pick accuracy'],
+  ['11.9', 'Avg spread error'],
+  ['9.9', 'Median spread error'],
+];
+---
+
+<div class="app app-light">
+  <p class="app-title">Overall Accuracy</p>
+  <dl class="acc">
+    {stats.map(([value, label]) => <div class:list={{ hot: value === '71.5%' }}><dd>{value}</dd><dt>{label}</dt></div>)}
+  </dl>
+</div>

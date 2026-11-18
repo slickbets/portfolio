@@ -1,0 +1,4 @@
+# The old résumé link goes to the homepage, whether or not the holding page is up.
+/resume.pdf / 301
+/resume.PDF / 301
+/resume.pdf/ / 301

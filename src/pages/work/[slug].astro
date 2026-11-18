@@ -1,185 +1,81 @@
 ---
-import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ProjectVisual from '../../components/ProjectVisual.astro';
-import StatusPill from '../../components/StatusPill.astro';
-import EmailCopy from '../../components/EmailCopy.astro';
-import Stats from '../../components/Stats.astro';
-import { themeAt } from '../../lib/themes';
+import ContactBlock from '../../components/ContactBlock.astro';
+import Arrow from '../../components/Arrow.astro';
+import TeamRatings from '../../components/visuals/TeamRatings.astro';
+import GameDetails from '../../components/visuals/GameDetails.astro';
+import Accuracy from '../../components/visuals/Accuracy.astro';
+import { orderedProjects, statusStyle } from '../../lib/projects';
+import { caseStudySegments } from '../../lib/case-study';
 import { HOLDING } from '../../lib/site';
 
 export async function getStaticPaths() {
   if (HOLDING) return [];
-  const projects = await getCollection('projects');
   // Same order as the homepage, so "Next project" walks through the work and loops back.
-  const ordered = projects.sort((a, b) => (a.data.featured ?? Infinity) - (b.data.featured ?? Infinity) || a.data.title.localeCompare(b.data.title));
-  return ordered.map((project, i) => ({
+  const ordered = await orderedProjects();
+  return ordered.map(({ project, color }, i) => ({
     params: { slug: project.id },
-    // Each project page wears its project's colors, the same ones as its card on the homepage wheel.
-    props: { project, next: ordered[(i + 1) % ordered.length], theme: themeAt(i, project.data.theme) },
+    props: { project, color, next: ordered[(i + 1) % ordered.length] },
   }));
 }
 
-const { project, next, theme } = Astro.props;
-const { title, summary, status, type, year, stack, repo, demo, role, timeline, outcome, stats, cover } = project.data;
+const { project, color, next } = Astro.props;
+const { title, summary, status, type, year, stack, repo, demo, role, timeline, outcome, stats = [] } = project.data;
 const brief = [['My role', role], ['Timeline', timeline], ['Outcome', outcome]].filter(([, v]) => v);
-const { Content } = await render(project);
+
+// Screenshots of these Slick Bets screens are placed as HTML tables built from the same values.
+const visuals = { 'team-ratings.png': TeamRatings, 'game-details.png': GameDetails, 'model-accuracy.png': Accuracy };
+const segments = await caseStudySegments(project.rendered?.html ?? '', project.id, visuals);
 ---
 
-<Base title={`${title} | Spencer Solomon`} description={summary} image={`/og/${project.id}.png`} type="article" theme={theme}>
-  <div class="wrap case">
-    <header class="head">
-      <a class="back" href="/work">← All work</a>
-      <p class="eyebrow"><StatusPill status={status} /><span>{type}, {year}</span></p>
-      <h1>{title}</h1>
-      <p class="sum">{summary}</p>
-    </header>
-
-    <div class="lead-visual">
-      <ProjectVisual project={project} width={1100} whole priority showStats />
-    </div>
-
-    <section class="brief" aria-label="At a glance">
-      {brief.length > 0 && (
+<Base title={`${title} | Spencer Solomon`} description={summary} image={`/og/${project.id}.png`} type="article" mainClass="case-main">
+  <section class="case-head wrap" aria-labelledby="case-title">
+    <a class="back rv" href="/work"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H4M9 4l-6 6 6 6"></path></svg>All work</a>
+    <p class="meta rv"><span class={`status ${statusStyle(project)}`}>{status}</span><span>{type}, {year}</span></p>
+    <h1 class="rv" id="case-title" style="--d:60ms">{title}</h1>
+    <p class="case-sum rv" style="--d:120ms">{summary}</p>
+  </section>
+  <div class="wrap">
+    <div class={`lead-vis lead-${color} rv`} style="--d:160ms"><ProjectVisual project={project} variant="lead" /></div>
+  </div>
+  <section class="sheet case-sheet">
+    <div class="wrap">
+      <div class="brief rv">
         <dl class="brief-main">
           {brief.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
         </dl>
-      )}
-      <dl class="brief-meta">
-        <div>
-          <dt>Built with</dt>
-          <dd><ul class="chips">{stack.map((item) => <li>{item}</li>)}</ul></dd>
-        </div>
-        {repo && <div><dt>Code</dt><dd><a href={repo}>GitHub repository</a></dd></div>}
-        {demo && <div><dt>Demo</dt><dd><a href={demo}>Live site</a></dd></div>}
-      </dl>
-    </section>
-
-    {cover && stats && <div class="stat-band"><Stats stats={stats} /></div>}
-
-    <article class="article">
-      <Content />
-    </article>
-
-    <section class="end">
-      {next.id !== project.id && (
-        <a class="next" href={`/work/${next.id}`}>
-          <span class="next-label">Next project →</span>
-          <span class="next-title">{next.data.title}</span>
-        </a>
-      )}
-      <div class="cta">
-        <h2>Get in touch</h2>
-        <p>If you're hiring for a product, program or builder role, email is the best way to reach me.</p>
-        <EmailCopy />
-        <div class="btns">
-          <a class="btn primary" href="https://www.linkedin.com/in/spencerwsolomon/">LinkedIn</a>
-        </div>
+        <dl class="brief-meta">
+          <div><dt>Built with</dt><dd><ul class="tags">{stack.map((item) => <li>{item}</li>)}</ul></dd></div>
+          {repo && <div><dt>Code</dt><dd><a class="more" href={repo}>GitHub repository <Arrow /></a></dd></div>}
+          {demo && <div><dt>Demo</dt><dd><a class="more" href={demo}>Live site <Arrow /></a></dd></div>}
+        </dl>
       </div>
-    </section>
-  </div>
+      {stats.length > 0 && (
+        <dl class={`stat-band stats-${stats.length} rv`}>
+          {stats.map(({ value, label }) => <div><dd>{value}</dd><dt>{label}</dt></div>)}
+        </dl>
+      )}
+      <article class="prose">
+        {segments.map((segment) =>
+          'html' in segment ? (
+            <Fragment set:html={segment.html} />
+          ) : (
+            <figure class="fig fig-html rv">
+              {(() => { const Visual = visuals[segment.visual as keyof typeof visuals]; return <Visual />; })()}
+              {segment.caption && <figcaption set:html={segment.caption} />}
+            </figure>
+          ),
+        )}
+      </article>
+      <a class={`next next-${next.color} rv`} href={`/work/${next.project.id}`}>
+        <span class="next-label">Next project</span>
+        <span class="next-title">{next.project.data.title}</span>
+        <span class="next-arrow" aria-hidden="true"><Arrow /></span>
+      </a>
+    </div>
+  </section>
+  <ContactBlock heading="Get in touch" headingId="cta-title" page>
+    If you're hiring for a product, program or builder role, email is the best way to reach me.
+  </ContactBlock>
 </Base>
-
-<style>
-  /* One centered reading column (--col, about 75 characters per line) shared by the header, the brief and the article, with
-     media breaking out to --wide. Everything left-aligns to the same edge. */
-  .case { --col: 640px; --wide: 1100px; }
-  .head, .brief, .stat-band, .article { width: 100%; max-width: var(--col); margin-inline: auto; }
-  .lead-visual { width: 100%; max-width: var(--wide); margin-inline: auto; }
-
-  .head { padding-block: clamp(20px, 3.5vw, 44px) 0; display: grid; gap: 16px; }
-  .back { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--muted); text-decoration: none; justify-self: start; padding-block: 15px; margin-block: -15px 0; }
-  .back:hover { color: var(--fg); text-decoration: underline; text-underline-offset: .22em; }
-  .eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; font: 500 var(--t12)/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
-  h1 { font: 900 var(--t56)/.92 var(--disp); letter-spacing: 0; }
-  .sum { font-size: var(--t22); line-height: 1.4; color: var(--muted-strong); text-wrap: pretty; }
-
-  /* At a glance: role, timeline and outcome, then the stack and links. */
-  .brief { margin-top: clamp(32px, 5vw, 56px); border: 1px solid var(--rule); border-radius: 22px; background: var(--tint); overflow: hidden; }
-  .brief dl { margin: 0; }
-  .brief dt { font: 500 var(--t12)/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
-  .brief dd { margin: 0; }
-  .brief-main { display: grid; gap: 20px; padding: 24px 24px 22px; }
-  .brief-main div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: baseline; }
-  .brief-main dd { font: 500 var(--t18)/1.45 var(--sans); color: var(--fg); text-wrap: pretty; }
-  .brief-meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; padding: 18px 24px 20px; border-top: 1px solid var(--rule); }
-  .brief-meta div { display: grid; gap: 10px; align-content: start; min-width: 0; }
-  .brief-meta a { display: inline-block; padding-block: 13px; margin-block: -13px; font: 500 var(--t14)/1.45 var(--sans); color: var(--fg); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; text-decoration-color: color-mix(in oklab, var(--fg) 55%, transparent); }
-  .brief-meta a:hover { text-decoration-color: var(--fg); }
-
-  .stat-band { margin-top: 20px; }
-  .stat-band :global(dd) { white-space: nowrap; }
-  .lead-visual { margin-top: clamp(24px, 3vw, 36px); }
-
-  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips li { font: 400 12px/1 var(--mono); white-space: nowrap; padding: 6px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); }
-
-  .end { width: 100%; max-width: var(--wide); margin-inline: auto; border-top: 1px solid var(--rule); padding-block: clamp(36px, 6vw, 64px) clamp(56px, 8vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
-  .next { display: grid; gap: 10px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 22px; text-decoration: none; background: var(--tint); transition: border-color .3s, transform .5s var(--ease); }
-  .next:hover { border-color: var(--accent); transform: translateY(-3px); }
-  .next-label { font: 600 var(--t14)/1 var(--sans); letter-spacing: -.01em; color: var(--fg); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; text-decoration-color: color-mix(in oklab, var(--fg) 55%, transparent); }
-  .next:hover .next-label { text-decoration-color: var(--fg); }
-  .next-title { font: 800 var(--t28)/.98 var(--disp); letter-spacing: 0; text-wrap: balance; }
-  .cta { display: grid; gap: 16px; justify-items: start; }
-  .cta h2 { font: 800 var(--t40)/.95 var(--disp); letter-spacing: 0; }
-  .cta p { color: var(--muted); max-width: 52ch; }
-  @media (max-width: 767px) { .end { grid-template-columns: 1fr; } }
-
-  .article :global(.callout) { margin: 14px 0; padding: clamp(18px, 3vw, 28px); border-radius: 14px; background: var(--tint); border: 1px solid var(--rule); border-left: 3px solid var(--accent); display: grid; gap: 14px; }
-  .article :global(.callout-label) { font: 500 var(--t12)/1 var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--muted-strong); }
-  .article :global(.callout-stats) { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
-  .article :global(.callout-stats div) { display: grid; gap: 4px; }
-  .article :global(.callout-stats strong) { font: 900 var(--t40)/.9 var(--disp); color: var(--accent); letter-spacing: 0; }
-  .article :global(.callout-stats span) { font-size: var(--t14); line-height: 1.45; color: var(--muted-strong); }
-
-  .article { padding-block: clamp(40px, 6vw, 72px) 56px; display: grid; gap: 18px; }
-  .article > :global(p:first-child) { font-size: var(--t22); line-height: 1.4; color: var(--muted-strong); }
-
-  /* A paragraph holding one screenshot becomes a wide figure in a browser frame. The caption is the
-     italic line written right under it in the Markdown. */
-  .article :global(p:has(> img:only-child)) {
-    margin: 22px calc(50% - min(var(--wide) / 2, 50vw - var(--pad))) 0;
-    border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; background: var(--bg);
-    box-shadow: 0 30px 60px -32px rgb(var(--shadow) / .5);
-  }
-  .article :global(p:has(> img:only-child))::before {
-    content: ""; display: block; height: 28px; background:
-      radial-gradient(circle at 16px 50%, var(--dot) 4.5px, transparent 5px),
-      radial-gradient(circle at 31px 50%, var(--dot) 4.5px, transparent 5px),
-      radial-gradient(circle at 46px 50%, var(--dot) 4.5px, transparent 5px),
-      var(--chrome);
-  }
-  .article :global(p:has(> img:only-child) img) { display: block; width: 100%; height: auto; }
-
-  /* Two phone screenshots in one paragraph sit side by side in phone frames. */
-
-  .article :global(p:has(> img + img)) { margin-top: 22px; display: flex; justify-content: center; gap: clamp(16px, 4vw, 40px); }
-  .article :global(p:has(> img + img) img) { width: min(260px, calc(50% - 8px)); height: auto; padding: 7px; border-radius: 34px; background: var(--frame); box-shadow: 0 30px 60px -28px rgb(var(--shadow) / .6), inset 0 0 0 1px var(--rule); }
-
-  .article :global(p:has(> img) + p:has(> em:only-child)) { margin-top: -4px; font: 400 var(--t14)/1.45 var(--sans); color: var(--muted); }
-  .article :global(p:has(> img) + p:has(> em:only-child) em) { font-style: normal; }
-  .article :global(p:has(> img) + p:has(> em:only-child) + h2) { margin-top: 34px; }
-  .article :global(h2) { font: 800 var(--t40)/.95 var(--disp); letter-spacing: 0; margin-top: 26px; }
-  .article :global(p), .article :global(ul) { margin: 0; }
-  .article :global(ul) { padding-left: 22px; display: grid; gap: 10px; }
-  .article :global(li::marker) { color: var(--muted); }
-  .article :global(strong) { font-weight: 600; }
-  .article :global(a) { color: var(--fg); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; text-decoration-color: color-mix(in oklab, var(--fg) 55%, transparent); }
-  .article :global(a:hover) { text-decoration-color: var(--fg); }
-
-  @media (max-width: 760px) {
-    h1 { font-size: var(--t40); }
-    .sum { font-size: var(--t18); line-height: 1.55; }
-    .brief-main { padding: 20px 18px; gap: 18px; }
-    .brief-main div { grid-template-columns: 1fr; gap: 8px; }
-    .brief-main dd { font-size: var(--t18); }
-    .brief-meta { grid-template-columns: 1fr; padding: 18px; }
-    .article > :global(p:first-child) { font-size: var(--t18); }
-    /* The commissioner screenshot is a wide desktop screen that turns unreadable on a phone, so it and its caption drop out. */
-    .article :global(p:has(> img[src*="commissioner-on-the-block"])),
-    .article :global(p:has(> img[src*="commissioner-on-the-block"]) + p:has(> em:only-child)) { display: none; }
-    .next-title { font-size: var(--t22); }
-    .cta h2 { font-size: var(--t28); }
-    .article :global(h2) { font-size: var(--t28); }
-  }
-</style>

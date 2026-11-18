@@ -1,0 +1,40 @@
+---
+// One project row on the homepage: its picture, then status, title, blurb, stack, proof line and link.
+import ProjectVisual from './ProjectVisual.astro';
+import Arrow from './Arrow.astro';
+import { statusStyle, type FieldColor, type Project } from '../lib/projects';
+
+interface Props {
+  project: Project;
+  color: FieldColor;
+  /** Put the picture on the right. */
+  flip?: boolean;
+  /** "h3" on the homepage, where the section already has an h2. The Work page uses "h2". */
+  heading?: 'h2' | 'h3';
+  /** Make the title a link (the Work page). */
+  linkTitle?: boolean;
+  /** Show the proof line (the homepage). */
+  proof?: boolean;
+  /** Use the shorter card summary when there is one (the homepage). */
+  card?: boolean;
+}
+
+const { project, color, flip = false, heading = 'h3', linkTitle = false, proof = true, card = true } = Astro.props;
+const { title, summary, cardSummary, status, type, year, stack, proof: proofLine, proofNote } = project.data;
+const Heading = heading;
+const href = `/work/${project.id}`;
+---
+
+<article class:list={['proj', `proj-${color}`, { 'proj-flip': flip }]}>
+  <div class="proj-media rv"><ProjectVisual project={project} /></div>
+  <div class="proj-text rv" style="--d:80ms">
+    <p class="meta"><span class={`status ${statusStyle(project)}`}>{status}</span><span>{type}, {year}</span></p>
+    <Heading class={heading === 'h2' ? 'h3' : undefined}>{linkTitle ? <a href={href}>{title}</a> : title}</Heading>
+    <p>{card ? (cardSummary ?? summary) : summary}</p>
+    <ul class="tags" aria-label="Built with">{stack.slice(0, 3).map((item) => <li>{item}</li>)}</ul>
+    {proof && (
+      <p class="proof"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span><strong>{proofLine}</strong>{proofNote}</span></p>
+    )}
+    <a class="more" href={href}>Read the case study <Arrow /></a>
+  </div>
+</article>

@@ -6,7 +6,7 @@ This repo is Spencer Solomon's portfolio site. It supports his search for produc
 
 - Astro, fully static output. No server code, database, login or CMS.
 - Content is Markdown or MDX in Astro content collections.
-- Styling and fonts are open (see Design direction). Use whatever serves the design.
+- Styling is plain CSS with design tokens in `src/styles/global.css`. Fonts are Plus Jakarta Sans and DM Sans, self-hosted through Fontsource.
 - Hosting is Cloudflare Workers with static assets (Cloudflare's current recommendation for static Astro sites), built by Workers Builds from the `main` branch on GitHub. Settings are in `wrangler.jsonc`, and the Node version is in `.node-version`. Analytics is Cloudflare Web Analytics, which sets no cookies.
 - Images go through `astro:assets` (`<Image />`) so they are resized and served as WebP.
 
@@ -25,7 +25,7 @@ src/
     projects/<slug>/index.md     one case study per folder, with its images beside it
     writing/<slug>.md            posts (the Writing menu link appears only once one exists)
   content.config.ts              schemas for both collections
-  components/                    ProjectWheel, BrowserFrame, PhoneFrame, StatusPill, Diagram, Stats, EmailCopy
+  components/                    Headline, ProjectCard, ProjectVisual, ContactBlock, Arrow, and visuals/ (the HTML versions of project screenshots)
   layouts/Base.astro             head tags, fonts, nav, footer
   pages/
     index.astro                  Home
@@ -34,13 +34,15 @@ src/
     about.astro                  Bio, experience, contact
     writing/index.astro, writing/[slug].astro, rss.xml.js, 404.astro
     og/[slug].png.ts             share images (1200x630), drawn at build time for home and each project
-  styles/global.css              design tokens and base styles (Midnight Garden)
-  styles/home.css                homepage hero, stack strip, project wheel, contact card
+  styles/global.css              design tokens, base styles, header, hero, homepage sections and contact field
+  styles/pages.css               About, Work, case study and 404 styles
   lib/site.ts                    HOLDING flag for the public holding page
-  lib/themes.ts                  per-project color presets
-  scripts/wheel.js               headline load-in, wheel and page color blending
+  lib/projects.ts                project order, each project's color field and status style
+  lib/case-study.ts              turns a case study's Markdown into the figure and phone-frame layout
+  scripts/site.js                scroll reveal, header surface, copy-email button
 public/
   robots.txt                     points to the sitemap
+  _redirects                     /resume.pdf goes to the homepage, always
 scripts/check-copy.mjs           the copy check behind npm run lint:copy
 src/lib/site.ts                  HOLDING flag: true serves the short public page
 ```
@@ -62,7 +64,6 @@ cover: ./cover.png             # optional; Work projects may use a diagram compo
 coverAlt: "What the screenshot shows"   # required whenever cover is set
 proof: "71.5% of winners picked correctly"   # the one proof line on the homepage row
 proofNote: "648 games, each prediction locked in before tip-off"
-theme: { accent: "#8CC5A8", bg: "#0F2A2B", bg2: "#173B3A", glow: "#1E7A6E" }   # optional; colors for the card and page, otherwise a preset from src/lib/themes.ts
 repo: https://...              # optional
 demo: https://...              # optional
 ```
@@ -85,10 +86,13 @@ Nothing else should need to change. If adding a project requires editing a page 
 
 ## Design direction
 
-The live design is "Midnight Garden" (deep green and navy, warm paper text, one soft accent per project, Big Shoulders Display, Instrument Serif and Sans, Geist Mono), planned in `docs/garden-redesign-plan.md`. It came out of an open experiment, and Spencer has removed the earlier design restrictions (the "Workbench" spec, light-only, the navy accent, Geist-only type, pill and frame shapes, and the restrained-motion rule). Treat `docs/design-spec.md` and `docs/reference/workbench.html` as history, not rules.
+The live design is a bright pastel one: a peach field (#F6D9C8) with a lighter surface (#FFF3EA), ink (#2A1C16), and coral (#FF7A62) and mint (#5ED0B0) as accent fills, set in Plus Jakarta Sans and DM Sans. Spencer chose it after comparing it with the earlier "Midnight Garden" dark theme, which is gone. `docs/garden-redesign-plan.md`, `docs/design-spec.md` and `docs/reference/workbench.html` are history, not rules.
 
 - Spencer's own reactions are the bar. He will say what he likes and what he hates, and that overrides any default taste.
-- Colors, type, layout, motion, dark or light, and styling tools are all open. Add fonts or packages when the design needs them.
+- The headline "From the roadmap to the repo." has a dark code-lines pill after "roadmap" and a laptop pill after "repo", and no underline.
+- Each project takes one of three color fields (mint, coral, peach) by its place in the homepage order. Accent colors are fills, never small text.
+- The nav is Work, About, then Contact as the dark pill. There is no résumé link.
+- The Slick Bets and Auction Draft screenshots in the case studies are HTML tables built from the real values in the repo screenshots. Use only values that are in the originals.
 - Keep accessibility basics (readable contrast, `prefers-reduced-motion` respected for non-essential motion) and the no-sideways-scrolling check below.
 - Do not use the design-taste-frontend skill. Spencer had it removed on 2026-10-20, and it should not be reinstalled.
 - The copy rules below still apply to every word on the site.
@@ -130,7 +134,7 @@ While Spencer is job hunting, the public site is a short holding page: his name,
 
 To turn the holding page on or off, set `HOLDING` in `src/lib/site.ts` and run `npm run build`.
 
-- `HOLDING = true` (current): the homepage uses `src/components/HomeHolding.astro`. `/about`, `/work`, `/work/*` and `/resume.pdf` 301 to `/` (the build writes `dist/_redirects` and removes those pages from `dist`). The sitemap lists only `/`. The branch `full-site-snapshot` points at the last full-site commit on `main` as a restore point.
+- `HOLDING = true` (current): the homepage uses `src/components/HomeHolding.astro`. `/about`, `/work` and `/work/*` 301 to `/` (the build adds these rules to `dist/_redirects` and removes those pages from `dist`). `/resume.pdf` always 301s to `/`, whether or not the holding page is on, through `public/_redirects`. The sitemap lists only `/`. The branch `full-site-snapshot` points at the last full-site commit on `main` as a restore point.
 - `HOLDING = false`: the homepage uses `src/components/HomeFull.astro`, the about and work pages are built as usual. No holding redirects are written.
 
 Flipping the flag is enough to restore the full site.
