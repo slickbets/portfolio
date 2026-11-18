@@ -121,8 +121,6 @@
 .next-arrow svg { width: 22px; height: 22px; }
 
 /* Contact on inner pages: same mint field, sitting on peach after the sheet */
-.page-contact { background: var(--peach); border-radius: var(--r-xl) var(--r-xl) 0 0; margin-top: calc(-1 * var(--r-xl)); position: relative; padding-top: clamp(56px, 7vw, 96px); }
-.contact-l a { text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
 
 /* ---------- About ---------- */
 .about-head { padding-bottom: clamp(64px, 8vw, 120px); }
