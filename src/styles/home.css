@@ -256,7 +256,7 @@ html:not(.js) .wcard { position: relative; flex: none; width: var(--cw); height:
 .contact { scroll-margin-top: 24px; }
 
 .contact-card .btn { color: var(--ink); }
-.contact-card .btn-ink { color: var(--accent); }
+.contact-card .btn-ink { background: var(--ink); color: var(--accent); }
 
 /* About teaser: tilted photo frames beside short chapters from the About page. */
 .about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px clamp(40px, 6vw, 110px); align-items: start; padding-top: clamp(96px, 14vh, 170px); padding-bottom: clamp(40px, 7vh, 80px); scroll-margin-top: 24px; }

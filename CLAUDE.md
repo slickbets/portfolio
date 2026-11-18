@@ -31,7 +31,7 @@ src/
     index.astro                  Home
     work/index.astro             Work list
     work/[slug].astro            Project page
-    about.astro                  Bio, web résumé, contact
+    about.astro                  Bio, experience, contact
     writing/index.astro, writing/[slug].astro, rss.xml.js, 404.astro
     og/[slug].png.ts             share images (1200x630), drawn at build time for home and each project
   styles/global.css              design tokens and base styles (Midnight Garden)
@@ -41,8 +41,6 @@ src/
   scripts/wheel.js               headline load-in, wheel and page color blending
 public/
   robots.txt                     points to the sitemap
-assets-hidden/
-  resume.pdf                     résumé, kept out of the deploy while the holding page is on
 scripts/check-copy.mjs           the copy check behind npm run lint:copy
 src/lib/site.ts                  HOLDING flag: true serves the short public page
 ```
@@ -111,9 +109,10 @@ These apply to every word on the site, including alt text and share text.
 ## Confidentiality rules
 
 - Nothing confidential from any employer: no internal tool names, people's names, ticket numbers, internal URLs, dollar figures, unconfirmed metrics, internal screenshots or data.
-- **The support-content case study names Block but never its brands (Square, Cash App, Afterpay).** Block may also be named on About and the résumé. Public vendor names (Zendesk, Salesforce Knowledge, Contentful, Bloomfire) are fine.
+- **The support-content case study names Block but never its brands (Square, Cash App, Afterpay).** Block may also be named on About. Public vendor names (Zendesk, Salesforce Knowledge, Contentful, Bloomfire) are fine.
 - **Credit:** Spencer led the content migration only. A product manager led the broader CRM migration. Copy must credit her role and must never imply Spencer led it.
-- The phone number never appears anywhere on the site, including `resume.pdf`.
+- The phone number never appears anywhere on the site.
+- There is no résumé on the site and no résumé PDF in the repo. Spencer keeps role-specific résumés elsewhere and points people to LinkedIn. Do not add a résumé page, link or file without his OK.
 
 ## Checks before every commit
 
@@ -123,8 +122,6 @@ These apply to every word on the site, including alt text and share text.
    - em-dashes and en-dashes
    - anything that looks like a phone number
    - "Block", "Square", "Cash App" or "Afterpay" inside `src/content/projects/support-content-hub/`
-
-   It scans the text of `assets-hidden/resume.pdf` for phone numbers only. Dashes are allowed in the PDF.
 4. Look at the changed pages at phone width (375px) and desktop width. There should be no sideways scrolling.
 
 ## Holding page
@@ -133,10 +130,10 @@ While Spencer is job hunting, the public site is a short holding page: his name,
 
 To turn the holding page on or off, set `HOLDING` in `src/lib/site.ts` and run `npm run build`.
 
-- `HOLDING = true` (current): the homepage uses `src/components/HomeHolding.astro`. `/about`, `/work`, `/work/*` and `/resume.pdf` 301 to `/` (the build writes `dist/_redirects` and removes those pages from `dist`). The sitemap lists only `/`. The résumé stays in `assets-hidden/` and is not deployed. The branch `full-site-snapshot` points at the last full-site commit on `main` as a restore point.
-- `HOLDING = false`: the homepage uses `src/components/HomeFull.astro`, the about and work pages are built as usual, and the résumé is copied from `assets-hidden/resume.pdf` to `dist/resume.pdf`. No holding redirects are written.
+- `HOLDING = true` (current): the homepage uses `src/components/HomeHolding.astro`. `/about`, `/work`, `/work/*` and `/resume.pdf` 301 to `/` (the build writes `dist/_redirects` and removes those pages from `dist`). The sitemap lists only `/`. The branch `full-site-snapshot` points at the last full-site commit on `main` as a restore point.
+- `HOLDING = false`: the homepage uses `src/components/HomeFull.astro`, the about and work pages are built as usual. No holding redirects are written.
 
-Do not move the résumé back to `public/` to restore the full site. Flipping the flag is enough.
+Flipping the flag is enough to restore the full site.
 
 ## Deploys
 

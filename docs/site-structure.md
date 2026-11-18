@@ -9,19 +9,18 @@
 | Project page | `/work/<slug>` | One case study each |
 | Writing | `/writing` | Shorter posts: lessons, how-I-built-it notes (**hidden from the menu until the first post exists**) |
 | Post | `/writing/<slug>` | One post each |
-| About | `/about` | Bio, web résumé, contact, résumé PDF download |
-| — | `/resume.pdf` | Résumé without the phone number |
+| About | `/about` | Bio, experience, contact |
 | — | `/rss.xml`, 404 page | Feed for writing; a simple not-found page |
 
 The menu has **Work · About**, plus **Writing** once a post exists. Every page footer has your email, LinkedIn and GitHub.
 
 **Picks:**
-- **About, résumé and contact are one page.** Three thin pages are worse than one good one, and a recruiter gets everything in one click.
+- **About, experience and contact are one page.** Three thin pages are worse than one good one, and a recruiter gets everything in one click.
 - **Writing stays hidden until it has a post.** An empty "Writing" link reads as abandoned. A strong first post is the AI leadership briefing story.
 
 ## Homepage, top to bottom
 
-1. **Intro.** The Option A headline and paragraph, with two buttons: "See my work" and "Résumé."
+1. **Intro.** The Option A headline and paragraph, with one button: "See my work."
 2. **Featured work.** Three large cards in this order:
    1. Support content migration (work, real users, strongest proof)
    2. Slick Bets (measured result)

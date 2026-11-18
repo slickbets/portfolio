@@ -26,7 +26,7 @@ Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and t
 
 ---
 
-# Résumé (web version)
+# Experience (web version)
 
 **Spencer Solomon**: Technical Program Manager, internal tools and building with Claude. Springfield, MO. PMP.
 
@@ -50,12 +50,8 @@ Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and t
 
 **Certifications and education:** PMP (2023). Associate of Arts, Ozarks Technical Community College.
 
-[Download the full résumé (PDF)](/resume.pdf)
-
 ---
 
 # Contact
 
 The best way to reach me is email: [spencerwsolomon@gmail.com](mailto:spencerwsolomon@gmail.com). I'm also on [LinkedIn](https://www.linkedin.com/in/spencerwsolomon/) and [GitHub](https://github.com/slickbets).
-
-[Download my résumé (PDF)](/resume.pdf)
