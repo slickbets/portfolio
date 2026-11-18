@@ -2,8 +2,6 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
-const hex = z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Use a six-digit hex color like #8CC5A8');
-
 const tags = z.enum(['ai-building', 'internal-tools', 'sports', 'data', 'product']);
 
 // One case study per folder: src/content/projects/<slug>/index.md, with its images beside it.
@@ -24,8 +22,6 @@ const projects = defineCollection({
       proof: z.string(),
       proofNote: z.string(),
       cardSummary: z.string().optional(),
-      // Optional colors for this project's card and page. Without it, see src/lib/themes.ts.
-      theme: z.object({ accent: hex, bg: hex, bg2: hex, glow: hex }).optional(),
       // The at-a-glance block under a project title. Each is one plain sentence.
       role: z.string().optional(),
       timeline: z.string().optional(),
