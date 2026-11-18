@@ -248,10 +248,10 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
 .foot { padding: clamp(32px, 4vw, 48px) 0 40px; font-size: var(--t-small); color: var(--muted); }
 .foot-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
 .foot nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
-.socials { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; }
-.socials a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; background: var(--surface); }
-.socials a:hover { background: var(--ink); color: var(--surface); text-decoration: none; }
-.socials svg { width: 18px; height: 18px; fill: currentColor; }
+.socials { display: flex; align-items: center; gap: 8px; list-style: none; margin: 0 -9px 0 4px; padding: 0; }
+.foot .socials a { display: grid; place-items: center; width: 40px; height: 40px; color: var(--muted); transition: color .2s var(--ease), transform .2s var(--ease); }
+.foot .socials a:hover { color: var(--ink); text-decoration: none; transform: translateY(-2px); }
+.socials svg { width: 22px; height: 22px; fill: currentColor; }
 .foot a { color: var(--ink); text-decoration: none; }
 .foot a:hover { text-decoration: underline; }
 
@@ -275,6 +275,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; 
   .teams li { padding: 8px 6px; }
 }
 @media (max-width: 900px) {
+  .socials { margin: 0 0 0 -9px; }
   .hero-foot { grid-template-columns: 1fr; }
   .hero-photo { aspect-ratio: 4 / 3; }
   .proj-media { margin-inline: calc(-1 * var(--gutter)); border-radius: 0; min-height: 0; padding: 32px var(--gutter); }
