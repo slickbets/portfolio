@@ -12,7 +12,7 @@ Below are the projects I've built, with honest notes on what worked and what did
 
 # About
 
-I'm a Staff Technical Project Manager at SentinelOne, based in Springfield, Missouri. Before that I spent nine years at Block, Jack Henry and Pondurance. My job has always been getting complicated technical work across the finish line: migrations, rollouts and projects that touch a dozen teams.
+I'm a Staff Technical Project Manager at SentinelOne, based in the Midwest. Before that I spent nine years at Block, Jack Henry and Pondurance. My job has always been getting complicated technical work across the finish line: migrations, rollouts and projects that touch a dozen teams.
 
 In early 2026 that changed. With AI coding tools, mainly Claude Code, I started building the tools myself instead of only coordinating the people who build them. I'm not a traditional software engineer, and I don't pretend to be. What I'm good at is knowing what to build, directing the AI to build it, checking the work, and deciding when it's done or when to walk away.
 
@@ -28,7 +28,7 @@ Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and t
 
 # Experience (web version)
 
-**Spencer Solomon**: Technical Program Manager, internal tools and building with Claude. Springfield, MO. PMP.
+**Spencer Solomon**: Technical Program Manager, internal tools and building with Claude. Midwest. PMP.
 
 **SentinelOne**: Staff Technical Project Manager, Professional Services · May 2026 – present
 - I lead enterprise deployments of SentinelOne's AI-powered SIEM platform for large customers and reseller partners, running four implementations at once from kickoff to go-live.
