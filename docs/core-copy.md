@@ -20,8 +20,6 @@ That shows up in the work here:
 - At Block I built a knowledge base for support agents that went to production, plus the tools that kept a large content migration on track.
 - On my own time I built an NBA prediction model that ran live for a season, and a real-time auction draft room for my fantasy football league.
 
-I'm looking for product, technical program or builder roles where I can do both: figure out the right thing to build, and build it. I'm especially interested in internal tools, customer-facing products, sports tech and weather.
-
 Outside of work, I'm an avid Chiefs fan. I play golf, travel with my wife, and take care of our two dogs, Zoey and Traeger.
 
 ---
