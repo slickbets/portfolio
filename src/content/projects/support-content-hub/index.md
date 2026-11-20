@@ -1,6 +1,6 @@
 ---
 title: "The tools behind a help desk migration"
-summary: "I led the support-content side of Block's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
+summary: "I led the support-content side of a fintech company's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
 status: Shipped
 type: Work
 year: 2026
