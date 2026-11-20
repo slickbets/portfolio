@@ -4,6 +4,7 @@ summary: "A real-time auction draft room I built in six days, then shelved when 
 status: Prototype
 type: Personal
 year: 2026
+cardSummary: "A real-time auction draft room I built in six days, then shelved when testing showed drafters needed [what testing showed]."
 stack: [TypeScript, React, Node.js, Socket.IO, Postgres, Claude Code]
 featured: 3
 repo: https://github.com/slickbets/auction-draft

@@ -12,7 +12,7 @@ import columns from '../assets/about/athens.jpg';
 const featured = (await orderedProjects()).filter(({ project }) => project.data.featured !== undefined);
 
 // The tools line in About: the tools used across the projects, most-used first.
-const tools = ['Claude Code', 'React', 'TypeScript', 'Node.js', 'Python', 'Postgres'];
+const tools = ['AI coding tools', 'React', 'TypeScript', 'Node.js', 'Python', 'Postgres'];
 
 // Tells search engines who this site is about, so a search for the name can show a profile.
 const person = {
@@ -30,7 +30,7 @@ const person = {
 };
 ---
 
-<Base title="Spencer Solomon | building w/ AI tools" description="Technical PM who builds with AI. Projects, case studies and the tools I've shipped.">
+<Base title="Spencer Solomon | The PM who builds" description="Technical program manager in cyber and fintech who builds his own tools. Case studies on a help desk migration, an NBA model and a live fantasy football draft tool.">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
 
   <!-- Hero: type first, with two small drawn pills inside the line. Then Spencer's photo, which the work sheet rises over. -->
@@ -38,7 +38,7 @@ const person = {
     <div class="wrap">
       <Headline />
       <div class="hero-foot">
-        <p class="lede rv" style="--d:180ms">I'm Spencer, a PM who builds.</p>
+        <p class="lede lede-id rv" style="--d:180ms"><strong>Spencer Solomon</strong>Technical Program Manager. Nine years leading technical programs in cyber, fintech and banking.</p>
         <a class="btn btn-ink rv" style="--d:240ms" href="#work">See my work
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"></path></svg>
         </a>
@@ -69,7 +69,7 @@ const person = {
           <h2 class="rv" id="about-title">I used to coordinate the builders. Now I build too.</h2>
           <div class="chapter-lead rv">
             <p class="ch-label"><b>01</b>The day job</p>
-            <p>I'm a Staff Technical Project Manager at SentinelOne, based in the Midwest. I joined SentinelOne in May 2026. Before that I spent nine years at Block, Jack Henry and Pondurance. The job has always been getting complicated technical work finished: migrations, rollouts and projects that touch a dozen teams.</p>
+            <p>I'm a Technical Program Manager in cybersecurity, based in the Midwest. I've spent nine years in cyber, fintech and banking getting complicated technical work finished: migrations, rollouts and projects that touch a dozen teams.</p>
           </div>
           <div class="tools rv">
             <p class="ch-label">Built with</p>
@@ -84,7 +84,7 @@ const person = {
             <Image src={bridge} alt="The Golden Gate Bridge seen across the water from a hillside path, under a clear blue sky." widths={[480, 800]} sizes="(min-width: 900px) 380px, 90vw" />
             <span class="photo-tag"><b>02</b>The switch</span>
           </div>
-          <figcaption><p>In early 2026, while I was at Block, I started building the tools myself, mostly with Claude Code, instead of only coordinating the people who build them. One of them went to production at Block.</p></figcaption>
+          <figcaption><p>In early 2026 I started building the tools myself with AI instead of only coordinating the people who build them.</p></figcaption>
         </figure>
         <figure class="chapter rv" style="--d:100ms">
           <div class="photo">

@@ -8,8 +8,9 @@ stack: [React, Vite, Contentful, Salesforce Knowledge, Zendesk API, Claude Code]
 featured: 1
 tags: [internal-tools, ai-building, product]
 proof: "Went from my side prototype to production"
-proofNote: "Launched to support agents at Block"
-cardSummary: "I ran the support-content side of Block's move off Zendesk. When the standard reports fell short, I built a matcher that found about 1,800 missed article links, and a knowledge base that went to production."
+proofNote: "Launched to the company's support agents"
+cardTitle: "A knowledge base for a help desk migration"
+cardSummary: "I ran the support-content side of a fintech company's move off Zendesk. Along the way I built a knowledge base for support agents, starting as a side prototype, and it went to production."
 stats:
   - { value: "~1,800", label: "missed article links found" }
   - { value: "10,000+", label: "support tickets analyzed" }

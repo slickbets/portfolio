@@ -22,6 +22,8 @@ const projects = defineCollection({
       proof: z.string(),
       proofNote: z.string(),
       cardSummary: z.string().optional(),
+      // Homepage card title, when it should differ from the case-study title.
+      cardTitle: z.string().optional(),
       // The at-a-glance block under a project title. Each is one plain sentence.
       role: z.string().optional(),
       timeline: z.string().optional(),
