@@ -1,5 +1,5 @@
 ---
-title: "The tools behind Block's move off Zendesk"
+title: "The tools behind a help desk migration"
 summary: "I led the support-content side of Block's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
 status: Shipped
 type: Work
@@ -48,7 +48,7 @@ The usual tools ran out quickly, so I built what was missing.
 
 ## How I built it
 
-I wrote all of this by directing AI coding tools. I decided what each tool had to answer and what "right" looked like. AI wrote the code, and I checked the results against real data before anyone made a decision from them.
+I wrote all of this by directing AI coding tools. I decided what each tool had to answer and what "right" looked like. The AI wrote the code, and I checked the results against real data before anyone made a decision from them.
 
 Two moments shaped the work:
 

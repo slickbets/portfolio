@@ -13,7 +13,7 @@ proofNote: "648 games, each prediction locked in before tip-off"
 cardSummary: "An NBA model that picked every game, every day, and ran itself through the 2025-26 season."
 cover: ./home-picks.png
 coverAlt: "Slick Bets daily picks table with matchups, picks, win probability and predicted spreads"
-role: "I directed Claude Code through every part of it, made the calls on the model and the product, and reviewed everything before it shipped."
+role: "I directed AI coding tools through every part of it, made the calls on the model and the product, and reviewed everything before it shipped."
 timeline: "I built it over about ten weeks, and it ran live through the end of the 2025-26 NBA season."
 outcome: "A small group of friends used it, and I never promoted it. I never tracked betting profit, so I make no claims about beating the books."
 stats:
@@ -67,7 +67,7 @@ Three decisions shaped it:
 
 **I cut the betting features.** The app started as a "value finder" that compared the model's odds to sportsbook odds, sized bets, and tracked a bankroll. The value picks weren't right. There are also too many ways to chase value (spreads, moneylines, player props) to do any of them well at once. So I narrowed it to one thing the model could do well, picking winners, and planned to build out from there.
 
-**I tuned the model with data, not instinct.** I had AI build a backtest that replays the season. I ran 840 combinations of settings against more than 900 games. Then I chose settings that were slightly less accurate at picking winners but better at predicting the margin. I also added tests that fail the build if accuracy drops below a set bar.
+**I tuned the model with data, not instinct.** I had the AI build a backtest that replays the season. I ran 840 combinations of settings against more than 900 games. Then I chose settings that were slightly less accurate at picking winners but better at predicting the margin. I also added tests that fail the build if accuracy drops below a set bar.
 
 **I learned production by running into it.** I'd never deployed an app before. Along the way I hit everything:
 - the daily job couldn't see its passwords
@@ -75,7 +75,7 @@ Three decisions shaped it:
 - duplicate games showed up
 - data providers went down
 
-Each one became a fix and a written rule in the project's instructions file, so AI wouldn't repeat the mistake.
+Each one became a fix and a written rule in the project's instructions file, so the AI wouldn't repeat the mistake.
 
 ## Outcome
 

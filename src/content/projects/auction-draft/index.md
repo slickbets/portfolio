@@ -13,7 +13,7 @@ proof: "100 simulated drafts, no broken rules"
 proofNote: "Plus a full 10-team draft run by bots."
 cover: ./tv-board.png
 coverAlt: "The draft room TV board during bidding: CeeDee Lamb on the block at $41, Team 7 leading with 22 seconds left, every team's remaining budget, and the three most recent sales"
-role: "I reviewed and approved a design spec and three build plans, then directed Claude Code one task at a time."
+role: "I reviewed and approved a design spec and three build plans, then directed AI coding tools one task at a time."
 timeline: "It took six days from spec to a working draft room."
 outcome: "It was never used in a real draft. Our league drafted on ESPN, whose free draft tool already shows the bye weeks, player news and depth charts mine lacked."
 stats:
@@ -53,7 +53,7 @@ A live draft room that everyone joins from their phone, with a TV screen for the
 
 ## How I built it
 
-This was my most structured build. Before writing any code, I had AI coding tools draft a design spec and three detailed build plans, and I reviewed and approved each one. Then AI built against the plans one task at a time, with a separate review pass on each piece of work.
+This was my most structured build. Before writing any code, I had an AI coding tool draft a design spec and three detailed build plans, and I reviewed and approved each one. Then the AI built against the plans one task at a time, with a separate review pass on each piece of work.
 
 I also put real weight on testing, because a draft room that breaks on draft night is worse than none. The test suite includes:
 - a full 10-team draft run by bots over real connections
