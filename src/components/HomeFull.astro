@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import Headline from './Headline.astro';
 import ProjectCard from './ProjectCard.astro';
 import Arrow from './Arrow.astro';
 import { orderedProjects } from '../lib/projects';
@@ -22,7 +21,7 @@ const person = {
   '@id': 'https://spencerwsolomon.com/#person',
   name: 'Spencer Solomon',
   url: 'https://spencerwsolomon.com/',
-  jobTitle: 'Staff Technical Project Manager',
+  jobTitle: 'Technical Program Manager',
   worksFor: { '@type': 'Organization', name: 'SentinelOne' },
   email: 'mailto:spencerwsolomon@gmail.com',
   address: { '@type': 'PostalAddress', addressCountry: 'US' },
@@ -33,12 +32,12 @@ const person = {
 <Base title="Spencer Solomon | The PM who builds" description="Technical program manager in cyber and fintech who builds his own tools. Case studies on a help desk migration, an NBA model and a live fantasy football draft tool.">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(person)} />
 
-  <!-- Hero: type first, with two small drawn pills inside the line. Then Spencer's photo, which the work sheet rises over. -->
+  <!-- Hero: the name as the headline, then the subline. Then Spencer's photo, which the work sheet rises over. -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
-      <Headline />
+      <h1 class="headline hero-name rv" id="hero-title">Spencer Solomon</h1>
       <div class="hero-foot">
-        <p class="lede lede-id rv" style="--d:180ms"><strong>Spencer Solomon</strong>Technical Program Manager. Nine years leading technical programs in cyber, fintech and banking.</p>
+        <p class="lede lede-id rv" style="--d:180ms">Technical Program Manager. Nine years leading technical programs in cyber, fintech and banking.</p>
         <a class="btn btn-ink rv" style="--d:240ms" href="#work">See my work
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M4 10l6 6 6-6"></path></svg>
         </a>

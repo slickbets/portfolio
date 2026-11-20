@@ -4,7 +4,7 @@ summary: "My first Claude Code project: an NBA prediction app that picked 71.5% 
 status: Retired
 type: Personal
 year: 2026
-stack: [Python, Streamlit, SQLite, Fly.io, GitHub Actions, Claude Code]
+stack: [Python, Streamlit, SQLite, Fly.io, GitHub Actions, AI coding tools]
 featured: 2
 repo: https://github.com/slickbets/nba-betting-value
 tags: [sports, data, ai-building]

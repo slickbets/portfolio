@@ -4,7 +4,7 @@ summary: "I led the support-content side of Block's move off Zendesk, and built 
 status: Shipped
 type: Work
 year: 2026
-stack: [React, Vite, Contentful, Salesforce Knowledge, Zendesk API, Claude Code]
+stack: [React, Vite, Contentful, Salesforce Knowledge, Zendesk API, AI coding tools]
 featured: 1
 tags: [internal-tools, ai-building, product]
 proof: "Went from my side prototype to production"
