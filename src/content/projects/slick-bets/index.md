@@ -29,7 +29,7 @@ stats:
 
 I wanted to know if I could build a model that predicts NBA games well enough to trust. I also wanted to see if it could find bets where the sportsbooks' odds were off.
 
-I also wanted to learn how to build software with Claude Code. This was my first real project with it.
+I also wanted to learn how to build software with AI coding tools. This was my first real project with it.
 
 ## What I built
 
@@ -61,13 +61,13 @@ It runs itself. Every morning a scheduled job pulls yesterday's results, updates
 
 ## How I built it
 
-I directed Claude Code through every part of it, over about ten weeks. I set the goals, made the calls on the model and the product, and reviewed everything before it shipped. My rule was preview, approve, then push.
+I directed AI coding tools through every part of it, over about ten weeks. I set the goals, made the calls on the model and the product, and reviewed everything before it shipped. My rule was preview, approve, then push.
 
 Three decisions shaped it:
 
 **I cut the betting features.** The app started as a "value finder" that compared the model's odds to sportsbook odds, sized bets, and tracked a bankroll. The value picks weren't right. There are also too many ways to chase value (spreads, moneylines, player props) to do any of them well at once. So I narrowed it to one thing the model could do well, picking winners, and planned to build out from there.
 
-**I tuned the model with data, not instinct.** I had Claude build a backtest that replays the season. I ran 840 combinations of settings against more than 900 games. Then I chose settings that were slightly less accurate at picking winners but better at predicting the margin. I also added tests that fail the build if accuracy drops below a set bar.
+**I tuned the model with data, not instinct.** I had AI build a backtest that replays the season. I ran 840 combinations of settings against more than 900 games. Then I chose settings that were slightly less accurate at picking winners but better at predicting the margin. I also added tests that fail the build if accuracy drops below a set bar.
 
 **I learned production by running into it.** I'd never deployed an app before. Along the way I hit everything:
 - the daily job couldn't see its passwords
@@ -75,7 +75,7 @@ Three decisions shaped it:
 - duplicate games showed up
 - data providers went down
 
-Each one became a fix and a written rule in the project's instructions file, so Claude wouldn't repeat the mistake.
+Each one became a fix and a written rule in the project's instructions file, so AI wouldn't repeat the mistake.
 
 ## Outcome
 
