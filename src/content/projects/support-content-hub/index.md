@@ -1,15 +1,16 @@
 ---
-title: "The tools behind Block's move off Zendesk"
-summary: "I led the support-content side of Block's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
+title: "The tools behind a help desk migration"
+summary: "I led the support-content side of a fintech company's move off Zendesk, and built the tools it needed: a matching engine, a usage analysis, and an agent knowledge base that went to production."
 status: Shipped
 type: Work
 year: 2026
-stack: [React, Vite, Contentful, Salesforce Knowledge, Zendesk API, Claude Code]
+stack: [React, Vite, Contentful, Salesforce Knowledge, Zendesk API, AI coding tools]
 featured: 1
 tags: [internal-tools, ai-building, product]
 proof: "Went from my side prototype to production"
-proofNote: "Launched to support agents at Block"
-cardSummary: "I ran the support-content side of Block's move off Zendesk. When the standard reports fell short, I built a matcher that found about 1,800 missed article links, and a knowledge base that went to production."
+proofNote: "Launched to the company's support agents"
+cardTitle: "A knowledge base for a help desk migration"
+cardSummary: "I ran the support-content side of a fintech company's move off Zendesk. Along the way I built a knowledge base for its support agents."
 stats:
   - { value: "~1,800", label: "missed article links found" }
   - { value: "10,000+", label: "support tickets analyzed" }
@@ -19,13 +20,13 @@ timeline: "I led the content migration from Q1 2026 and handed it off in May 202
 outcome: "The knowledge base launched to support agents at one brand, and the migration was scoped on corrected data, with a clear list of what to migrate and what to archive."
 ---
 
-**Shipped.** I led the support-content migration during Block's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.
+**Shipped.** I led the support-content migration during a fintech company's move off Zendesk. Along the way I built the tools the migration needed, including an agent knowledge base that went to production.
 
 ## The problem
 
 The company was moving its support operation off Zendesk, its help desk, before the contract ended. A product manager led that larger platform move to Salesforce. The support content alone was more than 1,000 internal support articles plus more than 2,000 "macros," the canned replies agents send customers. All of this content had to move to new platforms before the deadline, and nothing agents relied on could break.
 
-It sat inside a bigger effort. Block had several consumer brands, each with its own support-content tool, and leadership wanted fewer tools doing the same job.
+It sat inside a bigger effort. The company had several consumer brands, each with its own support-content tool, and leadership wanted fewer tools doing the same job.
 
 I was the program lead for the content migration: deciding what moved, where it went, and making sure it worked when it got there.
 
@@ -47,7 +48,7 @@ The usual tools ran out quickly, so I built what was missing.
 
 ## How I built it
 
-I wrote all of this by directing Claude Code. I decided what each tool had to answer and what "right" looked like. Claude wrote the code, and I checked the results against real data before anyone made a decision from them.
+I wrote all of this by directing AI coding tools. I decided what each tool had to answer and what "right" looked like. The AI wrote the code, and I checked the results against real data before anyone made a decision from them.
 
 Two moments shaped the work:
 
@@ -64,6 +65,6 @@ The knowledge base went through engineering review before production. Engineers 
 
 ## What I learned
 
-Running a program and building for it aren't separate jobs. Each time the standard tools stopped answering the question, building the answer myself with Claude Code was faster than waiting or working around the gap. It also gave the decisions much better data.
+Running a program and building for it aren't separate jobs. Each time the standard tools stopped answering the question, building the answer myself with AI coding tools was faster than waiting or working around the gap. It also gave the decisions much better data.
 
 A working prototype also moves people faster than a proposal. Leadership approved the knowledge base after seeing it work.

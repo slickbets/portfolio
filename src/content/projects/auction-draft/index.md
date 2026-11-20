@@ -4,7 +4,8 @@ summary: "A real-time auction draft room I built in six days, then shelved when 
 status: Prototype
 type: Personal
 year: 2026
-stack: [TypeScript, React, Node.js, Socket.IO, Postgres, Claude Code]
+cardSummary: "A real-time auction draft room I built in a week."
+stack: [TypeScript, React, Node.js, Socket.IO, Postgres, AI coding tools]
 featured: 3
 repo: https://github.com/slickbets/auction-draft
 tags: [sports, product, ai-building]
@@ -12,7 +13,7 @@ proof: "100 simulated drafts, no broken rules"
 proofNote: "Plus a full 10-team draft run by bots."
 cover: ./tv-board.png
 coverAlt: "The draft room TV board during bidding: CeeDee Lamb on the block at $41, Team 7 leading with 22 seconds left, every team's remaining budget, and the three most recent sales"
-role: "I reviewed and approved a design spec and three build plans, then directed Claude Code one task at a time."
+role: "I reviewed and approved a design spec and three build plans, then directed AI coding tools one task at a time."
 timeline: "It took six days from spec to a working draft room."
 outcome: "It was never used in a real draft. Our league drafted on ESPN, whose free draft tool already shows the bye weeks, player news and depth charts mine lacked."
 stats:
@@ -52,7 +53,7 @@ A live draft room that everyone joins from their phone, with a TV screen for the
 
 ## How I built it
 
-This was my most structured build. Before writing any code, I had Claude Code draft a design spec and three detailed build plans, and I reviewed and approved each one. Then Claude built against the plans one task at a time, with a separate review pass on each piece of work.
+This was my most structured build. Before writing any code, I had an AI coding tool draft a design spec and three detailed build plans, and I reviewed and approved each one. Then the AI built against the plans one task at a time, with a separate review pass on each piece of work.
 
 I also put real weight on testing, because a draft room that breaks on draft night is worse than none. The test suite includes:
 - a full 10-team draft run by bots over real connections
@@ -76,6 +77,6 @@ Matching it was a data problem, not an engineering one, and it was more work tha
 
 I've played fantasy football for more than a decade, so I know how people draft. What I underestimated was how much of a draft room is everything *around* the auction: the research a drafter leans on before every bid. I didn't see it until I was sitting in my own draft room and noticed what wasn't there. Next time I'm replacing a tool, I'll go through the old one screen by screen and list everything it gives people before I write the spec.
 
-Planning first with Claude Code worked. A written spec and plans, plus tests that try to break things, produced much more solid software than my first project.
+Planning first with AI coding tools worked. A written spec and plans, plus tests that try to break things, produced much more solid software than my first project.
 
 Knowing when to stop is part of the job. Shelving it before draft night was the right call.

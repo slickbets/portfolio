@@ -20,7 +20,7 @@ interface Props {
 }
 
 const { project, color, flip = false, heading = 'h3', linkTitle = false, proof = true, card = true } = Astro.props;
-const { title, summary, cardSummary, status, type, year, stack, proof: proofLine, proofNote } = project.data;
+const { title, cardTitle, summary, cardSummary, status, type, year, stack, proof: proofLine, proofNote } = project.data;
 const Heading = heading;
 const href = `/work/${project.id}`;
 ---
@@ -29,7 +29,7 @@ const href = `/work/${project.id}`;
   <div class="proj-media rv"><ProjectVisual project={project} /></div>
   <div class="proj-text rv" style="--d:80ms">
     <p class="meta"><span class={`status ${statusStyle(project)}`}>{status}</span><span>{type}, {year}</span></p>
-    <Heading class={heading === 'h2' ? 'h3' : undefined}>{linkTitle ? <a href={href}>{title}</a> : title}</Heading>
+    <Heading class={heading === 'h2' ? 'h3' : undefined}>{linkTitle ? <a href={href}>{title}</a> : (card ? (cardTitle ?? title) : title)}</Heading>
     <p>{card ? (cardSummary ?? summary) : summary}</p>
     <ul class="tags" aria-label="Built with">{stack.slice(0, 3).map((item) => <li>{item}</li>)}</ul>
     {proof && (
